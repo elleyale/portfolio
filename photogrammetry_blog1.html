@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Body 3D Scanning System - Research Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@200&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Martian Mono', monospace;
+            line-height: 1.7;
+            color: #000;
+            background: #fff;
+            font-weight: 200;
+        }
+        
+        .hero {
+            background: #fff;
+            color: #000;
+            padding: 0;
+            text-align: center;
+            border-bottom: 3px solid #ff0000;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #canvas3d {
+            width: 100%;
+            height: 400px;
+            display: block;
+        }
+        
+        .hero-content {
+            padding: 60px 40px;
+            background: #fff;
+        }
+        
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 200;
+            letter-spacing: -1px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .hero p {
+            font-size: 1em;
+            opacity: 0.7;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 200;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        .section {
+            margin: 100px 0;
+        }
+        
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            font-weight: 200;
+            letter-spacing: -0.5px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #ff0000;
+        }
+        
+        .section h3 {
+            font-size: 1.6em;
+            margin: 50px 0 20px;
+            font-weight: 200;
+        }
+        
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1px;
+            background: #000;
+            margin: 60px 0;
+            border: 1px solid #000;
+        }
+        
+        .stat-card {
+            background: #fff;
+            padding: 50px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: #ff0000;
+            transition: height 0.3s ease;
+            z-index: 0;
+        }
+        
+        .stat-card:hover::before {
+            height: 100%;
+        }
+        
+        .stat-card:hover {
+            color: #fff;
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 200;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            word-break: keep-all;
+            white-space: nowrap;
+        }
+        
+        .stat-label {
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 200;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .partnership-slideshow {
+            position: relative;
+            max-width: 1000px;
+            margin: 60px auto;
+            background: #000;
+            border: 1px solid #000;
+        }
+        
+        .slide {
+            display: none;
+            flex-direction: column;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 500px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #ff0000;
+        }
+        
+        .slide-content {
+            padding: 40px;
+            background: #fff;
+            color: #000;
+        }
+        
+        .slide-content h4 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: 200;
+            color: #000;
+        }
+        
+        .slide-content p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .slideshow-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .slide-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .slide-btn {
+            background: #fff;
+            border: 1px solid #000;
+            color: #000;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Martian Mono', monospace;
+            font-weight: 200;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .slide-indicators {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .indicator {
+            width: 10px;
+            height: 10px;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: #ff0000;
+            width: 30px;
+        }
+        
+        .slide-counter {
+            font-size: 0.9em;
+            color: #666;
+            letter-spacing: 1px;
+        }
+        
+        .feature-card {
+            padding: 40px 0;
+            border-top: 2px solid #000;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-top-color: #ff0000;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 200;
+        }
+        
+        .feature-card p {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .pipeline-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0;
+            gap: 20px;
+        }
+        
+        .pipeline-step {
+            flex: 1;
+            min-width: 150px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .pipeline-step:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+        }
+        
+        .pipeline-step .number {
+            font-size: 1.5em;
+            font-weight: 200;
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+        
+        .pipeline-step h4 {
+            font-size: 1em;
+            font-weight: 200;
+            margin-bottom: 8px;
+        }
+        
+        .pipeline-step p {
+            font-size: 0.85em;
+            color: #666;
+            margin: 0;
+        }
+        
+        .comparison-slider {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 60px auto;
+            height: 500px;
+            overflow: hidden;
+            border: 1px solid #000;
+        }
+        
+        .comparison-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #999;
+            font-weight: 200;
+            letter-spacing: 1px;
+        }
+        
+        .after-image {
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+            background: #000;
+            color: #fff;
+        }
+        
+        .slider-handle {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ff0000;
+            cursor: ew-resize;
+            z-index: 10;
+        }
+        
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #ff0000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2em;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
+        }
+        
+        .tech-tag {
+            padding: 12px 24px;
+            border: 1px solid #000;
+            font-size: 0.9em;
+            font-weight: 200;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-tag:hover {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+        
+        .interactive-demo {
+            background: #fafafa;
+            padding: 60px 40px;
+            margin: 60px 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .demo-controls {
+            display: flex;
+            gap: 0;
+            margin-bottom: 40px;
+            justify-content: center;
+            border: 1px solid #000;
+        }
+        
+        .demo-button {
+            background: #fff;
+            color: #000;
+            border: none;
+            border-right: 1px solid #000;
+            padding: 18px 35px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 200;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            flex: 1;
+            font-family: 'Martian Mono', monospace;
+        }
+        
+        .demo-button:last-child {
+            border-right: none;
+        }
+        
+        .demo-button:hover {
+            background: #f5f5f5;
+        }
+        
+        .demo-button.active {
+            background: #000;
+            color: #fff;
+        }
+        
+        .scan-visualization {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 200;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scan-point {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ff0000;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .highlight {
+            color: #ff0000;
+            font-weight: 400;
+        }
+        
+        @media (max-width: 768px) {
+            #canvas3d {
+                height: 300px;
+            }
+            
+            .hero-content {
+                padding: 40px 30px;
+            }
+            
+            .hero h1 { 
+                font-size: 2em; 
+            }
+            .section {
+                margin: 60px 0;
+            }
+            .section h2 {
+                font-size: 2em;
+            }
+            .container {
+                padding: 30px 20px;
+            }
+            .pipeline-flow {
+                flex-direction: column;
+            }
+            .demo-controls {
+                flex-direction: column;
+            }
+            .demo-button {
+                border-right: none;
+                border-bottom: 1px solid #000;
+            }
+            .demo-button:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <canvas id="canvas3d"></canvas>
+        <div class="hero-content">
+            <h1>Full Body 3D Scanning System</h1>
+            <p>A comprehensive photogrammetry pipeline for high-quality 3D human digitization (Dopl)</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="section">
+            <h2>Research Objectives</h2>
+            <p>
+                In 2020, the challenge was posed to develop a commercial-grade 3D scanning system that would simultaneously 
+                satisfy three critical requirements: <span class="highlight">exceptional scan quality</span>, 
+                <span class="highlight">operational robustness</span>, and <span class="highlight">user accessibility</span>. 
+                The project scope encompassed both hardware architecture and complete digital asset processing pipeline development.
+            </p>
+            <p>
+                The research and development timeline was constrained to a 10-month period, necessitating efficient methodology 
+                and rapid iteration cycles. The deliverable requirements specified a production-ready full 3D capture system with 
+                end-to-end processing capabilities—from raw image acquisition through final textured mesh generation—suitable for 
+                immediate commercial deployment.
+            </p>
+            
+            <h3>Design Requirements</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>System Robustness</h4>
+                    <p>Hardware reliability and operational stability for continuous commercial use</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Exceptional Quality</h4>
+                    <p>Sub-millimeter geometric accuracy and photorealistic texture reproduction</p>
+                </div>
+                <div class="feature-card">
+                    <h4>User Accessibility</h4>
+                    <p>Intuitive operation requiring minimal technical expertise from operators</p>
+                </div>
+                <div class="feature-card">
+                    <h4>10-Month Timeline</h4>
+                    <p>Accelerated R&D cycle from concept to production-ready system</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Abstract</h2>
+            <p>
+                This research presents a comprehensive photogrammetry-based system for full-body 3D digitization, developed 
+                through a 10-month research and development initiative that successfully delivered both hardware architecture 
+                and complete digital asset processing pipeline. The methodology employed a simulation-first approach, wherein 
+                extensive virtual testing preceded hardware development, optimizing camera placement algorithms and photogrammetric 
+                reconstruction parameters prior to physical implementation.
+            </p>
+            <p>
+                The resulting architecture comprises an 87-camera DSLR array with hardware-synchronized capture capabilities, 
+                deployed across <span class="highlight">five operational systems</span> that have processed 
+                <span class="highlight">tens of thousands of subjects</span>. The system demonstrates production-scale viability 
+                for applications in computer graphics, virtual reality, biometric analysis, and digital anthropology. This work 
+                contributes a validated framework for transitioning photogrammetry research from virtual simulation to 
+                large-scale commercial deployment within constrained development timelines.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">87</div>
+                    <div class="stat-label">DSLR Cameras</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Months R&D</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Systems Built</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">People Scanned</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Methodology</h2>
+            <h3>Phase 1: Virtual Scanner Development & Simulation</h3>
+            <p>
+                The research methodology prioritized computational simulation as a risk mitigation strategy for hardware investment. 
+                A virtual scanning environment was constructed to model the complete photogrammetric capture system, including camera 
+                pose estimation, optical characteristics, lighting conditions, and subject positioning parameters. This digital twin 
+                approach enabled parametric optimization across thousands of configuration permutations.
+            </p>
+            <p>
+                The simulation framework evaluated critical variables including camera quantity, spatial distribution geometry, 
+                baseline distances, and overlap ratios. Monte Carlo methods were employed to assess robustness under varying 
+                subject poses and environmental conditions. This computational validation phase significantly reduced development 
+                cycle time and capital expenditure while ensuring the physical system would achieve target performance specifications 
+                upon deployment.
+            </p>
+            
+            <h3>Phase 2: Physical Prototyping & Manufacturing</h3>
+            <p>
+                Following virtual validation, system specifications were formalized into engineering documentation for manufacturer 
+                collaboration. The transition from simulation to physical hardware involved iterative refinement of mechanical design, 
+                electrical synchronization systems, and calibration procedures. Five complete scanner units were manufactured through 
+                this collaborative development process, with each iteration incorporating empirical findings from operational testing.
+            </p>
+            <p>
+                Production units integrated custom triggering hardware for microsecond-precision synchronization across the 87-camera 
+                array, automated calibration routines for geometric accuracy maintenance, and optimized data acquisition pipelines for 
+                high-throughput operation. The manufacturing phase validated the scalability and reproducibility of the virtual design 
+                parameters in physical deployments.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>System Architecture</h2>
+            <h3>Hardware Configuration</h3>
+            <p>
+                The photogrammetric capture system employs an 87-camera DSLR array arranged in a geodesic-inspired spherical 
+                configuration to maximize surface coverage while minimizing occlusion artifacts. Camera placement follows an 
+                optimized distribution pattern derived from virtual simulation, ensuring adequate baseline distances for 
+                stereoscopic reconstruction while maintaining sufficient image overlap for robust feature matching.
+            </p>
+            <p>
+                Synchronization is achieved through custom hardware triggering mechanisms implemented via Raspberry Pi 
+                microcontrollers, enabling simultaneous exposure across all sensor units with sub-millisecond precision. 
+                This temporal alignment is critical for capturing static poses of human subjects without motion blur artifacts 
+                that would compromise reconstruction accuracy. The system incorporates automated camera calibration protocols 
+                to maintain geometric precision throughout operational lifecycles.
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>87 DSLR Array</h4>
+                    <p>Full 360° spherical coverage with optimized camera placement</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Hardware Sync</h4>
+                    <p>Simultaneous capture trigger across all cameras</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Auto Calibration</h4>
+                    <p>Geometric precision system for accurate reconstruction</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Lighting Array</h4>
+                    <p>Controlled illumination rig for consistent results</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Computational Pipeline</h2>
+            <p>
+                The photogrammetric reconstruction pipeline processes multi-view imagery through sequential algorithmic stages, 
+                transforming raw sensor data into topologically consistent 3D mesh representations with photorealistic texture mapping. 
+                The computational workflow integrates classical computer vision techniques with modern optimization frameworks.
+            </p>
+            
+            <div class="pipeline-flow">
+                <div class="pipeline-step">
+                    <div class="number">01</div>
+                    <h4>Image Capture</h4>
+                    <p>Synchronized acquisition</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="number">02</div>
+                    <h4>Feature Extraction</h4>
+                    <p>Keypoint detection</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="number">03</div>
+                    <h4>3D Reconstruction</h4>
+                    <p>Point cloud generation</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="number">04</div>
+                    <h4>Mesh Creation</h4>
+                    <p>Surface reconstruction</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="number">05</div>
+                    <h4>Texture Mapping</h4>
+                    <p>Color projection</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="number">06</div>
+                    <h4>Refinement</h4>
+                    <p>Final optimization</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Technology Stack</h2>
+            <h3>Software Architecture & Implementation</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">REALITY CAPTURE</span>
+                <span class="tech-tag">STRUCTURE FROM MOTION</span>
+                <span class="tech-tag">MULTI-VIEW STEREO</span>
+                <span class="tech-tag">BUNDLE ADJUSTMENT</span>
+                <span class="tech-tag">POISSON RECONSTRUCTION</span>
+                <span class="tech-tag">PYTHON</span>
+                <span class="tech-tag">JAVA</span>
+                <span class="tech-tag">C++</span>
+                <span class="tech-tag">OPENCV</span>
+                <span class="tech-tag">RASPBERRY PI</span>
+                <span class="tech-tag">GPU ACCELERATION</span>
+                <span class="tech-tag">CUDA</span>
+            </div>
+            <p>
+                The system architecture integrates Reality Capture as the primary photogrammetric reconstruction engine, 
+                supplemented by custom algorithmic implementations in Python and Java for pipeline automation and data management. 
+                Hardware control systems utilize Raspberry Pi microcontrollers for camera synchronization and triggering protocols. 
+                Computational bottlenecks are addressed through GPU acceleration using CUDA frameworks, enabling near-real-time 
+                processing of high-resolution multi-view datasets. The software stack emphasizes modularity and scalability to 
+                accommodate future algorithmic enhancements and deployment scenarios.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>Results & Discussion</h2>
+            <h3>Reconstruction Quality Assessment</h3>
+            
+            <div class="comparison-slider" id="comparisonSlider">
+                <div class="comparison-image before-image">RAW CAPTURE</div>
+                <div class="comparison-image after-image">PROCESSED 3D MODEL</div>
+                <div class="slider-handle" id="sliderHandle">
+                    <div class="slider-button">⟷</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Interactive Demo</h2>
+            <div class="interactive-demo">
+                <h3>Scan Visualization</h3>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showScanStage('capture')">CAPTURE</button>
+                    <button class="demo-button" onclick="showScanStage('pointcloud')">POINT CLOUD</button>
+                    <button class="demo-button" onclick="showScanStage('mesh')">MESH</button>
+                    <button class="demo-button" onclick="showScanStage('textured')">TEXTURED</button>
+                </div>
+                <div class="scan-visualization" id="scanViz">
+                    <span id="scanStageLabel">MULTI-CAMERA CAPTURE STAGE</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Deployment & Operational Analysis</h2>
+            <h3>Large-Scale Implementation Results</h3>
+            <p>
+                Five complete scanning systems were deployed in operational environments, collectively processing tens of thousands 
+                of human subjects. This production-scale implementation validates the robustness of both hardware architecture and 
+                computational pipeline under real-world operating conditions. The deployment phase generated empirical data regarding 
+                system reliability, throughput optimization, and user experience factors.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Deployed Systems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Subjects Captured</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">435</div>
+                    <div class="stat-label">Total Sensors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">System Uptime</div>
+                </div>
+            </div>
+            
+            <h3>Empirical Findings & System Performance</h3>
+            <p>
+                Operational data from large-scale deployment provided insights into calibration drift patterns, processing throughput 
+                optimization strategies, and failure mode analysis. Each capture session contributed to the refinement of automated 
+                quality assurance protocols and data validation procedures. The statistical robustness achieved across thousands of 
+                acquisitions demonstrates the commercial viability of photogrammetry-based human digitization at production scale.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>Notable Deployments & Collaborations</h2>
+            <h3>Industry Partnerships</h3>
+            <p>
+                The scanning systems have been deployed across diverse industry verticals, supporting high-profile productions 
+                and enterprise applications. These collaborations demonstrate the system's versatility and ability to meet 
+                demanding professional requirements across entertainment, gaming, academic, and fashion technology sectors.
+            </p>
+            
+            <div class="partnership-slideshow">
+                <div class="slide active">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - SEVERANCE SEASON 2 ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Severance Season 2</h4>
+                        <p>Character digitization for Apple TV+ acclaimed science fiction series production. High-fidelity 3D scanning enabled the creation of digital doubles and assets for the show's unique visual storytelling requirements, supporting complex visual effects sequences and maintaining continuity across production.</p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - JIM HENSON COMPANY ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Jim Henson Company</h4>
+                        <p>Digital character development for legendary puppetry and creature effects studio. The scanning technology bridged traditional puppetry techniques with modern digital workflows, enabling hybrid character creation that preserves the tactile quality of physical puppets while expanding creative possibilities through digital enhancement.</p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - SONY MUSIC ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Sony Music</h4>
+                        <p>Artist character digitization for music entertainment. Full-body scans of recording artist.</p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - HARVARD LAMPOON ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Harvard Lampoon</h4>
+                        <p>Academic collaboration for  digital preservation of cultural artifacts, demonstrating the system's adaptability to non-commercial research contexts.</p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - ACTIVISION ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Activision</h4>
+                        <p>High-fidelity asset generation for AAA game company. Photorealistic scans supported the creation of personaliized 3D printed collectible items.</p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - RIOT GAMES ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Riot Games</h4>
+                        <p>  The technology enabled production of high-quality personalized collectible items. </p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - APPLE TV+ ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Apple TV+</h4>
+                        <p>Digital human asset creation for streaming platform original productions.  Multiple shows benefited from the scanning technology, streamlining character digitization workflows and ensuring consistent quality across diverse production requirements for Apple's premium content offerings.</p>
+                    </div>
+                </div>
+                
+                <div class="slide">
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - CLO3D ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>CLO3D Integration</h4>
+                        <p>Virtual garment fitting software pipeline for fashion technology applications. Body scans provided accurate base models for virtual clothing simulation, enabling fashion designers and brands to visualize garment fit and drape on realistic body shapes, accelerating design iteration cycles and reducing physical sampling requirements.</p>
+                    </div>
+                </div>
+                
+                <div class="slideshow-controls">
+                    <div class="slide-nav">
+                        <button class="slide-btn" id="prevBtn">← PREV</button>
+                        <button class="slide-btn" id="nextBtn">NEXT →</button>
+                    </div>
+                    <div class="slide-indicators" id="indicators"></div>
+                    <div class="slide-counter">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Cross-Industry Impact</h3>
+            <p>
+                These collaborations span entertainment production (Severance Season 2, Jim Henson Company, Apple TV+), 
+                music entertainment (Sony Music artist digitization), interactive media (Activision, Riot Games), academic 
+                institutions (Harvard Lampoon), and fashion technology (CLO3D virtual fitting software). The system's 
+                adaptability to varied workflow requirements—from traditional puppetry studios to cutting-edge game development 
+                and virtual performance applications—validates its design philosophy of balancing technical excellence with 
+                operational flexibility. Each deployment contributed unique technical challenges that informed system refinements 
+                and expanded the technology's application scope.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>Applications</h2>
+            <h3>Domain-Specific Use Cases</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Computer Graphics & VR</h4>
+                    <p>High-fidelity character asset generation for real-time rendering engines and immersive environments</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Cinematic Production</h4>
+                    <p>Digital human replication for visual effects pipelines and performance capture integration</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Clinical Biomechanics</h4>
+                    <p>Morphological analysis and longitudinal documentation for medical research applications</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Digital Anthropology</h4>
+                    <p>Cultural heritage preservation through high-resolution anthropometric archiving</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Conclusions & Future Directions</h2>
+            <p>
+                This research demonstrates a validated methodology for transitioning photogrammetric scanning systems from 
+                computational simulation through physical prototyping to production-scale deployment. The simulation-first approach 
+                to hardware design optimization proved effective in reducing development risk and accelerating time-to-deployment 
+                for the 87-camera DSLR array architecture.
+            </p>
+            <p>
+                Deployment of five operational systems processing tens of thousands of subjects validates both the technical 
+                robustness and commercial viability of the proposed architecture. The integration of Reality Capture with custom 
+                Python and Java pipeline automation, coupled with Raspberry Pi-based hardware synchronization, demonstrates a 
+                scalable framework for high-throughput human digitization.
+            </p>
+            <p>
+                Future research directions include investigation of real-time reconstruction algorithms leveraging neural radiance 
+                fields, extension to dynamic capture scenarios with temporal coherence constraints, and development of adaptive 
+                calibration systems for minimizing maintenance overhead in long-term deployments. The established virtual-to-physical 
+                development methodology provides a foundation for continued innovation in photogrammetric capture systems.
+            </p>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js 3D Scanner Visualization
+        const canvas = document.getElementById('canvas3d');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, 400);
+        renderer.setClearColor(0xffffff, 1);
+        
+        camera.position.z = 5;
+        
+        // Create scanner representation (placeholder for GLB model)
+        // This is a geometric approximation of a multi-camera scanning rig
+        const scannerGroup = new THREE.Group();
+        
+        // Create camera ring representations
+        const cameraGeometry = new THREE.BoxGeometry(0.15, 0.1, 0.2);
+        const cameraMaterial = new THREE.MeshPhongMaterial({ 
+            color: 0x1a1a1a,
+            shininess: 50
+        });
+        
+        // Red accent lens material
+        const lensMaterial = new THREE.MeshPhongMaterial({ 
+            color: 0xff0000,
+            emissive: 0xff0000,
+            emissiveIntensity: 0.3,
+            shininess: 100
+        });
+        
+        // Create 3 rings of cameras at different heights
+        const rings = [
+            { y: 1.5, count: 12, radius: 2 },
+            { y: 0, count: 15, radius: 2.2 },
+            { y: -1.5, count: 12, radius: 2 }
+        ];
+        
+        rings.forEach(ring => {
+            for (let i = 0; i < ring.count; i++) {
+                const angle = (i / ring.count) * Math.PI * 2;
+                const cameraGroup = new THREE.Group();
+                
+                // Camera body
+                const cam = new THREE.Mesh(cameraGeometry, cameraMaterial);
+                cameraGroup.add(cam);
+                
+                // Red lens
+                const lensGeometry = new THREE.CircleGeometry(0.04, 16);
+                const lens = new THREE.Mesh(lensGeometry, lensMaterial);
+                lens.position.z = 0.11;
+                cameraGroup.add(lens);
+                
+                // Position camera pointing inward
+                cameraGroup.position.x = Math.cos(angle) * ring.radius;
+                cameraGroup.position.z = Math.sin(angle) * ring.radius;
+                cameraGroup.position.y = ring.y;
+                cameraGroup.lookAt(0, ring.y, 0);
+                
+                scannerGroup.add(cameraGroup);
+            }
+        });
+        
+        scene.add(scannerGroup);
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight1.position.set(5, 5, 5);
+        scene.add(directionalLight1);
+        
+        const directionalLight2 = new THREE.DirectionalLight(0x333333, 0.4);
+        directionalLight2.position.set(-5, -5, -5);
+        scene.add(directionalLight2);
+        
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            scannerGroup.rotation.y += 0.003;
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / 400;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, 400);
+        });
+        
+        // Slideshow functionality
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlidesCount = slides.length;
+        
+        // Initialize indicators
+        const indicatorsContainer = document.getElementById('indicators');
+        for (let i = 0; i < totalSlidesCount; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+            indicator.onclick = () => goToSlide(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+        
+        document.getElementById('totalSlides').textContent = totalSlidesCount;
+        
+        // Add event listeners to buttons
+        document.getElementById('prevBtn').addEventListener('click', () => changeSlide(-1));
+        document.getElementById('nextBtn').addEventListener('click', () => changeSlide(1));
+        
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex >= totalSlidesCount) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = totalSlidesCount - 1;
+            showSlide(currentSlideIndex);
+        }
+        
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach(ind => ind.classList.remove('active'));
+            indicators[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+        }
+        
+        // Comparison slider functionality
+        const slider = document.getElementById('comparisonSlider');
+        const handle = document.getElementById('sliderHandle');
+        const afterImage = slider.querySelector('.after-image');
+        
+        let isDragging = false;
+        
+        function updateSlider(e) {
+            if (!isDragging && e.type !== 'click') return;
+            
+            const rect = slider.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const percentage = (x / rect.width) * 100;
+            
+            if (percentage >= 0 && percentage <= 100) {
+                handle.style.left = percentage + '%';
+                afterImage.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
+            }
+        }
+        
+        handle.addEventListener('mousedown', () => isDragging = true);
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('mousemove', updateSlider);
+        slider.addEventListener('click', updateSlider);
+        
+        handle.addEventListener('touchstart', () => isDragging = true);
+        document.addEventListener('touchend', () => isDragging = false);
+        document.addEventListener('touchmove', updateSlider);
+        
+        function showScanStage(stage) {
+            const buttons = document.querySelectorAll('.demo-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const viz = document.getElementById('scanViz');
+            const label = document.getElementById('scanStageLabel');
+            
+            const existingPoints = viz.querySelectorAll('.scan-point');
+            existingPoints.forEach(point => point.remove());
+            
+            const stages = {
+                capture: { label: 'MULTI-CAMERA CAPTURE STAGE', points: 0 },
+                pointcloud: { label: 'POINT CLOUD GENERATION (500K+ POINTS)', points: 150 },
+                mesh: { label: 'MESH SURFACE RECONSTRUCTION', points: 80 },
+                textured: { label: 'FINAL TEXTURED 3D MODEL', points: 0 }
+            };
+            
+            label.textContent = stages[stage].label;
+            
+            for (let i = 0; i < stages[stage].points; i++) {
+                setTimeout(() => {
+                    const point = document.createElement('div');
+                    point.className = 'scan-point';
+                    point.style.left = Math.random() * 100 + '%';
+                    point.style.top = Math.random() * 100 + '%';
+                    point.style.animationDelay = Math.random() * 2 + 's';
+                    viz.appendChild(point);
+                }, i * 8);
+            }
+        }
+    </script>
+</body>
+</html>

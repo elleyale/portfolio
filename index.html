@@ -3,19 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ella Musaieva</title>
+    <title>Ella Musaieva - Creative Technologist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@200;300&display=swap" rel="stylesheet">
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
-            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
-        }
-    }
-    </script>
     <style>
         * {
             margin: 0;
@@ -43,7 +34,6 @@
             background: #FF0000;
             z-index: 1000;
             overflow: hidden;
-            cursor: pointer;
             box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
         }
 
@@ -60,7 +50,7 @@
 
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-33.333%); }
         }
 
         .ticker-item {
@@ -114,7 +104,7 @@
             gap: 60px;
         }
 
-        /* 3D Hub - Top */
+        /* 3D Hub */
         .pod-container {
             width: 100%;
             height: 600px;
@@ -137,7 +127,13 @@
             color: #000000;
         }
 
-        /* Intro Section - Below Model */
+        #threejsCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Intro Section */
         .intro {
             max-width: 700px;
             text-align: left;
@@ -148,7 +144,6 @@
             overflow: hidden;
         }
 
-        /* Point Cloud Canvas Background */
         #pointCloudCanvas {
             position: absolute;
             top: 0;
@@ -225,19 +220,7 @@
             width: 100%;
         }
 
-        /* Right Side - 3D Pod */
-        .pod-container {
-            width: 100%;
-            height: 500px;
-            position: relative;
-        }
-
-        #threejsCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
+        /* Loading Indicator */
         .loading-indicator {
             position: absolute;
             top: 50%;
@@ -355,22 +338,6 @@
             color: #666666;
         }
 
-        .footer-right {
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-link {
-            font-size: 12px;
-            color: #666666;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: #000000;
-        }
-
         .social-links {
             display: flex;
             gap: 15px;
@@ -419,6 +386,10 @@
                 font-size: 26px;
             }
 
+            .intro {
+                padding: 40px 30px;
+            }
+
             .pod-container {
                 height: 400px;
             }
@@ -438,27 +409,22 @@
 <body>
     <!-- AI News Ticker -->
     <div class="news-ticker-container">
-        <div class="news-ticker" id="newsTicker">
-            <div class="ticker-item">
-                <span class="ticker-loading">⟡ LOADING TECH NEWS...</span>
-            </div>
-        </div>
+        <div class="news-ticker" id="newsTicker"></div>
     </div>
 
-    <!-- Main Container -->
     <div class="container">
         <div class="center-content">
-            <!-- 3D Hub - Futuristic Visual First -->
+            <!-- 3D Hub -->
             <div class="pod-container" id="podContainer">
                 <div class="where-am-i" id="whereAmI"></div>
                 <canvas id="threejsCanvas"></canvas>
                 <div class="loading-indicator" id="loadingIndicator">
                     <div class="loader"></div>
-                    <p>Loading...</p>
+                    <p>Loading 3D Model...</p>
                 </div>
             </div>
 
-            <!-- Intro Below Model -->
+            <!-- Intro -->
             <div class="intro">
                 <canvas id="pointCloudCanvas"></canvas>
                 <h1>Ella Musaieva</h1>
@@ -468,15 +434,10 @@
                 </p>
 
                 <nav class="nav-links">
-                    <a href="lab-notebook-portfolio.html" class="nav-link">
-                        Research & Projects
-                    </a>
-                    <a href="/cdn-cgi/l/email-protection#e6838a8a87a693929283949289958ec885898b" class="nav-link">
-                        Contact
-                    </a>
-                    <a href="#" class="nav-link">
-                        CV
-                    </a>
+                    <a href="lab-notebook-portfolio.html" class="nav-link">Research & Projects</a>
+                    <a href="photogrammetry_blog1.html" class="nav-link">Photogrammetry Research</a>
+                    <a href="mailto:ella@uttertosh.com" class="nav-link">Contact</a>
+                    <a href="#" class="nav-link">CV</a>
                 </nav>
             </div>
         </div>
@@ -487,21 +448,19 @@
         <div class="footer-left">
             © 2024 Ella Musaieva
         </div>
-        <div class="footer-right">
-            <div class="social-links">
-                <a href="https://twitter.com/uttertosh" aria-label="Twitter">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-                    </svg>
-                </a>
-                <a href="http://www.linkedin.com/in/ella-musaieva" aria-label="LinkedIn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                </a>
-            </div>
+        <div class="social-links">
+            <a href="https://twitter.com/uttertosh" aria-label="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                </svg>
+            </a>
+            <a href="http://www.linkedin.com/in/ella-musaieva" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+            </a>
         </div>
     </footer>
 
@@ -520,13 +479,21 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        // News ticker
+        // News ticker - Initialize immediately
         const ticker = document.getElementById('newsTicker');
-        let currentIndex = 0;
         
         const newsCollection = [
             { fact: "Neural networks achieve breakthrough in protein structure prediction", source: "Nature", category: "AI" },
@@ -548,17 +515,8 @@
             return colors[category] || '#00FF41';
         }
         
-        function getNewsSet() {
-            const items = [];
-            for (let i = 0; i < 8; i++) {
-                items.push(newsCollection[(currentIndex + i) % newsCollection.length]);
-            }
-            return items;
-        }
-        
         function updateTicker() {
-            const newsItems = getNewsSet();
-            const tickerContent = newsItems.map(item => `
+            const tickerContent = newsCollection.map(item => `
                 <div class="ticker-item">
                     <span class="ticker-category" style="color: ${getCategoryColor(item.category)};">[${item.category}]</span>
                     <span class="ticker-fact">${item.fact}</span>
@@ -566,21 +524,24 @@
                     <span class="ticker-separator">⟡</span>
                 </div>
             `).join('');
+            
+            // Triple for seamless loop
             ticker.innerHTML = tickerContent + tickerContent + tickerContent;
+            console.log('Ticker updated');
         }
         
+        // Initialize immediately
         updateTicker();
-        setInterval(() => {
-            currentIndex = (currentIndex + 8) % newsCollection.length;
-            updateTicker();
-        }, 30000);
+        
+        // Rotate every 30 seconds
+        setInterval(updateTicker, 30000);
 
         // Modal
         const modal = document.getElementById('modal');
         const whereAmI = document.getElementById('whereAmI');
         const modalClose = document.getElementById('modalClose');
 
-        // Typing effect for "Where am I?"
+        // Typing effect
         const whereAmIText = '–Where am I?_';
         let charIndex = 0;
         
@@ -592,7 +553,6 @@
             }
         }
         
-        // Start typing after model loads
         setTimeout(typeWhereAmI, 1000);
 
         whereAmI.addEventListener('click', () => modal.classList.add('active'));
@@ -601,7 +561,7 @@
             if (e.target === modal) modal.classList.remove('active');
         });
 
-        // Random Point Cloud Background
+        // Point Cloud
         const pointCloudCanvas = document.getElementById('pointCloudCanvas');
         if (pointCloudCanvas) {
             const ctx = pointCloudCanvas.getContext('2d');
@@ -619,7 +579,6 @@
                 ctx.scale(dpr, dpr);
                 ctx.clearRect(0, 0, rect.width, rect.height);
                 
-                // Generate random points
                 const numPoints = 300;
                 const colors = ['#999999', '#AAAAAA', '#BBBBBB', '#CCCCCC'];
                 
@@ -640,25 +599,22 @@
                 ctx.globalAlpha = 1;
             }
             
-            // Initialize and redraw on resize
             setTimeout(initPointCloud, 100);
             window.addEventListener('resize', initPointCloud);
         }
 
-        // Three.js Scene Setup
+        // Three.js
         const canvas = document.getElementById('threejsCanvas');
         const podContainer = document.getElementById('podContainer');
         
-        let scene, camera, renderer, controls;
+        let scene, camera, renderer;
         let model = null;
         let clock = new THREE.Clock();
         
         function initThreeJS() {
-            // Scene
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xFFFFFF);
             
-            // Camera
             camera = new THREE.PerspectiveCamera(
                 45,
                 podContainer.clientWidth / podContainer.clientHeight,
@@ -667,7 +623,6 @@
             );
             camera.position.set(0, 1.5, 3);
             
-            // Renderer
             renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
             renderer.setSize(podContainer.clientWidth, podContainer.clientHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
@@ -675,7 +630,6 @@
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
             renderer.toneMappingExposure = 1.0;
             
-            // Simple lighting (for white background)
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
             scene.add(ambientLight);
             
@@ -686,24 +640,26 @@
             const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
             fillLight.position.set(-3, 0, -2);
             scene.add(fillLight);
+            
+            console.log('Three.js initialized');
         }
         
         function loadModel() {
             const loader = new GLTFLoader();
             
+            console.log('Loading model_root.glb...');
+            
             loader.load(
                 'model_root.glb',
                 (gltf) => {
+                    console.log('Model loaded successfully!');
                     const root = gltf.scene;
                     scene.add(root);
                     
-                    // Find the parent pivot object
+                    // Find model_root
                     const modelRoot = root.getObjectByName("model_root");
-                    if (!modelRoot) {
-                        console.warn("No object named 'model_root' found; using gltf.scene instead.");
-                    }
                     
-                    // Apply glass material tuning
+                    // Apply glass material
                     const glassMesh = root.getObjectByName("glass");
                     if (glassMesh && glassMesh.isMesh) {
                         const mats = Array.isArray(glassMesh.material)
@@ -712,26 +668,19 @@
                         
                         mats.forEach((m) => {
                             if (!m) return;
-                            
-                            // Tune for PBR glass
                             m.metalness = 0.0;
                             m.roughness = 0.02;
                             m.transmission = 1.0;
                             m.ior = 1.52;
                             m.thickness = 0.012;
-                            
-                            // Dispersion (rainbow effect)
                             if ("dispersion" in m) {
                                 m.dispersion = 0.12;
                             }
-                            
                             m.needsUpdate = true;
                         });
-                    } else {
-                        console.warn("No mesh named 'glass' found in GLB.");
                     }
                     
-                    // Pod mesh - ensure it's not glass
+                    // Pod mesh
                     const podMesh = root.getObjectByName("pod");
                     if (podMesh && podMesh.isMesh) {
                         const mats = Array.isArray(podMesh.material)
@@ -746,11 +695,9 @@
                         });
                     }
                     
-                    // Store reference for rotation
                     model = modelRoot || root;
-                    root.userData.modelRoot = model;
                     
-                    // Center and scale the model
+                    // Center and scale
                     const box = new THREE.Box3().setFromObject(root);
                     const center = box.getCenter(new THREE.Vector3());
                     root.position.sub(center);
@@ -762,18 +709,21 @@
                     
                     document.getElementById('loadingIndicator').style.display = 'none';
                 },
-                undefined,
+                (progress) => {
+                    const percent = (progress.loaded / progress.total * 100).toFixed(2);
+                    console.log('Loading progress:', percent + '%');
+                },
                 (error) => {
-                    console.error('Error loading GLB:', error);
+                    console.error('Error loading model:', error);
                     const loadingIndicator = document.getElementById('loadingIndicator');
                     if (loadingIndicator) {
-                        loadingIndicator.innerHTML = '<p style="color: #999;">3D preview</p>';
+                        loadingIndicator.innerHTML = '<p style="color: #999;">Model unavailable<br>Check console</p>';
                     }
                 }
             );
         }
         
-        // Mouse interaction variables
+        // Mouse interaction
         let mouseX = 0, mouseY = 0;
         let targetRotationX = 0, targetRotationY = 0;
         let isMouseOver = false;
@@ -794,18 +744,16 @@
             isMouseOver = false;
         });
         
-        // Animation loop
+        // Animation
         function animate() {
             requestAnimationFrame(animate);
             
             const delta = clock.getDelta();
             
             if (model) {
-                // Gentle idle rotation when not hovering
                 if (!isMouseOver) {
                     model.rotation.y += 0.3 * delta;
                 } else {
-                    // Mouse-controlled rotation
                     model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
                     model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
                 }
@@ -814,7 +762,7 @@
             renderer.render(scene, camera);
         }
         
-        // Resize handler
+        // Resize
         window.addEventListener('resize', () => {
             const width = podContainer.clientWidth;
             const height = podContainer.clientHeight;
@@ -823,8 +771,10 @@
             renderer.setSize(width, height);
         });
         
-        // Initialize
+        // Start
         initThreeJS();
         loadModel();
         animate();
-            camera.aspect 
+    </script>
+</body>
+</html>
