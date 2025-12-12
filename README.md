@@ -1,4 +1,4 @@
-# Ella Musaieva - Portfolio Website
+#  - Portfolio Website
 
 A retro-futuristic portfolio website featuring interactive 3D models, AI-powered news ticker, and research documentation.
 
