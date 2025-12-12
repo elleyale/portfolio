@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive - Ella Musaieva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@200;300&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #FFFFFF;
+            color: #000000;
+            font-family: 'Martian Mono', monospace;
+            font-weight: 200;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 80px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            border-bottom: 3px solid #FF0000;
+            padding-bottom: 40px;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 200;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666666;
+            max-width: 700px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 40px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #000000;
+        }
+
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .archive-item {
+            border: 1px solid #E0E0E0;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .archive-item:hover {
+            border-color: #FF0000;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .archive-item .date {
+            font-size: 11px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .archive-item h3 {
+            font-size: 18px;
+            font-weight: 200;
+            margin-bottom: 10px;
+        }
+
+        .archive-item p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        .archive-item .category {
+            font-size: 11px;
+            color: #FF0000;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 100px 40px;
+            color: #999999;
+        }
+
+        .coming-soon h2 {
+            font-size: 24px;
+            font-weight: 200;
+            margin-bottom: 20px;
+        }
+
+        .coming-soon p {
+            font-size: 14px;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 60px 20px;
+            }
+
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .archive-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <div class="header">
+            <h1>Archive</h1>
+            <p>A collection of past projects, experiments, and explorations in immersive media, 3D workflows, and creative technology.</p>
+        </div>
+
+        <!-- Coming Soon Section -->
+        <div class="coming-soon">
+            <h2>Archive Coming Soon</h2>
+            <p>This section is currently being curated. Check back soon for a comprehensive archive of projects, research, and experiments.</p>
+        </div>
+
+        <!-- Archive Grid (hidden for now, uncomment when ready to add content) -->
+        <!--
+        <div class="archive-grid">
+            <a href="#" class="archive-item">
+                <div class="date">2024</div>
+                <h3>Project Title</h3>
+                <p>Brief description of the project and what it explored.</p>
+                <div class="category">3D Scanning</div>
+            </a>
+            
+            <a href="#" class="archive-item">
+                <div class="date">2023</div>
+                <h3>Another Project</h3>
+                <p>Brief description of the project and what it explored.</p>
+                <div class="category">Immersive Media</div>
+            </a>
+            
+            Add more items as needed
+        </div>
+        -->
+    </div>
+</body>
+</html>

@@ -44,10 +44,6 @@
             padding: 12px 0;
         }
 
-        .news-ticker:hover {
-            animation-play-state: paused;
-        }
-
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-33.333%); }
@@ -90,37 +86,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 40px 100px;
+            padding: 80px 40px 60px;
             position: relative;
         }
 
         /* Center Content */
         .center-content {
-            max-width: 1000px;
+            max-width: 1400px;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            display: grid;
+            grid-template-columns: 1fr 400px;
             gap: 60px;
+            align-items: start;
         }
 
-        /* 3D Hub */
+        /* 3D Hub Container */
+        .model-section {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
         .pod-container {
             width: 100%;
             height: 600px;
             position: relative;
+            background: #FAFAFA;
+            border: 1px solid #E8E8E8;
         }
 
         .where-am-i {
             position: absolute;
-            top: 40px;
-            left: 40px;
+            top: 30px;
+            left: 30px;
             font-size: 14px;
             color: #666666;
             cursor: pointer;
             transition: color 0.3s ease;
             z-index: 10;
-            margin-bottom: 0;
         }
 
         .where-am-i:hover {
@@ -131,93 +134,6 @@
             width: 100%;
             height: 100%;
             display: block;
-        }
-
-        /* Intro Section */
-        .intro {
-            max-width: 700px;
-            text-align: left;
-            position: relative;
-            padding: 60px;
-            background: #F8F8F8;
-            border: 1px solid #E8E8E8;
-            overflow: hidden;
-        }
-
-        #pointCloudCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .intro > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .intro h1 {
-            font-size: 42px;
-            font-weight: 200;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-
-        .intro .title {
-            font-size: 16px;
-            color: #666666;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-
-        .intro .description {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        /* Navigation Links */
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .nav-link {
-            font-size: 14px;
-            color: #000000;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            padding: 8px 0;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 6px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #000000;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #666666;
-            transform: translateX(5px);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
         }
 
         /* Loading Indicator */
@@ -249,6 +165,104 @@
             color: #666;
             font-size: 12px;
             font-weight: 200;
+        }
+
+        /* Info Section - Below Model */
+        .info-section {
+            padding: 40px;
+            background: #FAFAFA;
+            border: 1px solid #E8E8E8;
+        }
+
+        .info-section h1 {
+            font-size: 36px;
+            font-weight: 200;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-section .title {
+            font-size: 16px;
+            color: #666666;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .info-section .description {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.8;
+        }
+
+        /* Right Sidebar - Tabs */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid #E0E0E0;
+        }
+
+        .nav-tab {
+            font-size: 14px;
+            color: #666666;
+            text-decoration: none;
+            padding: 20px 30px;
+            border-bottom: 1px solid #E0E0E0;
+            transition: all 0.3s ease;
+            position: relative;
+            background: #FFFFFF;
+            text-align: left;
+        }
+
+        .nav-tab:last-child {
+            border-bottom: none;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: #FF0000;
+            transition: width 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: #000000;
+            background: #FAFAFA;
+            padding-left: 40px;
+        }
+
+        .nav-tab:hover::before {
+            width: 4px;
+        }
+
+        .nav-tab.active {
+            color: #000000;
+            background: #F5F5F5;
+            border-left: 4px solid #FF0000;
+            padding-left: 36px;
+        }
+
+        .tab-label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            opacity: 0.6;
+        }
+
+        .tab-title {
+            display: block;
+            font-size: 14px;
         }
 
         /* Modal */
@@ -324,13 +338,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 20px 40px;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-top: 1px solid #E0E0E0;
+            z-index: 999;
         }
 
         .footer-left {
@@ -353,51 +368,58 @@
         }
 
         /* Responsive */
-        @media (max-width: 968px) {
+        @media (max-width: 1024px) {
             .center-content {
+                grid-template-columns: 1fr;
                 gap: 40px;
             }
 
-            .intro {
-                max-width: 100%;
+            .sidebar {
+                position: relative;
+                top: 0;
             }
 
-            .intro h1 {
-                font-size: 32px;
+            .nav-tabs {
+                flex-direction: row;
+                overflow-x: auto;
             }
 
-            .pod-container {
-                height: 500px;
+            .nav-tab {
+                border-bottom: none;
+                border-right: 1px solid #E0E0E0;
+                white-space: nowrap;
             }
 
-            .footer {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
+            .nav-tab:last-child {
+                border-right: none;
             }
         }
 
         @media (max-width: 640px) {
             .container {
-                padding: 80px 20px 100px;
-            }
-
-            .intro h1 {
-                font-size: 26px;
-            }
-
-            .intro {
-                padding: 40px 30px;
+                padding: 80px 20px 80px;
             }
 
             .pod-container {
                 height: 400px;
             }
 
+            .info-section {
+                padding: 30px 20px;
+            }
+
+            .info-section h1 {
+                font-size: 28px;
+            }
+
             .where-am-i {
                 top: 20px;
                 left: 20px;
                 font-size: 13px;
+            }
+
+            .nav-tab {
+                padding: 15px 20px;
             }
 
             .modal-content {
@@ -414,31 +436,49 @@
 
     <div class="container">
         <div class="center-content">
-            <!-- 3D Hub -->
-            <div class="pod-container" id="podContainer">
-                <div class="where-am-i" id="whereAmI"></div>
-                <canvas id="threejsCanvas"></canvas>
-                <div class="loading-indicator" id="loadingIndicator">
-                    <div class="loader"></div>
-                    <p>Loading 3D Model...</p>
+            <!-- Left: Model Section -->
+            <div class="model-section">
+                <!-- 3D Model -->
+                <div class="pod-container" id="podContainer">
+                    <div class="where-am-i" id="whereAmI"></div>
+                    <canvas id="threejsCanvas"></canvas>
+                    <div class="loading-indicator" id="loadingIndicator">
+                        <div class="loader"></div>
+                        <p>Loading model...</p>
+                    </div>
+                </div>
+
+                <!-- Info Below Model -->
+                <div class="info-section">
+                    <h1>Ella Musaieva</h1>
+                    <p class="title">Creative Technologist</p>
+                    <p class="description">
+                        Exploring the intersection of physical space, digital capture, and immersive experience through computational design and systems thinking.
+                    </p>
                 </div>
             </div>
 
-            <!-- Intro -->
-            <div class="intro">
-                <canvas id="pointCloudCanvas"></canvas>
-                <h1>Ella Musaieva</h1>
-                <p class="title">Creative Technologist</p>
-                <p class="description">
-                    Exploring the intersection of physical space, digital capture, and immersive experience through computational design and systems thinking.
-                </p>
-
-                <nav class="nav-links">
-                    <a href="photogrammetry_blog1.html" class="nav-link">Research & Projects</a>
-                    <a href="mailto:ella@uttertosh.com" class="nav-link">Contact</a>
-                    <a href="#" class="nav-link">CV</a>
+            <!-- Right: Navigation Tabs -->
+            <aside class="sidebar">
+                <nav class="nav-tabs">
+                    <a href="photogrammetry_blog1.html" class="nav-tab">
+                        <span class="tab-label">01</span>
+                        <span class="tab-title">Research & Projects</span>
+                    </a>
+                    <a href="archive.html" class="nav-tab">
+                        <span class="tab-label">02</span>
+                        <span class="tab-title">Archive</span>
+                    </a>
+                    <a href="mailto:ella@uttertosh.com" class="nav-tab">
+                        <span class="tab-label">03</span>
+                        <span class="tab-title">Contact</span>
+                    </a>
+                    <a href="Ella_Musaieva_resume.pdf" class="nav-tab" target="_blank">
+                        <span class="tab-label">04</span>
+                        <span class="tab-title">CV</span>
+                    </a>
                 </nav>
-            </div>
+            </aside>
         </div>
     </div>
 
@@ -478,7 +518,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="importmap">
+    <script type="importmap">
     {
         "imports": {
             "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
@@ -491,9 +531,8 @@
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        // News ticker - Initialize immediately
+        // News Ticker
         const ticker = document.getElementById('newsTicker');
-        
         const newsCollection = [
             { fact: "Neural networks achieve breakthrough in protein structure prediction", source: "Nature", category: "AI" },
             { fact: "Quantum processors reach new milestone in error correction", source: "Science", category: "QUANTUM" },
@@ -523,16 +562,10 @@
                     <span class="ticker-separator">⟡</span>
                 </div>
             `).join('');
-            
-            // Triple for seamless loop
             ticker.innerHTML = tickerContent + tickerContent + tickerContent;
-            console.log('Ticker updated');
         }
         
-        // Initialize immediately
         updateTicker();
-        
-        // Rotate every 30 seconds
         setInterval(updateTicker, 30000);
 
         // Modal
@@ -560,49 +593,7 @@
             if (e.target === modal) modal.classList.remove('active');
         });
 
-        // Point Cloud
-        const pointCloudCanvas = document.getElementById('pointCloudCanvas');
-        if (pointCloudCanvas) {
-            const ctx = pointCloudCanvas.getContext('2d');
-            const intro = document.querySelector('.intro');
-            
-            function initPointCloud() {
-                const dpr = window.devicePixelRatio || 1;
-                const rect = intro.getBoundingClientRect();
-                
-                pointCloudCanvas.width = rect.width * dpr;
-                pointCloudCanvas.height = rect.height * dpr;
-                pointCloudCanvas.style.width = rect.width + 'px';
-                pointCloudCanvas.style.height = rect.height + 'px';
-                
-                ctx.scale(dpr, dpr);
-                ctx.clearRect(0, 0, rect.width, rect.height);
-                
-                const numPoints = 300;
-                const colors = ['#999999', '#AAAAAA', '#BBBBBB', '#CCCCCC'];
-                
-                for (let i = 0; i < numPoints; i++) {
-                    const x = Math.random() * rect.width;
-                    const y = Math.random() * rect.height;
-                    const radius = Math.random() * 1.5 + 0.5;
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    const alpha = Math.random() * 0.4 + 0.3;
-                    
-                    ctx.beginPath();
-                    ctx.arc(x, y, radius, 0, Math.PI * 2);
-                    ctx.fillStyle = color;
-                    ctx.globalAlpha = alpha;
-                    ctx.fill();
-                }
-                
-                ctx.globalAlpha = 1;
-            }
-            
-            setTimeout(initPointCloud, 100);
-            window.addEventListener('resize', initPointCloud);
-        }
-
-        // Three.js
+        // Three.js Scene
         const canvas = document.getElementById('threejsCanvas');
         const podContainer = document.getElementById('podContainer');
         
@@ -610,117 +601,111 @@
         let model = null;
         let clock = new THREE.Clock();
         
-        function initThreeJS() {
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xFFFFFF);
-            
-            camera = new THREE.PerspectiveCamera(
-                45,
-                podContainer.clientWidth / podContainer.clientHeight,
-                0.1,
-                100
-            );
-            camera.position.set(0, 1.5, 3);
-            
-            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-            renderer.setSize(podContainer.clientWidth, podContainer.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.outputColorSpace = THREE.SRGBColorSpace;
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1.0;
-            
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-            directionalLight.position.set(3, 5, 2);
-            scene.add(directionalLight);
-            
-            const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
-            fillLight.position.set(-3, 0, -2);
-            scene.add(fillLight);
-            
-            console.log('Three.js initialized');
-        }
+        // Initialize Three.js
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xFAFAFA);
         
-        function loadModel() {
-            const loader = new GLTFLoader();
-            
-            console.log('Loading model_root.glb...');
-            
-            loader.load(
-                'model_root.glb',
-                (gltf) => {
-                    console.log('Model loaded successfully!');
-                    const root = gltf.scene;
-                    scene.add(root);
-                    
-                    // Find model_root
-                    const modelRoot = root.getObjectByName("model_root");
-                    
-                    // Apply glass material
-                    const glassMesh = root.getObjectByName("glass");
-                    if (glassMesh && glassMesh.isMesh) {
-                        const mats = Array.isArray(glassMesh.material)
-                            ? glassMesh.material
-                            : [glassMesh.material];
-                        
-                        mats.forEach((m) => {
-                            if (!m) return;
-                            m.metalness = 0.0;
-                            m.roughness = 0.02;
-                            m.transmission = 1.0;
-                            m.ior = 1.52;
-                            m.thickness = 0.012;
-                            if ("dispersion" in m) {
-                                m.dispersion = 0.12;
-                            }
-                            m.needsUpdate = true;
-                        });
-                    }
-                    
-                    // Pod mesh
-                    const podMesh = root.getObjectByName("pod");
-                    if (podMesh && podMesh.isMesh) {
-                        const mats = Array.isArray(podMesh.material)
-                            ? podMesh.material
-                            : [podMesh.material];
-                        
-                        mats.forEach((m) => {
-                            if (!m) return;
-                            if ("transmission" in m) m.transmission = 0.0;
-                            if ("dispersion" in m) m.dispersion = 0.0;
-                            m.needsUpdate = true;
-                        });
-                    }
-                    
-                    model = modelRoot || root;
-                    
-                    // Center and scale
-                    const box = new THREE.Box3().setFromObject(root);
-                    const center = box.getCenter(new THREE.Vector3());
-                    root.position.sub(center);
-                    
-                    const size = box.getSize(new THREE.Vector3());
-                    const maxDim = Math.max(size.x, size.y, size.z);
-                    const scale = 2.5 / maxDim;
-                    root.scale.multiplyScalar(scale);
-                    
-                    document.getElementById('loadingIndicator').style.display = 'none';
-                },
-                (progress) => {
-                    const percent = (progress.loaded / progress.total * 100).toFixed(2);
-                    console.log('Loading progress:', percent + '%');
-                },
-                (error) => {
-                    console.error('Error loading model:', error);
-                    const loadingIndicator = document.getElementById('loadingIndicator');
-                    if (loadingIndicator) {
-                        loadingIndicator.innerHTML = '<p style="color: #999;">Model unavailable<br>Check console</p>';
-                    }
+        camera = new THREE.PerspectiveCamera(
+            45,
+            podContainer.clientWidth / podContainer.clientHeight,
+            0.1,
+            100
+        );
+        camera.position.set(0, 1.5, 4);
+        
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer.setSize(podContainer.clientWidth, podContainer.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        directionalLight.position.set(3, 5, 2);
+        scene.add(directionalLight);
+        
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        fillLight.position.set(-3, 0, -2);
+        scene.add(fillLight);
+        
+        console.log('Three.js initialized');
+        
+        // Load Model
+        const loader = new GLTFLoader();
+        console.log('Attempting to load: model_root.glb');
+        
+        loader.load(
+            './model_root.glb',
+            (gltf) => {
+                console.log('✓ Model loaded successfully');
+                const root = gltf.scene;
+                scene.add(root);
+                
+                // Apply glass material
+                const glassMesh = root.getObjectByName("glass");
+                if (glassMesh && glassMesh.isMesh) {
+                    console.log('✓ Found glass mesh');
+                    const mats = Array.isArray(glassMesh.material) ? glassMesh.material : [glassMesh.material];
+                    mats.forEach((m) => {
+                        if (!m) return;
+                        m.metalness = 0.0;
+                        m.roughness = 0.02;
+                        m.transmission = 1.0;
+                        m.ior = 1.52;
+                        m.thickness = 0.012;
+                        if ("dispersion" in m) m.dispersion = 0.12;
+                        m.needsUpdate = true;
+                    });
                 }
-            );
-        }
+                
+                // Pod mesh
+                const podMesh = root.getObjectByName("pod");
+                if (podMesh && podMesh.isMesh) {
+                    console.log('✓ Found pod mesh');
+                    const mats = Array.isArray(podMesh.material) ? podMesh.material : [podMesh.material];
+                    mats.forEach((m) => {
+                        if (!m) return;
+                        if ("transmission" in m) m.transmission = 0.0;
+                        if ("dispersion" in m) m.dispersion = 0.0;
+                        m.needsUpdate = true;
+                    });
+                }
+                
+                const modelRoot = root.getObjectByName("model_root");
+                model = modelRoot || root;
+                
+                // Center and scale
+                const box = new THREE.Box3().setFromObject(root);
+                const center = box.getCenter(new THREE.Vector3());
+                root.position.sub(center);
+                
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 2.5 / maxDim;
+                root.scale.multiplyScalar(scale);
+                
+                console.log('✓ Model centered and scaled');
+                document.getElementById('loadingIndicator').style.display = 'none';
+            },
+            (progress) => {
+                if (progress.total > 0) {
+                    const percent = (progress.loaded / progress.total * 100).toFixed(0);
+                    console.log(`Loading: ${percent}%`);
+                }
+            },
+            (error) => {
+                console.error('✗ Model loading error:', error);
+                console.error('Make sure model_root.glb is in the same directory as index.html');
+                const loadingIndicator = document.getElementById('loadingIndicator');
+                if (loadingIndicator) {
+                    loadingIndicator.innerHTML = '<p style="color: #999; font-size: 11px;">Model file not found<br>Check console (F12)</p>';
+                }
+            }
+        );
         
         // Mouse interaction
         let mouseX = 0, mouseY = 0;
@@ -731,7 +716,6 @@
             const rect = podContainer.getBoundingClientRect();
             mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
             mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-            
             targetRotationY = mouseX * 0.5;
             targetRotationX = mouseY * 0.3;
             isMouseOver = true;
@@ -746,7 +730,6 @@
         // Animation
         function animate() {
             requestAnimationFrame(animate);
-            
             const delta = clock.getDelta();
             
             if (model) {
@@ -761,10 +744,16 @@
             renderer.render(scene, camera);
         }
         
+        animate();
+        
         // Resize
         window.addEventListener('resize', () => {
             const width = podContainer.clientWidth;
             const height = podContainer.clientHeight;
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            renderer.setSiz
+            renderer.setSize(width, height);
+        });
+    </script>
+</body>
+</html>
