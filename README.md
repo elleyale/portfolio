@@ -1,4 +1,4 @@
-#  - Portfolio Website
+# Ella Musaieva - Portfolio Website
 
 A retro-futuristic portfolio website featuring interactive 3D models, AI-powered news ticker, and research documentation.
 
@@ -11,12 +11,11 @@ A retro-futuristic portfolio website featuring interactive 3D models, AI-powered
 - 📍 **Point Cloud Background** - Subtle random point cloud texture
 - 📱 **Fully Responsive** - Works on desktop, tablet, and mobile
 
-### Lab Notebook Page (`lab-notebook-portfolio.html`)
-- 📚 **Research Entries** - 5 detailed project case studies
-- 🔬 **Research Methodology** - Context → Method → Outcome format
-- 🎯 **Research Interests** - Tagged skill areas
-- 🛠️ **Capabilities Spectrum** - Technical to conceptual skills
-- 🌐 **Contact Section** - Email, phone, social links
+### Research Page (`photogrammetry_blog1.html`)
+- 📚 **Photogrammetry Research** - Full body 3D scanning system
+- 🔬 **Technical Deep Dive** - Hardware, software, and methodology
+- 🎯 **Visual Documentation** - 3D visualizations and diagrams
+- 🌐 **Professional Layout** - Clean research blog format
 
 ## Quick Start
 
@@ -62,9 +61,12 @@ Upload all files to any static hosting service:
 ```
 portfolio/
 ├── index.html                      # Landing page
-├── lab-notebook-portfolio.html     # Research/projects page
+├── photogrammetry_blog1.html      # Research blog page
 ├── model_root.glb                  # 3D model file (4.7MB)
-└── README.md                       # This file
+├── README.md                       # This file
+├── DEPLOYMENT.md                   # Detailed deployment guide
+├── QUICKSTART.md                   # Quick start guide
+└── .gitignore                      # Git ignore rules
 ```
 
 ## Technical Stack
