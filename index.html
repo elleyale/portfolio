@@ -80,39 +80,32 @@
             font-size: 16px;
         }
 
-        /* Main Container */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 40px 60px;
-            position: relative;
-        }
-
-        /* Center Content */
-        .center-content {
-            max-width: 1400px;
-            width: 100%;
+        /* Main Layout */
+        .main-container {
+            position: fixed;
+            top: 45px;
+            left: 0;
+            right: 0;
+            bottom: 0;
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 60px;
-            align-items: start;
+            grid-template-columns: 1fr 60px;
         }
 
-        /* 3D Hub Container */
+        /* Left: 3D Model Area */
         .model-section {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            height: 100%;
+            overflow-y: auto;
         }
 
         .pod-container {
             width: 100%;
-            height: 600px;
+            height: calc(100vh - 400px);
+            min-height: 500px;
             position: relative;
             background: #FAFAFA;
-            border: 1px solid #E8E8E8;
+            border-right: 1px solid #E0E0E0;
         }
 
         .where-am-i {
@@ -136,7 +129,6 @@
             display: block;
         }
 
-        /* Loading Indicator */
         .loading-indicator {
             position: absolute;
             top: 50%;
@@ -167,24 +159,25 @@
             font-weight: 200;
         }
 
-        /* Info Section - Below Model */
+        /* Info Section */
         .info-section {
-            padding: 40px;
-            background: #FAFAFA;
-            border: 1px solid #E8E8E8;
+            padding: 60px;
+            background: #FFFFFF;
+            border-right: 1px solid #E0E0E0;
+            border-top: 1px solid #E0E0E0;
         }
 
         .info-section h1 {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: 200;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
         }
 
         .info-section .title {
-            font-size: 16px;
+            font-size: 18px;
             color: #666666;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.8;
         }
 
@@ -192,31 +185,31 @@
             font-size: 14px;
             color: #666666;
             line-height: 1.8;
+            max-width: 700px;
         }
 
-        /* Right Sidebar - Tabs */
-        .sidebar {
-            position: sticky;
-            top: 100px;
-        }
-
-        .nav-tabs {
+        /* Right: Thin Navigation Tabs */
+        .nav-sidebar {
             display: flex;
             flex-direction: column;
-            gap: 0;
-            border: 1px solid #E0E0E0;
+            background: #FFFFFF;
+            border-left: 1px solid #E0E0E0;
         }
 
         .nav-tab {
-            font-size: 14px;
-            color: #666666;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-decoration: none;
-            padding: 20px 30px;
+            color: #666666;
+            font-size: 10px;
             border-bottom: 1px solid #E0E0E0;
             transition: all 0.3s ease;
             position: relative;
-            background: #FFFFFF;
-            text-align: left;
+            padding: 15px 5px;
+            text-align: center;
         }
 
         .nav-tab:last-child {
@@ -235,34 +228,28 @@
         }
 
         .nav-tab:hover {
-            color: #000000;
             background: #FAFAFA;
-            padding-left: 40px;
+            color: #000000;
         }
 
         .nav-tab:hover::before {
-            width: 4px;
+            width: 3px;
         }
 
-        .nav-tab.active {
-            color: #000000;
-            background: #F5F5F5;
-            border-left: 4px solid #FF0000;
-            padding-left: 36px;
+        .tab-number {
+            display: block;
+            font-size: 18px;
+            font-weight: 200;
+            margin-bottom: 8px;
+            opacity: 0.3;
         }
 
         .tab-label {
-            display: block;
-            font-size: 11px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-            opacity: 0.6;
-        }
-
-        .tab-title {
-            display: block;
-            font-size: 14px;
+            letter-spacing: 2px;
+            font-size: 9px;
         }
 
         /* Modal */
@@ -337,7 +324,7 @@
             position: fixed;
             bottom: 0;
             left: 0;
-            right: 0;
+            right: 60px;
             padding: 15px 40px;
             display: flex;
             justify-content: space-between;
@@ -368,40 +355,59 @@
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .center-content {
+        @media (max-width: 968px) {
+            .main-container {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                grid-template-rows: 1fr auto;
             }
 
-            .sidebar {
-                position: relative;
-                top: 0;
-            }
-
-            .nav-tabs {
+            .nav-sidebar {
                 flex-direction: row;
-                overflow-x: auto;
+                border-left: none;
+                border-top: 1px solid #E0E0E0;
             }
 
             .nav-tab {
                 border-bottom: none;
                 border-right: 1px solid #E0E0E0;
-                white-space: nowrap;
+                padding: 15px 10px;
             }
 
             .nav-tab:last-child {
                 border-right: none;
             }
-        }
 
-        @media (max-width: 640px) {
-            .container {
-                padding: 80px 20px 80px;
+            .tab-label {
+                writing-mode: horizontal-tb;
             }
 
             .pod-container {
-                height: 400px;
+                height: 50vh;
+                min-height: 400px;
+                border-right: none;
+            }
+
+            .info-section {
+                padding: 40px 30px;
+                border-right: none;
+            }
+
+            .info-section h1 {
+                font-size: 36px;
+            }
+
+            .footer {
+                right: 0;
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .pod-container {
+                height: 40vh;
+                min-height: 300px;
             }
 
             .info-section {
@@ -412,18 +418,13 @@
                 font-size: 28px;
             }
 
-            .where-am-i {
-                top: 20px;
-                left: 20px;
-                font-size: 13px;
+            .tab-number {
+                font-size: 18px;
+                margin-bottom: 5px;
             }
 
-            .nav-tab {
-                padding: 15px 20px;
-            }
-
-            .modal-content {
-                padding: 40px 30px;
+            .tab-label {
+                font-size: 9px;
             }
         }
     </style>
@@ -434,52 +435,49 @@
         <div class="news-ticker" id="newsTicker"></div>
     </div>
 
-    <div class="container">
-        <div class="center-content">
-            <!-- Left: Model Section -->
-            <div class="model-section">
-                <!-- 3D Model -->
-                <div class="pod-container" id="podContainer">
-                    <div class="where-am-i" id="whereAmI"></div>
-                    <canvas id="threejsCanvas"></canvas>
-                    <div class="loading-indicator" id="loadingIndicator">
-                        <div class="loader"></div>
-                        <p>Loading model...</p>
-                    </div>
-                </div>
-
-                <!-- Info Below Model -->
-                <div class="info-section">
-                    <h1>Ella Musaieva</h1>
-                    <p class="title">Creative Technologist</p>
-                    <p class="description">
-                        Exploring the intersection of physical space, digital capture, and immersive experience through computational design and systems thinking.
-                    </p>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left: Model & Info -->
+        <div class="model-section">
+            <!-- 3D Model -->
+            <div class="pod-container" id="podContainer">
+                <div class="where-am-i" id="whereAmI"></div>
+                <canvas id="threejsCanvas"></canvas>
+                <div class="loading-indicator" id="loadingIndicator">
+                    <div class="loader"></div>
+                    <p>Loading model...</p>
                 </div>
             </div>
 
-            <!-- Right: Navigation Tabs -->
-            <aside class="sidebar">
-                <nav class="nav-tabs">
-                    <a href="photogrammetry_blog1.html" class="nav-tab">
-                        <span class="tab-label">01</span>
-                        <span class="tab-title">Research & Projects</span>
-                    </a>
-                    <a href="archive.html" class="nav-tab">
-                        <span class="tab-label">02</span>
-                        <span class="tab-title">Archive</span>
-                    </a>
-                    <a href="mailto:ella@uttertosh.com" class="nav-tab">
-                        <span class="tab-label">03</span>
-                        <span class="tab-title">Contact</span>
-                    </a>
-                    <a href="Ella_Musaieva_resume.pdf" class="nav-tab" target="_blank">
-                        <span class="tab-label">04</span>
-                        <span class="tab-title">CV</span>
-                    </a>
-                </nav>
-            </aside>
+            <!-- Info -->
+            <div class="info-section">
+                <h1>Ella Musaieva</h1>
+                <p class="title">Creative Technologist</p>
+                <p class="description">
+                    Exploring the intersection of physical space, digital capture, and immersive experience through computational design and systems thinking.
+                </p>
+            </div>
         </div>
+
+        <!-- Right: Thin Navigation Tabs -->
+        <nav class="nav-sidebar">
+            <a href="photogrammetry_blog1.html" class="nav-tab">
+                <span class="tab-number">01</span>
+                <span class="tab-label">Research</span>
+            </a>
+            <a href="archive.html" class="nav-tab">
+                <span class="tab-number">02</span>
+                <span class="tab-label">Archive</span>
+            </a>
+            <a href="mailto:ella@uttertosh.com" class="nav-tab">
+                <span class="tab-number">03</span>
+                <span class="tab-label">Contact</span>
+            </a>
+            <a href="Ella_Musaieva_resume.pdf" class="nav-tab" target="_blank">
+                <span class="tab-number">04</span>
+                <span class="tab-label">CV</span>
+            </a>
+        </nav>
     </div>
 
     <!-- Footer -->
@@ -573,7 +571,6 @@
         const whereAmI = document.getElementById('whereAmI');
         const modalClose = document.getElementById('modalClose');
 
-        // Typing effect
         const whereAmIText = '–Where am I?_';
         let charIndex = 0;
         
@@ -601,7 +598,6 @@
         let model = null;
         let clock = new THREE.Clock();
         
-        // Initialize Three.js
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xFAFAFA);
         
@@ -620,7 +616,6 @@
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.0;
         
-        // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
         
@@ -632,23 +627,16 @@
         fillLight.position.set(-3, 0, -2);
         scene.add(fillLight);
         
-        console.log('Three.js initialized');
-        
-        // Load Model
         const loader = new GLTFLoader();
-        console.log('Attempting to load: model_root.glb');
         
         loader.load(
-            './model_root.glb',
+            'model_root.glb',
             (gltf) => {
-                console.log('✓ Model loaded successfully');
                 const root = gltf.scene;
                 scene.add(root);
                 
-                // Apply glass material
                 const glassMesh = root.getObjectByName("glass");
                 if (glassMesh && glassMesh.isMesh) {
-                    console.log('✓ Found glass mesh');
                     const mats = Array.isArray(glassMesh.material) ? glassMesh.material : [glassMesh.material];
                     mats.forEach((m) => {
                         if (!m) return;
@@ -662,10 +650,8 @@
                     });
                 }
                 
-                // Pod mesh
                 const podMesh = root.getObjectByName("pod");
                 if (podMesh && podMesh.isMesh) {
-                    console.log('✓ Found pod mesh');
                     const mats = Array.isArray(podMesh.material) ? podMesh.material : [podMesh.material];
                     mats.forEach((m) => {
                         if (!m) return;
@@ -678,7 +664,6 @@
                 const modelRoot = root.getObjectByName("model_root");
                 model = modelRoot || root;
                 
-                // Center and scale
                 const box = new THREE.Box3().setFromObject(root);
                 const center = box.getCenter(new THREE.Vector3());
                 root.position.sub(center);
@@ -688,26 +673,18 @@
                 const scale = 2.5 / maxDim;
                 root.scale.multiplyScalar(scale);
                 
-                console.log('✓ Model centered and scaled');
                 document.getElementById('loadingIndicator').style.display = 'none';
             },
-            (progress) => {
-                if (progress.total > 0) {
-                    const percent = (progress.loaded / progress.total * 100).toFixed(0);
-                    console.log(`Loading: ${percent}%`);
-                }
-            },
+            undefined,
             (error) => {
-                console.error('✗ Model loading error:', error);
-                console.error('Make sure model_root.glb is in the same directory as index.html');
+                console.error('Model loading error:', error);
                 const loadingIndicator = document.getElementById('loadingIndicator');
                 if (loadingIndicator) {
-                    loadingIndicator.innerHTML = '<p style="color: #999; font-size: 11px;">Model file not found<br>Check console (F12)</p>';
+                    loadingIndicator.innerHTML = '<p style="color: #999;">Model unavailable</p>';
                 }
             }
         );
         
-        // Mouse interaction
         let mouseX = 0, mouseY = 0;
         let targetRotationX = 0, targetRotationY = 0;
         let isMouseOver = false;
@@ -727,7 +704,6 @@
             isMouseOver = false;
         });
         
-        // Animation
         function animate() {
             requestAnimationFrame(animate);
             const delta = clock.getDelta();
@@ -746,7 +722,6 @@
         
         animate();
         
-        // Resize
         window.addEventListener('resize', () => {
             const width = podContainer.clientWidth;
             const height = podContainer.clientHeight;

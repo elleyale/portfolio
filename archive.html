@@ -21,166 +21,367 @@
             font-weight: 200;
             font-size: 14px;
             line-height: 1.7;
-            padding: 80px 40px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* Header */
         .header {
-            border-bottom: 3px solid #FF0000;
-            padding-bottom: 40px;
-            margin-bottom: 60px;
-        }
-
-        .header h1 {
-            font-size: 48px;
-            font-weight: 200;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .header p {
-            font-size: 16px;
-            color: #666666;
-            max-width: 700px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            z-index: 1000;
         }
 
         .back-link {
-            display: inline-block;
-            margin-bottom: 40px;
             color: #666666;
             text-decoration: none;
             font-size: 14px;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .back-link:hover {
             color: #000000;
         }
 
-        .archive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .archive-item {
-            border: 1px solid #E0E0E0;
-            padding: 30px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .archive-item:hover {
-            border-color: #FF0000;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .archive-item .date {
-            font-size: 11px;
-            color: #999999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .archive-item h3 {
-            font-size: 18px;
-            font-weight: 200;
-            margin-bottom: 10px;
-        }
-
-        .archive-item p {
-            font-size: 13px;
-            color: #666666;
-            line-height: 1.6;
-        }
-
-        .archive-item .category {
-            font-size: 11px;
-            color: #FF0000;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .coming-soon {
-            text-align: center;
-            padding: 100px 40px;
-            color: #999999;
-        }
-
-        .coming-soon h2 {
+        .header h1 {
             font-size: 24px;
             font-weight: 200;
-            margin-bottom: 20px;
+            letter-spacing: -0.5px;
         }
 
-        .coming-soon p {
-            font-size: 14px;
-            max-width: 500px;
+        /* Main Content */
+        .container {
+            padding: 120px 60px 60px;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+
+        .intro {
+            max-width: 800px;
+            margin-bottom: 80px;
+        }
+
+        .intro p {
+            font-size: 16px;
+            color: #666666;
             line-height: 1.8;
         }
 
+        /* Media Library Grid */
+        .media-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .category-card {
+            border: 1px solid #E0E0E0;
+            padding: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            border-color: #FF0000;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-thumbnail {
+            width: 100%;
+            height: 250px;
+            background: #F8F8F8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border: 2px solid #E0E0E0;
+            border-radius: 50%;
+        }
+
+        .category-icon {
+            font-size: 32px;
+            color: #CCCCCC;
+            z-index: 1;
+        }
+
+        .category-info {
+            padding: 30px;
+        }
+
+        .category-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999999;
+            margin-bottom: 10px;
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: 200;
+            margin-bottom: 12px;
+        }
+
+        .category-description {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .category-count {
+            font-size: 11px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FF0000;
+            border: 1px solid #FF0000;
+            padding: 4px 8px;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 3px solid #FF0000;
+            padding: 40px 60px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 12px;
+            color: #666666;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: #666666;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #000000;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .media-categories {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding: 60px 20px;
+            .header {
+                padding: 0 30px;
+                height: 70px;
             }
 
             .header h1 {
-                font-size: 36px;
+                font-size: 18px;
             }
 
-            .archive-grid {
+            .container {
+                padding: 100px 30px 40px;
+            }
+
+            .media-categories {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+
+            .footer {
+                padding: 30px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="back-link">
+            ← Back
+        </a>
+        <h1>Archive</h1>
+        <div style="width: 80px;"></div> <!-- Spacer for center alignment -->
+    </header>
+
+    <!-- Main Content -->
     <div class="container">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        
-        <div class="header">
-            <h1>Archive</h1>
-            <p>A collection of past projects, experiments, and explorations in immersive media, 3D workflows, and creative technology.</p>
+        <div class="intro">
+            <p>A curated collection of work spanning immersive media, 3D workflows, creative technology, and experimental projects. Each category represents a different facet of my practice at the intersection of art, technology, and spatial computing.</p>
         </div>
 
-        <!-- Coming Soon Section -->
-        <div class="coming-soon">
-            <h2>Archive Coming Soon</h2>
-            <p>This section is currently being curated. Check back soon for a comprehensive archive of projects, research, and experiments.</p>
-        </div>
+        <!-- Media Library Categories -->
+        <div class="media-categories">
+            <!-- Showreels -->
+            <a href="#" class="category-card">
+                <div class="category-thumbnail">
+                    <div class="category-icon">▶</div>
+                </div>
+                <div class="category-info">
+                    <div class="category-label">Video</div>
+                    <h2 class="category-title">Showreels</h2>
+                    <p class="category-description">
+                        Compilation reels showcasing 3D scanning systems, immersive installations, and technical demonstrations across client projects and personal work.
+                    </p>
+                    <div class="category-count">Coming Soon</div>
+                    <div class="coming-soon-badge">In Progress</div>
+                </div>
+            </a>
 
-        <!-- Archive Grid (hidden for now, uncomment when ready to add content) -->
-        <!--
-        <div class="archive-grid">
-            <a href="#" class="archive-item">
-                <div class="date">2024</div>
-                <h3>Project Title</h3>
-                <p>Brief description of the project and what it explored.</p>
-                <div class="category">3D Scanning</div>
+            <!-- Artwork -->
+            <a href="#" class="category-card">
+                <div class="category-thumbnail">
+                    <div class="category-icon">◆</div>
+                </div>
+                <div class="category-info">
+                    <div class="category-label">Visual</div>
+                    <h2 class="category-title">Artwork</h2>
+                    <p class="category-description">
+                        Digital and physical artworks exploring computational aesthetics, generative design, and the materiality of data through 3D rendering and fabrication.
+                    </p>
+                    <div class="category-count">Coming Soon</div>
+                    <div class="coming-soon-badge">In Progress</div>
+                </div>
             </a>
-            
-            <a href="#" class="archive-item">
-                <div class="date">2023</div>
-                <h3>Another Project</h3>
-                <p>Brief description of the project and what it explored.</p>
-                <div class="category">Immersive Media</div>
+
+            <!-- Experiments -->
+            <a href="#" class="category-card">
+                <div class="category-thumbnail">
+                    <div class="category-icon">◇</div>
+                </div>
+                <div class="category-info">
+                    <div class="category-label">Research</div>
+                    <h2 class="category-title">Experiments</h2>
+                    <p class="category-description">
+                        Technical prototypes, shader studies, algorithm explorations, and early-stage research into real-time graphics, photogrammetry, and spatial capture.
+                    </p>
+                    <div class="category-count">Coming Soon</div>
+                    <div class="coming-soon-badge">In Progress</div>
+                </div>
             </a>
-            
-            Add more items as needed
+
+            <!-- Documentation -->
+            <a href="#" class="category-card">
+                <div class="category-thumbnail">
+                    <div class="category-icon">▣</div>
+                </div>
+                <div class="category-info">
+                    <div class="category-label">Process</div>
+                    <h2 class="category-title">Documentation</h2>
+                    <p class="category-description">
+                        Behind-the-scenes process documentation, technical breakdowns, pipeline development, and system design notes from client and personal projects.
+                    </p>
+                    <div class="category-count">Coming Soon</div>
+                    <div class="coming-soon-badge">In Progress</div>
+                </div>
+            </a>
+
+            <!-- Talks & Presentations -->
+            <a href="#" class="category-card">
+                <div class="category-thumbnail">
+                    <div class="category-icon">▲</div>
+                </div>
+                <div class="category-info">
+                    <div class="category-label">Speaking</div>
+                    <h2 class="category-title">Talks & Presentations</h2>
+                    <p class="category-description">
+                        Conference presentations, workshop materials, and speaking engagements on immersive technologies, 3D workflows, and creative-technical collaboration.
+                    </p>
+                    <div class="category-count">Coming Soon</div>
+                    <div class="coming-soon-badge">In Progress</div>
+                </div>
+            </a>
+
+            <!-- Collaborations -->
+            <a href="#" class="category-card">
+                <div class="category-thumbnail">
+                    <div class="category-icon">○</div>
+                </div>
+                <div class="category-info">
+                    <div class="category-label">Projects</div>
+                    <h2 class="category-title">Collaborations</h2>
+                    <p class="category-description">
+                        Collaborative projects with artists, studios, and institutions exploring new forms of spatial media, interactive experience, and digital-physical hybrid works.
+                    </p>
+                    <div class="category-count">Coming Soon</div>
+                    <div class="coming-soon-badge">In Progress</div>
+                </div>
+            </a>
         </div>
-        -->
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                © 2024 Ella Musaieva
+            </div>
+            <div class="social-links">
+                <a href="https://twitter.com/uttertosh" aria-label="Twitter">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                    </svg>
+                </a>
+                <a href="http://www.linkedin.com/in/ella-musaieva" aria-label="LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
