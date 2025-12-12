@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Test</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: monospace; }
+        #container { width: 100%; height: 600px; background: #f0f0f0; position: relative; }
+        #status { padding: 20px; background: #000; color: #0f0; font-size: 12px; }
+        .log { margin: 2px 0; }
+    </style>
+</head>
+<body>
+    <div id="status">
+        <div class="log">🔍 Model Loading Test</div>
+        <div class="log">Repository: elleyale/portfolio</div>
+        <div class="log">---</div>
+    </div>
+    <div id="container"></div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        const status = document.getElementById('status');
+        function log(msg) {
+            const div = document.createElement('div');
+            div.className = 'log';
+            div.textContent = msg;
+            status.appendChild(div);
+            console.log(msg);
+        }
+
+        const container = document.getElementById('container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xf0f0f0);
+        
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(0, 1.5, 4);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        directionalLight.position.set(3, 5, 2);
+        scene.add(directionalLight);
+        
+        log('✓ Three.js scene initialized');
+        
+        const loader = new GLTFLoader();
+        
+        // Test URLs
+        const urls = [
+            {
+                name: 'GitHub Raw',
+                url: 'https://raw.githubusercontent.com/elleyale/portfolio/main/model_root.glb'
+            },
+            {
+                name: 'Local',
+                url: 'model_root.glb'
+            }
+        ];
+        
+        let currentIndex = 0;
+        
+        function tryLoad() {
+            if (currentIndex >= urls.length) {
+                log('✗ All attempts failed');
+                return;
+            }
+            
+            const {name, url} = urls[currentIndex];
+            log(`Attempting: ${name}`);
+            log(`URL: ${url}`);
+            
+            loader.load(
+                url,
+                (gltf) => {
+                    log(`✓ SUCCESS loading from ${name}`);
+                    scene.add(gltf.scene);
+                    
+                    const box = new THREE.Box3().setFromObject(gltf.scene);
+                    const center = box.getCenter(new THREE.Vector3());
+                    gltf.scene.position.sub(center);
+                    
+                    const size = box.getSize(new THREE.Vector3());
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = 2.5 / maxDim;
+                    gltf.scene.scale.multiplyScalar(scale);
+                    
+                    log('✓ Model positioned and scaled');
+                    
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        gltf.scene.rotation.y += 0.01;
+                        renderer.render(scene, camera);
+                    }
+                    animate();
+                },
+                (progress) => {
+                    if (progress.total) {
+                        const percent = Math.round(progress.loaded / progress.total * 100);
+                        log(`Loading: ${percent}%`);
+                    }
+                },
+                (error) => {
+                    log(`✗ Failed: ${error.message}`);
+                    log('---');
+                    currentIndex++;
+                    setTimeout(tryLoad, 1000);
+                }
+            );
+        }
+        
+        tryLoad();
+        
+        // Render empty scene
+        function render() {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>
+</body>
+</html>
