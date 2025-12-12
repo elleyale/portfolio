@@ -434,8 +434,7 @@
                 </p>
 
                 <nav class="nav-links">
-                    <a href="lab-notebook-portfolio.html" class="nav-link">Research & Projects</a>
-                    <a href="photogrammetry_blog1.html" class="nav-link">Photogrammetry Research</a>
+                    <a href="photogrammetry_blog1.html" class="nav-link">Research & Projects</a>
                     <a href="mailto:ella@uttertosh.com" class="nav-link">Contact</a>
                     <a href="#" class="nav-link">CV</a>
                 </nav>
@@ -479,7 +478,7 @@
         </div>
     </div>
 
-    <script type="importmap">
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="importmap">
     {
         "imports": {
             "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
@@ -768,13 +767,4 @@
             const height = podContainer.clientHeight;
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-        });
-        
-        // Start
-        initThreeJS();
-        loadModel();
-        animate();
-    </script>
-</body>
-</html>
+            renderer.setSiz
