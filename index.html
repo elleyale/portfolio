@@ -546,7 +546,7 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-left">© 2024 Ella Musaieva</div>
+        <div class="footer-left">©️ 2024 Ella Musaieva</div>
         <div class="social-links">
             <a href="https://twitter.com/uttertosh" aria-label="Twitter">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -615,13 +615,13 @@
                             source: 'TechCrunch',
                             category: categorizeNews(item.title)
                         }));
-                        console.log('✓ Fetched', currentNews.length, 'fresh tech news');
+                        // no-op: fetched news
                         updateTicker();
                     } else {
                         throw new Error('Invalid response');
                     }
                 } catch (error) {
-                    console.warn('Using fallback news:', error.message);
+                    // fallback news used
                     currentNews = fallbackNews;
                     updateTicker();
                 }
@@ -651,7 +651,7 @@
             
             fetchNews();
             setInterval(fetchNews, 600000); // 10 minutes
-            console.log('🤖 AI News Agent running - updates every 10 minutes');
+            // news agent running
         })();
     </script>
 
@@ -694,13 +694,16 @@
     <script type="module">
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
         const canvas = document.getElementById('threejsCanvas');
         const podContainer = document.getElementById('podContainer');
         
-        let scene, camera, renderer;
+        let scene, camera, renderer, controls;
         let model = null;
         let clock = new THREE.Clock();
+        let userOrbiting = false;
+        let shadowPlane = null;
         
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xFAFAFA);
@@ -708,30 +711,45 @@
         camera = new THREE.PerspectiveCamera(
             45,
             podContainer.clientWidth / podContainer.clientHeight,
-            0.1,
-            100
+            0.01,
+            5000
         );
         camera.position.set(0, 1.5, 4);
         
-        renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, logarithmicDepthBuffer: true });
         renderer.setSize(podContainer.clientWidth, podContainer.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.0;
+        renderer.toneMappingExposure = 1.1;
+        renderer.shadowMap.enabled = false; // disable drop shadows for a clean look
+
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.rotateSpeed = 0.5;
+        controls.zoomSpeed = 0.8;
+        controls.minDistance = 0.8;
+        controls.maxDistance = 12;
+        controls.addEventListener('start', () => { userOrbiting = true; });
+        controls.addEventListener('end', () => { userOrbiting = false; });
         
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-        directionalLight.position.set(3, 5, 2);
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xbfbfbf, 0.5);
+        scene.add(hemiLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.6);
+        directionalLight.position.set(0, 12, 18); // higher, frontal
+        directionalLight.target.position.set(0, 1.5, 0);
+        directionalLight.castShadow = false;
         scene.add(directionalLight);
+        scene.add(directionalLight.target);
         
-        const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
-        fillLight.position.set(-3, 0, -2);
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.2);
+        fillLight.position.set(-6, 4, -10);
         scene.add(fillLight);
-        
-        console.log('Three.js initialized');
         
         const loader = new GLTFLoader();
         
@@ -749,29 +767,16 @@
             ? `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${GITHUB_CONFIG.modelPath}`
             : null;
         
-        console.log('Model loading configuration:');
-        if (githubUrl) {
-            console.log('Primary: GitHub →', githubUrl);
-            console.log('Fallback: Local → model_root.glb');
-        } else {
-            console.log('Loading from: Local → model_root.glb');
-        }
-        
         function loadModelWithFallback() {
             const primaryUrl = githubUrl || 'model_root.glb';
             const fallbackUrl = githubUrl ? 'model_root.glb' : null;
-            
-            console.log('Attempting to load:', primaryUrl);
             
             loader.load(
                 primaryUrl,
                 onModelLoaded,
                 onProgress,
                 (error) => {
-                    console.warn('Primary load failed:', error.message);
-                    
                     if (fallbackUrl) {
-                        console.log('Trying fallback:', fallbackUrl);
                         loader.load(
                             fallbackUrl,
                             onModelLoaded,
@@ -785,14 +790,27 @@
             );
         }
         
+        const MODEL_SCALE_MULTIPLIER = 2.0; // Lowered to keep model fully in view
+
+        function frameCameraToObject(box) {
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fitHeightDistance = maxDim / (2 * Math.tan((Math.PI * camera.fov) / 360));
+            const distance = fitHeightDistance * 1;
+            camera.position.copy(center).add(new THREE.Vector3(0, size.y * 0.4, distance));
+            camera.lookAt(center);
+            controls.target.copy(center);
+            controls.update();
+            camera.updateProjectionMatrix();
+        }
+
         function onModelLoaded(gltf) {
-            console.log('✓ Model loaded successfully');
             const root = gltf.scene;
             scene.add(root);
-            
+
             const glassMesh = root.getObjectByName("glass");
             if (glassMesh && glassMesh.isMesh) {
-                console.log('✓ Configuring glass material');
                 const mats = Array.isArray(glassMesh.material) ? glassMesh.material : [glassMesh.material];
                 mats.forEach((m) => {
                     if (!m) return;
@@ -808,7 +826,6 @@
             
             const podMesh = root.getObjectByName("pod");
             if (podMesh && podMesh.isMesh) {
-                console.log('✓ Configuring pod material');
                 const mats = Array.isArray(podMesh.material) ? podMesh.material : [podMesh.material];
                 mats.forEach((m) => {
                     if (!m) return;
@@ -817,32 +834,76 @@
                     m.needsUpdate = true;
                 });
             }
-            
+
             const modelRoot = root.getObjectByName("model_root");
             model = modelRoot || root;
             
             const box = new THREE.Box3().setFromObject(root);
-            const center = box.getCenter(new THREE.Vector3());
-            root.position.sub(center);
-            
-            const size = box.getSize(new THREE.Vector3());
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = 2.5 / maxDim;
+            const centerBefore = box.getCenter(new THREE.Vector3());
+            // Recentering pass 1 (pre-scale)
+            root.position.sub(centerBefore);
+            box.setFromObject(root);
+
+            let size = box.getSize(new THREE.Vector3());
+            let maxDim = Math.max(size.x, size.y, size.z);
+            if (maxDim < 1e-6) {
+                const placeholder = new THREE.Mesh(
+                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.MeshNormalMaterial({ wireframe: false })
+                );
+                placeholder.name = 'debug_placeholder';
+                root.add(placeholder);
+                box.setFromObject(root);
+                size = box.getSize(new THREE.Vector3());
+                maxDim = Math.max(size.x, size.y, size.z);
+            }
+
+            const scale = (2.5 / maxDim) * MODEL_SCALE_MULTIPLIER;
             root.scale.multiplyScalar(scale);
-            
-            console.log('✓ Model positioned and scaled');
+
+            box.setFromObject(root);
+
+            // Second recenter pass after scale to eliminate offsets
+            const centerAfterScale = box.getCenter(new THREE.Vector3());
+            root.position.sub(centerAfterScale);
+            box.setFromObject(root);
+
+            // Set initial orientation (~90° left)
+            model.rotation.y = -Math.PI / 2;
+
+            // Recenter after rotation to keep it visually centered
+            const rotatedBox = new THREE.Box3().setFromObject(model);
+            const rotatedCenter = rotatedBox.getCenter(new THREE.Vector3());
+            model.position.sub(rotatedCenter);
+            rotatedBox.setFromObject(model);
+            const rotatedCenterAfter = rotatedBox.getCenter(new THREE.Vector3());
+
+            // Frame camera to the rotated, recentered model
+            frameCameraToObject(rotatedBox);
+
+            // No shadows; keep materials bright
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = false;
+                    child.receiveShadow = false;
+                }
+            });
+
+            // Update controls bounds to model scale
+            const distanceLimit = Math.max(50, maxDim * 40);
+            controls.minDistance = Math.max(0.5, maxDim * 0.05);
+            controls.maxDistance = distanceLimit;
+
             document.getElementById('loadingIndicator').style.display = 'none';
         }
         
         function onProgress(progress) {
             if (progress.total) {
                 const percent = Math.round(progress.loaded / progress.total * 100);
-                console.log('Loading:', percent + '%');
             }
         }
         
         function onError(error) {
-            console.error('✗ Model loading failed:', error);
             const loadingIndicator = document.getElementById('loadingIndicator');
             if (loadingIndicator) {
                 loadingIndicator.innerHTML = `
@@ -858,37 +919,15 @@
         // Start loading
         loadModelWithFallback();
         
-        let mouseX = 0, mouseY = 0;
-        let targetRotationX = 0, targetRotationY = 0;
-        let isMouseOver = false;
-        
-        podContainer.addEventListener('mousemove', (e) => {
-            const rect = podContainer.getBoundingClientRect();
-            mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-            mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-            targetRotationY = mouseX * 0.5;
-            targetRotationX = mouseY * 0.3;
-            isMouseOver = true;
-        });
-        
-        podContainer.addEventListener('mouseleave', () => {
-            targetRotationX = 0;
-            targetRotationY = 0;
-            isMouseOver = false;
-        });
-        
         function animate() {
             requestAnimationFrame(animate);
             const delta = clock.getDelta();
             
-            if (model) {
-                if (!isMouseOver) {
-                    model.rotation.y += 0.3 * delta;
-                } else {
-                    model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
-                    model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
-                }
+            if (model && !userOrbiting) {
+                // Rotation disabled
             }
+
+            controls.update();
             
             renderer.render(scene, camera);
         }
