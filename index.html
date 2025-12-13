@@ -166,6 +166,7 @@
             gap: 40px;
         }
 
+        /* Avatar Area - After Text */
         .avatar-area {
             width: 300px;
             height: 300px;
@@ -175,7 +176,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            margin: 0;
+            margin: 0 auto;
         }
 
         .avatar-placeholder {
@@ -202,8 +203,9 @@
             border-radius: 50%;
         }
 
+        /* Text Content */
         .text-content {
-            text-align: left;
+            text-align: center;
         }
 
         .info-section h1 {
@@ -226,180 +228,6 @@
             line-height: 1.8;
             max-width: 700px;
         }
-
-        /* Featured Projects Section */
-        .featured-section {
-            padding: 80px 60px;
-            background: #FFFFFF;
-            border-right: 1px solid #E0E0E0;
-            border-top: 1px solid #E0E0E0;
-        }
-
-        .featured-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .featured-header h2 {
-            font-size: 16px;
-            font-weight: 200;
-            color: #000000;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .featured-header p {
-            font-size: 12px;
-            color: #666666;
-            font-weight: 200;
-        }
-
-        .featured-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .featured-item {
-            border: 1px solid #E0E0E0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .featured-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            border-color: #FF0000;
-        }
-
-        /* Artwork Carousel in Featured */
-        .artwork-carousel {
-            position: relative;
-            width: 100%;
-            height: 600px;
-            overflow: hidden;
-            background: #000000;
-        }
-
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-slide img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #E0E0E0;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 24px;
-            color: #000;
-            z-index: 10;
-        }
-
-        .carousel-button:hover {
-            background: #FFFFFF;
-            border-color: #FF0000;
-        }
-
-        .carousel-button.prev {
-            left: 30px;
-        }
-
-        .carousel-button.next {
-            right: 30px;
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .carousel-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .carousel-indicator.active {
-            background: #FFFFFF;
-            width: 30px;
-            border-radius: 5px;
-        }
-
-        .featured-info {
-            padding: 40px;
-        }
-
-        .featured-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #FF0000;
-            margin-bottom: 15px;
-            font-weight: 200;
-        }
-
-        .featured-title {
-            font-size: 24px;
-            font-weight: 200;
-            margin-bottom: 15px;
-            color: #000000;
-        }
-
-        .featured-description {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.8;
-            font-weight: 200;
-            margin-bottom: 20px;
-        }
-
-        .featured-video {
-            width: 100%;
-            height: 600px;
-            background: #000;
-        }
-
-        .featured-video video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
 
         .nav-sidebar {
             display: flex;
@@ -616,37 +444,6 @@
                 font-size: 20px;
             }
 
-            .featured-section {
-                padding: 60px 30px;
-                border-right: none;
-            }
-
-            .artwork-carousel {
-                height: 400px;
-            }
-
-            .carousel-button {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-
-            .carousel-button.prev {
-                left: 15px;
-            }
-
-            .carousel-button.next {
-                right: 15px;
-            }
-
-            .featured-video {
-                height: 400px;
-            }
-
-            .featured-info {
-                padding: 30px;
-            }
-
             .footer {
                 right: 0;
                 flex-direction: column;
@@ -688,40 +485,6 @@
             .tab-label {
                 font-size: 9px;
             }
-
-            .featured-section {
-                padding: 40px 20px;
-            }
-
-            .artwork-carousel {
-                height: 300px;
-            }
-
-            .carousel-button {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
-            }
-
-            .carousel-button.prev {
-                left: 10px;
-            }
-
-            .carousel-button.next {
-                right: 10px;
-            }
-
-            .featured-video {
-                height: 300px;
-            }
-
-            .featured-info {
-                padding: 25px;
-            }
-
-            .featured-title {
-                font-size: 20px;
-            }
         }
     </style>
 </head>
@@ -760,69 +523,6 @@
                     <div class="avatar-placeholder">Personal Avatar</div>
                 </div>
             </div>
-
-            <!-- Featured Projects -->
-            <div class="featured-section">
-                <div class="featured-header">
-                    <h2>Featured Work</h2>
-                    <p>Selected projects showcasing creative technology and immersive media</p>
-                </div>
-
-                <div class="featured-grid">
-                    <!-- Artwork Carousel -->
-                    <div class="featured-item">
-                        <div class="artwork-carousel" id="artworkCarousel">
-                            <div class="carousel-track" id="carouselTrack">
-                                <div class="carousel-slide">
-                                    <img src="artwork_01_sardines.png" alt="Sardines in Can">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="artwork_02_legs.png" alt="Legs by the Ocean">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="artwork_03_spoon.png" alt="Hand with Spoon">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="artwork_04_bottle.png" alt="Pouring Bottle">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="artwork_05_violin.png" alt="Blue Violin">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="artwork_06_fish.png" alt="Fish Detail">
-                                </div>
-                            </div>
-                            <button class="carousel-button prev" onclick="moveCarousel(-1)">‹</button>
-                            <button class="carousel-button next" onclick="moveCarousel(1)">›</button>
-                            <div class="carousel-indicators" id="carouselIndicators"></div>
-                        </div>
-                        <div class="featured-info">
-                            <div class="featured-label">Visual Art</div>
-                            <h3 class="featured-title">Artwork Collection</h3>
-                            <p class="featured-description">
-                                Series of paintings exploring anatomical observation, material studies, and everyday objects through hyperrealistic rendering and color theory.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Collaboration Video -->
-                    <div class="featured-item">
-                        <div class="featured-video">
-                            <video controls loop>
-                                <source src="collaboration_video.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <div class="featured-info">
-                            <div class="featured-label">Collaboration</div>
-                            <h3 class="featured-title">Creative Collaboration</h3>
-                            <p class="featured-description">
-                                Collaborative project showcasing interdisciplinary creative work combining technology, performance, and visual media.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <nav class="nav-sidebar">
@@ -834,7 +534,7 @@
                 <span class="tab-number">02</span>
                 <span class="tab-label">Works & Archive</span>
             </a>
-            <a href="/cdn-cgi/l/email-protection#a2c7cecec3e2d7d6d6c7d0d6cdd1ca8cc1cdcf" class="nav-tab">
+            <a href="mailto:ella@uttertosh.com" class="nav-tab">
                 <span class="tab-number">03</span>
                 <span class="tab-label">Contact</span>
             </a>
@@ -846,7 +546,7 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-left">© 2024 Ella Musaieva</div>
+        <div class="footer-left">©️ 2024 Ella Musaieva</div>
         <div class="social-links">
             <a href="https://twitter.com/uttertosh" aria-label="Twitter">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -874,6 +574,9 @@
         </div>
     </div>
 
+    <!-- News Ticker Script (Regular JS) -->
+    <!-- News Ticker Script (Regular JS) -->
+    <script>
         (function() {
             const ticker = document.getElementById('newsTicker');
             let currentNews = [];
@@ -912,11 +615,13 @@
                             source: 'TechCrunch',
                             category: categorizeNews(item.title)
                         }));
+                        // no-op: fetched news
                         updateTicker();
                     } else {
                         throw new Error('Invalid response');
                     }
                 } catch (error) {
+                    // fallback news used
                     currentNews = fallbackNews;
                     updateTicker();
                 }
@@ -945,11 +650,13 @@
             }
             
             fetchNews();
-            setInterval(fetchNews, 600000);
+            setInterval(fetchNews, 600000); // 10 minutes
+            // news agent running
         })();
     </script>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <!-- Modal Script -->
+    <script>
         const modal = document.getElementById('modal');
         const whereAmI = document.getElementById('whereAmI');
         const modalClose = document.getElementById('modalClose');
@@ -974,6 +681,7 @@
         });
     </script>
 
+    <!-- Three.js Module Script -->
     <script type="importmap">
     {
         "imports": {
@@ -995,6 +703,7 @@
         let model = null;
         let clock = new THREE.Clock();
         let userOrbiting = false;
+        let shadowPlane = null;
         
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xFAFAFA);
@@ -1013,7 +722,7 @@
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.1;
-        renderer.shadowMap.enabled = false;
+        renderer.shadowMap.enabled = false; // disable drop shadows for a clean look
 
         controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
@@ -1032,7 +741,7 @@
         scene.add(hemiLight);
         
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1.6);
-        directionalLight.position.set(0, 12, 18);
+        directionalLight.position.set(0, 12, 18); // higher, frontal
         directionalLight.target.position.set(0, 1.5, 0);
         directionalLight.castShadow = false;
         scene.add(directionalLight);
@@ -1044,6 +753,7 @@
         
         const loader = new GLTFLoader();
         
+        // Configuration: Your GitHub repository details
         const GITHUB_CONFIG = {
             enabled: true,
             username: 'elleyale',
@@ -1052,21 +762,21 @@
             modelPath: 'model_root.glb'
         };
         
+        // Build GitHub raw URL
         const githubUrl = GITHUB_CONFIG.enabled 
             ? `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${GITHUB_CONFIG.modelPath}`
             : null;
-       ? 'model_root.glb' : null;
-            
-            console.log('Loading model from:', primaryUrl);
+        
+        function loadModelWithFallback() {
+            const primaryUrl = githubUrl || 'model_root.glb';
+            const fallbackUrl = githubUrl ? 'model_root.glb' : null;
             
             loader.load(
                 primaryUrl,
                 onModelLoaded,
                 onProgress,
                 (error) => {
-                    console.warn('Primary load failed:', error.message);
                     if (fallbackUrl) {
-                        console.log('Trying fallback:', fallbackUrl);
                         loader.load(
                             fallbackUrl,
                             onModelLoaded,
@@ -1080,7 +790,7 @@
             );
         }
         
-        const MODEL_SCALE_MULTIPLIER = 2.0;
+        const MODEL_SCALE_MULTIPLIER = 2.0; // Lowered to keep model fully in view
 
         function frameCameraToObject(box) {
             const size = box.getSize(new THREE.Vector3());
@@ -1096,13 +806,11 @@
         }
 
         function onModelLoaded(gltf) {
-            console.log('✓ Model loaded successfully');
             const root = gltf.scene;
             scene.add(root);
 
             const glassMesh = root.getObjectByName("glass");
             if (glassMesh && glassMesh.isMesh) {
-                console.log('✓ Configuring glass material');
                 const mats = Array.isArray(glassMesh.material) ? glassMesh.material : [glassMesh.material];
                 mats.forEach((m) => {
                     if (!m) return;
@@ -1118,7 +826,6 @@
             
             const podMesh = root.getObjectByName("pod");
             if (podMesh && podMesh.isMesh) {
-                console.log('✓ Configuring pod material');
                 const mats = Array.isArray(podMesh.material) ? podMesh.material : [podMesh.material];
                 mats.forEach((m) => {
                     if (!m) return;
@@ -1133,30 +840,48 @@
             
             const box = new THREE.Box3().setFromObject(root);
             const centerBefore = box.getCenter(new THREE.Vector3());
+            // Recentering pass 1 (pre-scale)
             root.position.sub(centerBefore);
             box.setFromObject(root);
 
             let size = box.getSize(new THREE.Vector3());
             let maxDim = Math.max(size.x, size.y, size.z);
+            if (maxDim < 1e-6) {
+                const placeholder = new THREE.Mesh(
+                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.MeshNormalMaterial({ wireframe: false })
+                );
+                placeholder.name = 'debug_placeholder';
+                root.add(placeholder);
+                box.setFromObject(root);
+                size = box.getSize(new THREE.Vector3());
+                maxDim = Math.max(size.x, size.y, size.z);
+            }
 
             const scale = (2.5 / maxDim) * MODEL_SCALE_MULTIPLIER;
             root.scale.multiplyScalar(scale);
 
             box.setFromObject(root);
 
+            // Second recenter pass after scale to eliminate offsets
             const centerAfterScale = box.getCenter(new THREE.Vector3());
             root.position.sub(centerAfterScale);
             box.setFromObject(root);
 
+            // Set initial orientation (~90° left)
             model.rotation.y = -Math.PI / 2;
 
+            // Recenter after rotation to keep it visually centered
             const rotatedBox = new THREE.Box3().setFromObject(model);
             const rotatedCenter = rotatedBox.getCenter(new THREE.Vector3());
             model.position.sub(rotatedCenter);
             rotatedBox.setFromObject(model);
+            const rotatedCenterAfter = rotatedBox.getCenter(new THREE.Vector3());
 
+            // Frame camera to the rotated, recentered model
             frameCameraToObject(rotatedBox);
 
+            // No shadows; keep materials bright
             model.traverse((child) => {
                 if (child.isMesh) {
                     child.castShadow = false;
@@ -1164,23 +889,21 @@
                 }
             });
 
+            // Update controls bounds to model scale
             const distanceLimit = Math.max(50, maxDim * 40);
             controls.minDistance = Math.max(0.5, maxDim * 0.05);
             controls.maxDistance = distanceLimit;
 
-            console.log('✓ Model positioned and scaled');
             document.getElementById('loadingIndicator').style.display = 'none';
         }
         
         function onProgress(progress) {
             if (progress.total) {
                 const percent = Math.round(progress.loaded / progress.total * 100);
-                console.log('Loading:', percent + '%');
             }
         }
         
         function onError(error) {
-            console.error('✗ Model loading failed:', error);
             const loadingIndicator = document.getElementById('loadingIndicator');
             if (loadingIndicator) {
                 loadingIndicator.innerHTML = `
@@ -1193,12 +916,19 @@
             }
         }
         
+        // Start loading
         loadModelWithFallback();
         
         function animate() {
             requestAnimationFrame(animate);
+            const delta = clock.getDelta();
             
+            if (model && !userOrbiting) {
+                // Rotation disabled
+            }
+
             controls.update();
+            
             renderer.render(scene, camera);
         }
         
@@ -1207,53 +937,10 @@
         window.addEventListener('resize', () => {
             const width = podContainer.clientWidth;
             const height = podContainer.clientHeight;
-            camera.aspect =camera.aspect = width / height;
+            camera.aspect = width / height;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
         });
-    </script>
-
-    <!-- Artwork Carousel Script -->
-    <script>
-        let currentSlide = 0;
-        const track = document.getElementById('carouselTrack');
-        const slides = document.querySelectorAll('.carousel-slide');
-        const totalSlides = slides.length;
-        const indicatorsContainer = document.getElementById('carouselIndicators');
-
-        // Create indicators
-        for (let i = 0; i < totalSlides; i++) {
-            const indicator = document.createElement('div');
-            indicator.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
-            indicator.onclick = () => goToSlide(i);
-            indicatorsContainer.appendChild(indicator);
-        }
-
-        function moveCarousel(direction) {
-            currentSlide += direction;
-            if (currentSlide < 0) currentSlide = totalSlides - 1;
-            if (currentSlide >= totalSlides) currentSlide = 0;
-            updateCarousel();
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-
-        function updateCarousel() {
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            const indicators = document.querySelectorAll('.carousel-indicator');
-            indicators.forEach((ind, idx) => {
-                ind.classList.toggle('active', idx === currentSlide);
-            });
-        }
-
-        // Auto-advance every 5 seconds
-        setInterval(() => {
-            moveCarousel(1);
-        }, 5000);
     </script>
 </body>
 </html>
