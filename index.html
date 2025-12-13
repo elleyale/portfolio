@@ -227,6 +227,180 @@
             max-width: 700px;
         }
 
+        /* Featured Projects Section */
+        .featured-section {
+            padding: 80px 60px;
+            background: #FFFFFF;
+            border-right: 1px solid #E0E0E0;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .featured-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .featured-header h2 {
+            font-size: 16px;
+            font-weight: 200;
+            color: #000000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .featured-header p {
+            font-size: 12px;
+            color: #666666;
+            font-weight: 200;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .featured-item {
+            border: 1px solid #E0E0E0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .featured-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: #FF0000;
+        }
+
+        /* Artwork Carousel in Featured */
+        .artwork-carousel {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            background: #000000;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #E0E0E0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            color: #000;
+            z-index: 10;
+        }
+
+        .carousel-button:hover {
+            background: #FFFFFF;
+            border-color: #FF0000;
+        }
+
+        .carousel-button.prev {
+            left: 30px;
+        }
+
+        .carousel-button.next {
+            right: 30px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicator.active {
+            background: #FFFFFF;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .featured-info {
+            padding: 40px;
+        }
+
+        .featured-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #FF0000;
+            margin-bottom: 15px;
+            font-weight: 200;
+        }
+
+        .featured-title {
+            font-size: 24px;
+            font-weight: 200;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        .featured-description {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.8;
+            font-weight: 200;
+            margin-bottom: 20px;
+        }
+
+        .featured-video {
+            width: 100%;
+            height: 600px;
+            background: #000;
+        }
+
+        .featured-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
         .nav-sidebar {
             display: flex;
             flex-direction: column;
@@ -442,6 +616,37 @@
                 font-size: 20px;
             }
 
+            .featured-section {
+                padding: 60px 30px;
+                border-right: none;
+            }
+
+            .artwork-carousel {
+                height: 400px;
+            }
+
+            .carousel-button {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .carousel-button.prev {
+                left: 15px;
+            }
+
+            .carousel-button.next {
+                right: 15px;
+            }
+
+            .featured-video {
+                height: 400px;
+            }
+
+            .featured-info {
+                padding: 30px;
+            }
+
             .footer {
                 right: 0;
                 flex-direction: column;
@@ -483,6 +688,40 @@
             .tab-label {
                 font-size: 9px;
             }
+
+            .featured-section {
+                padding: 40px 20px;
+            }
+
+            .artwork-carousel {
+                height: 300px;
+            }
+
+            .carousel-button {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            .carousel-button.prev {
+                left: 10px;
+            }
+
+            .carousel-button.next {
+                right: 10px;
+            }
+
+            .featured-video {
+                height: 300px;
+            }
+
+            .featured-info {
+                padding: 25px;
+            }
+
+            .featured-title {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -519,6 +758,69 @@
 
                 <div class="avatar-area">
                     <div class="avatar-placeholder">Personal Avatar</div>
+                </div>
+            </div>
+
+            <!-- Featured Projects -->
+            <div class="featured-section">
+                <div class="featured-header">
+                    <h2>Featured Work</h2>
+                    <p>Selected projects showcasing creative technology and immersive media</p>
+                </div>
+
+                <div class="featured-grid">
+                    <!-- Artwork Carousel -->
+                    <div class="featured-item">
+                        <div class="artwork-carousel" id="artworkCarousel">
+                            <div class="carousel-track" id="carouselTrack">
+                                <div class="carousel-slide">
+                                    <img src="artwork_01_sardines.png" alt="Sardines in Can">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_02_legs.png" alt="Legs by the Ocean">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_03_spoon.png" alt="Hand with Spoon">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_04_bottle.png" alt="Pouring Bottle">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_05_violin.png" alt="Blue Violin">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_06_fish.png" alt="Fish Detail">
+                                </div>
+                            </div>
+                            <button class="carousel-button prev" onclick="moveCarousel(-1)">‹</button>
+                            <button class="carousel-button next" onclick="moveCarousel(1)">›</button>
+                            <div class="carousel-indicators" id="carouselIndicators"></div>
+                        </div>
+                        <div class="featured-info">
+                            <div class="featured-label">Visual Art</div>
+                            <h3 class="featured-title">Artwork Collection</h3>
+                            <p class="featured-description">
+                                Series of paintings exploring anatomical observation, material studies, and everyday objects through hyperrealistic rendering and color theory.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Collaboration Video -->
+                    <div class="featured-item">
+                        <div class="featured-video">
+                            <video controls loop>
+                                <source src="collaboration_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="featured-info">
+                            <div class="featured-label">Collaboration</div>
+                            <h3 class="featured-title">Creative Collaboration</h3>
+                            <p class="featured-description">
+                                Collaborative project showcasing interdisciplinary creative work combining technology, performance, and visual media.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -895,17 +1197,6 @@
         
         function animate() {
             requestAnimationFrame(animate);
-            const delta = clock.getDelta();
-            const time = clock.getElapsedTime();
-            
-            // Gentle bounce and rotation when not user-orbiting
-            if (model && !userOrbiting) {
-                // Slow rotation around Y-axis
-                model.rotation.y += delta * 0.15;
-                
-                // Gentle bounce using sine wave
-                model.position.y = Math.sin(time * 0.8) * 0.05;
-            }
             
             controls.update();
             renderer.render(scene, camera);
@@ -920,6 +1211,49 @@
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
         });
+    </script>
+
+    <!-- Artwork Carousel Script -->
+    <script>
+        let currentSlide = 0;
+        const track = document.getElementById('carouselTrack');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        const indicatorsContainer = document.getElementById('carouselIndicators');
+
+        // Create indicators
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
+            indicator.onclick = () => goToSlide(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+
+        function moveCarousel(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        // Auto-advance every 5 seconds
+        setInterval(() => {
+            moveCarousel(1);
+        }, 5000);
     </script>
 </body>
 </html>
