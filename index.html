@@ -175,7 +175,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            margin: 0 auto;
+            margin: 0;
         }
 
         .avatar-placeholder {
@@ -203,7 +203,7 @@
         }
 
         .text-content {
-            text-align: center;
+            text-align: left;
         }
 
         .info-section h1 {
@@ -572,7 +572,6 @@
         </div>
     </div>
 
-    <script>
         (function() {
             const ticker = document.getElementById('newsTicker');
             let currentNews = [];
@@ -900,6 +899,16 @@
         function animate() {
             requestAnimationFrame(animate);
             const delta = clock.getDelta();
+            const time = clock.getElapsedTime();
+            
+            // Gentle bounce and rotation when not user-orbiting
+            if (model && !userOrbiting) {
+                // Slow rotation around Y-axis
+                model.rotation.y += delta * 0.15;
+                
+                // Gentle bounce using sine wave
+                model.position.y = Math.sin(time * 0.8) * 0.05;
+            }
             
             controls.update();
             renderer.render(scene, camera);
@@ -910,10 +919,4 @@
         window.addEventListener('resize', () => {
             const width = podContainer.clientWidth;
             const height = podContainer.clientHeight;
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-        });
-    </script>
-</body>
-</html>
+            camera.aspect =

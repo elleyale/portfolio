@@ -174,6 +174,91 @@
             margin-top: 10px;
         }
 
+        /* Artwork Carousel */
+        .artwork-carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            background: #000000;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #E0E0E0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            color: #000;
+            z-index: 10;
+        }
+
+        .carousel-button:hover {
+            background: #FFFFFF;
+            border-color: #FF0000;
+        }
+
+        .carousel-button.prev {
+            left: 20px;
+        }
+
+        .carousel-button.next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicator.active {
+            background: #FFFFFF;
+            width: 24px;
+            border-radius: 4px;
+        }
+
         /* Footer */
         .footer {
             border-top: 3px solid #FF0000;
@@ -507,20 +592,41 @@
             </a>
 
             <!-- Artwork -->
-            <a href="#" class="category-card">
-                <div class="category-thumbnail">
-                    <div class="category-icon">◆</div>
+            <div class="category-card">
+                <div class="artwork-carousel" id="artworkCarousel">
+                    <div class="carousel-track" id="carouselTrack">
+                        <div class="carousel-slide">
+                            <img src="artwork_01_sardines.png" alt="Sardines in Can">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="artwork_02_legs.png" alt="Legs by the Ocean">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="artwork_03_spoon.png" alt="Hand with Spoon">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="artwork_04_bottle.png" alt="Pouring Bottle">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="artwork_05_violin.png" alt="Blue Violin">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="artwork_06_fish.png" alt="Fish Detail">
+                        </div>
+                    </div>
+                    <button class="carousel-button prev" onclick="moveCarousel(-1)">‹</button>
+                    <button class="carousel-button next" onclick="moveCarousel(1)">›</button>
+                    <div class="carousel-indicators" id="carouselIndicators"></div>
                 </div>
                 <div class="category-info">
                     <div class="category-label">Visual</div>
                     <h2 class="category-title">Artwork</h2>
                     <p class="category-description">
-                        Digital and physical artworks exploring computational aesthetics, generative design, and the materiality of data through 3D rendering and fabrication.
+                        Digital and physical artworks exploring computational aesthetics, material studies, and anatomical observation through painting and rendering.
                     </p>
-                    <div class="category-count">Coming Soon</div>
-                    <div class="coming-soon-badge">In Progress</div>
+                    <div class="category-count">6 Pieces</div>
                 </div>
-            </a>
+            </div>
 
             <!-- Experiments -->
             <a href="#" class="category-card">
@@ -610,5 +716,48 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Artwork Carousel
+        let currentSlide = 0;
+        const track = document.getElementById('carouselTrack');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        const indicatorsContainer = document.getElementById('carouselIndicators');
+
+        // Create indicators
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
+            indicator.onclick = () => goToSlide(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+
+        function moveCarousel(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        // Auto-advance every 5 seconds
+        setInterval(() => {
+            moveCarousel(1);
+        }, 5000);
+    </script>
 </body>
 </html>
