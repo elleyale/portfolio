@@ -206,11 +206,101 @@
             color: #000000;
         }
 
+        /* Video Showcase Section */
+        .video-showcase {
+            margin-bottom: 80px;
+        }
+
+        .video-showcase h2 {
+            font-size: 32px;
+            font-weight: 200;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .video-card {
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: #FF0000;
+        }
+
+        .video-embed {
+            width: 100%;
+            height: 350px;
+            background: #000;
+            position: relative;
+        }
+
+        .video-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-details {
+            padding: 30px;
+        }
+
+        .video-client {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #FF0000;
+            margin-bottom: 10px;
+        }
+
+        .video-title {
+            font-size: 22px;
+            font-weight: 200;
+            margin-bottom: 15px;
+        }
+
+        .video-description {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .video-tech {
+            font-size: 11px;
+            color: #999999;
+        }
+
+        .video-tech span {
+            display: inline-block;
+            margin-right: 15px;
+            padding: 5px 0;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .media-categories {
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 30px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .video-embed {
+                height: 300px;
             }
         }
 
@@ -231,6 +321,23 @@
             .media-categories {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .video-embed {
+                height: 250px;
+            }
+
+            .video-details {
+                padding: 25px;
+            }
+
+            .video-title {
+                font-size: 20px;
             }
 
             .footer {
@@ -259,6 +366,126 @@
     <div class="container">
         <div class="intro">
             <p>A curated collection of work spanning immersive media, 3D workflows, creative technology, and experimental projects. Each category represents a different facet of my practice at the intersection of art, technology, and spatial computing.</p>
+        </div>
+
+        <!-- Video Showcase Section -->
+        <div class="video-showcase">
+            <h2>Featured Work</h2>
+            
+            <div class="video-grid">
+                <!-- Severance Season 2 -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://www.youtube.com/embed/_UXKlYvLGJY" 
+                            title="Severance Season 2 - Apple TV+"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Apple TV+</div>
+                        <h3 class="video-title">Severance Season 2</h3>
+                        <p class="video-description">
+                            Volumetric capture and 3D asset creation for immersive promotional content. Multi-camera photogrammetry system deployment for high-fidelity character scans and real-time preview workflows.
+                        </p>
+                        <div class="video-tech">
+                            <span>Photogrammetry</span>
+                            <span>Volumetric Capture</span>
+                            <span>3D Pipeline Development</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sony Music -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://www.youtube.com/embed/rwGpzW8xz-U" 
+                            title="Sony Music - 3D Artist Capture"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Sony Music</div>
+                        <h3 class="video-title">Artist 3D Capture</h3>
+                        <p class="video-description">
+                            Full-body 3D scanning for music industry applications. Real-time preview systems and optimized asset delivery for interactive media platforms, virtual concerts, and immersive experiences.
+                        </p>
+                        <div class="video-tech">
+                            <span>3D Scanning</span>
+                            <span>Real-time Systems</span>
+                            <span>Asset Optimization</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Directing Reel -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://player.vimeo.com/video/1146240080?badge=0&autopause=0&player_id=0&app_id=58479" 
+                            title="Directing Reel - Ella Musaieva"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Directing Reel</div>
+                        <h3 class="video-title">Film & Television Direction</h3>
+                        <p class="video-description">
+                            Compilation reel showcasing directing work across narrative, documentary, and commercial productions. Experience includes multi-camera live direction for broadcast television, post-production creative supervision, and on-set coordination for film and commercial projects.
+                        </p>
+                        <div class="video-tech">
+                            <span>Film Direction</span>
+                            <span>Live Multi-Camera</span>
+                            <span>Creative Supervision</span>
+                            <span>Post-Production</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jim Henson Company -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <img src="Jim_Henson_Company.jpg" alt="Jim Henson Company - Character 3D Scan" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Jim Henson Company</div>
+                        <h3 class="video-title">Character 3D Scanning</h3>
+                        <p class="video-description">
+                            High-resolution photogrammetry capture of practical puppetry characters for digital archival and production reference. Custom lighting and multi-angle scanning for detailed texture preservation, ensuring faithful reproduction of intricate puppet craftsmanship.
+                        </p>
+                        <div class="video-tech">
+                            <span>Character Scanning</span>
+                            <span>High-Resolution Capture</span>
+                            <span>Texture Mapping</span>
+                            <span>Archival Documentation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activision -->
+                <div class="video-card">
+                    <div class="video-embed">
+                        <img src="Activision.jpg" alt="Activision - 3D Game Asset Capture" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Activision</div>
+                        <h3 class="video-title">Game Asset Production</h3>
+                        <p class="video-description">
+                            3D scanning pipeline development for AAA game asset creation. Optimized workflows for real-time rendering, PBR material generation, normal map creation, and multi-level LOD systems for high-performance gaming environments.
+                        </p>
+                        <div class="video-tech">
+                            <span>Game Asset Pipeline</span>
+                            <span>Real-time Optimization</span>
+                            <span>LOD Generation</span>
+                            <span>PBR Workflows</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Media Library Categories -->
