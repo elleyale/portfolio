@@ -532,7 +532,7 @@
                 <span class="tab-number">02</span>
                 <span class="tab-label">Works & Archive</span>
             </a>
-            <a href="mailto:ella@uttertosh.com" class="nav-tab">
+            <a href="/cdn-cgi/l/email-protection#a2c7cecec3e2d7d6d6c7d0d6cdd1ca8cc1cdcf" class="nav-tab">
                 <span class="tab-number">03</span>
                 <span class="tab-label">Contact</span>
             </a>
@@ -647,7 +647,7 @@
         })();
     </script>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const modal = document.getElementById('modal');
         const whereAmI = document.getElementById('whereAmI');
         const modalClose = document.getElementById('modalClose');
@@ -753,10 +753,7 @@
         const githubUrl = GITHUB_CONFIG.enabled 
             ? `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${GITHUB_CONFIG.modelPath}`
             : null;
-        
-        function loadModelWithFallback() {
-            const primaryUrl = githubUrl || 'model_root.glb';
-            const fallbackUrl = githubUrl ? 'model_root.glb' : null;
+       ? 'model_root.glb' : null;
             
             console.log('Loading model from:', primaryUrl);
             
@@ -919,4 +916,10 @@
         window.addEventListener('resize', () => {
             const width = podContainer.clientWidth;
             const height = podContainer.clientHeight;
-            camera.aspect =
+            camera.aspect =camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+    </script>
+</body>
+</html>

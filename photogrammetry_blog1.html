@@ -20,6 +20,52 @@
             color: #000;
             background: #fff;
             font-weight: 200;
+            padding-top: 80px;
+        }
+
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-size: 14px;
+            font-weight: 200;
+            color: #000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: #FF0000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #000;
         }
         
         .hero {
@@ -545,6 +591,16 @@
     </style>
 </head>
 <body>
+    <nav class="nav-header">
+        <a href="index.html" class="nav-logo">Ella Musaieva</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="photogrammetry_blog1.html">Research</a>
+            <a href="archive.html">Works & Archive</a>
+            <a href="mailto:ella@uttertosh.com">Contact</a>
+        </div>
+    </nav>
+
     <div class="hero">
         <div class="hero-image">
             <img src="scanner.jpg" alt="Full Body 3D Scanning System - Camera Rig Setup">
