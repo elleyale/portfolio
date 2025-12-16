@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Ella Musaieva</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f5f5f5;
+            --surface: #ffffff;
+            --border: #d1d5db;
+            --text: #1f2937;
+            --text-dim: #6b7280;
+            --accent: #dc2626;
+            --accent-dim: #991b1b;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .postcard {
+            max-width: 700px;
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 50px;
+            position: relative;
+        }
+
+        /* Subtle corner marks */
+        .postcard::before,
+        .postcard::after {
+            display: none;
+        }
+
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Avatar with subtle signal line */
+        .avatar-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        #particleCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .signal-line {
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            overflow: hidden;
+        }
+
+        .signal-pulse {
+            position: absolute;
+            height: 100%;
+            width: 50px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { left: -50px; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        .status {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        /* Form */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .input,
+        .textarea {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 0;
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input:focus,
+        .textarea:focus {
+            outline: none;
+            border-bottom-color: var(--accent-dim);
+        }
+
+        .textarea {
+            resize: none;
+            min-height: 80px;
+            padding-top: 8px;
+        }
+
+        .input::placeholder,
+        .textarea::placeholder {
+            color: var(--text-dim);
+            opacity: 0.4;
+        }
+
+        .button {
+            align-self: flex-start;
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 12px 30px;
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-weight: 400;
+        }
+
+        .button:hover {
+            border-color: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        /* Footer timestamp */
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .postcard {
+                padding: 35px 25px;
+            }
+
+            .content {
+                gap: 30px;
+            }
+
+            .avatar {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="postcard">
+        <div class="header">
+            <div class="title">Contact</div>
+            <div class="subtitle" id="quoteText">Loading quote...</div>
+        </div>
+
+        <div class="content">
+            <div class="avatar-container">
+                <div class="avatar">
+                    <canvas id="particleCanvas"></canvas>
+                </div>
+                <div class="signal-line">
+                    <div class="signal-pulse"></div>
+                </div>
+                <div class="status">
+                    <div class="status-dot"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+
+            <form class="form" id="contactForm">
+                <div class="field">
+                    <label class="label" for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="input" 
+                        placeholder="Your name"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label class="label" for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="input" 
+                        placeholder="your@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label class="label" for="message">Message</label>
+                    <textarea 
+                        id="message" 
+                        class="textarea" 
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="button">Send</button>
+            </form>
+        </div>
+
+        <div class="footer">
+            <span>ella@uttertosh.com</span>
+            <span id="timestamp"></span>
+        </div>
+    </div>
+
+    <script>
+        // Technology Quote Agent
+        const quotes = [
+            "Technology is neither good nor bad; nor is it neutral.",
+            "Any sufficiently advanced technology is indistinguishable from magic.",
+            "The future is already here — it's just not evenly distributed.",
+            "We shape our tools and thereafter our tools shape us.",
+            "Technology is a useful servant but a dangerous master.",
+            "The real problem is not whether machines think but whether humans do.",
+            "Technology made large populations possible; large populations now make technology indispensable.",
+            "First we shape our structures, then they shape us.",
+            "The machine does not isolate us from the great problems of nature but plunges us more deeply into them."
+        ];
+
+        let currentQuoteIndex = 0;
+        const quoteElement = document.getElementById('quoteText');
+
+        function updateQuote() {
+            quoteElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                quoteElement.textContent = quotes[currentQuoteIndex];
+                quoteElement.style.opacity = '1';
+            }, 300);
+        }
+
+        // Initialize with first quote
+        quoteElement.textContent = quotes[0];
+        quoteElement.style.transition = 'opacity 0.3s ease';
+        
+        // Rotate quotes every 8 seconds
+        setInterval(updateQuote, 8000);
+
+        // Particle System
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Particle class
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 2 + 0.5;
+                this.alpha = Math.random() * 0.5 + 0.3;
+            }
+
+            update(mouseX, mouseY) {
+                // Drift
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Mouse attraction
+                if (mouseX !== null && mouseY !== null) {
+                    const dx = mouseX - this.x;
+                    const dy = mouseY - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 80) {
+                        const force = (80 - distance) / 80;
+                        this.vx += (dx / distance) * force * 0.1;
+                        this.vy += (dy / distance) * force * 0.1;
+                    }
+                }
+
+                // Damping
+                this.vx *= 0.98;
+                this.vy *= 0.98;
+
+                // Boundaries
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                this.x = Math.max(0, Math.min(canvas.width, this.x));
+                this.y = Math.max(0, Math.min(canvas.height, this.y));
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(220, 38, 38, ${this.alpha})`;
+                ctx.fill();
+            }
+        }
+
+        // Create particles
+        const particles = [];
+        const particleCount = 40;
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Mouse tracking
+        let mouseX = null;
+        let mouseY = null;
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouseX = null;
+            mouseY = null;
+        });
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connections between nearby particles
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 50) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[j].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(220, 38, 38, ${0.1 * (1 - distance / 50)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Update and draw particles
+            particles.forEach(particle => {
+                particle.update(mouseX, mouseY);
+                particle.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('timestamp').textContent = timestamp;
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // Form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            const subject = encodeURIComponent(`Message from ${name}`);
+            const body = encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${message}`);
+            
+            window.location.href = `mailto:ella@uttertosh.com?subject=${subject}&body=${body}`;
+            
+            // Feedback
+            const button = this.querySelector('.button');
+            button.textContent = 'Sent';
+            setTimeout(() => {
+                button.textContent = 'Send';
+                this.reset();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
