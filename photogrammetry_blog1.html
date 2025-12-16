@@ -233,17 +233,6 @@
         .slide.active {
             display: flex;
         }
-
-        /* Make the entire slide clickable when wrapped in a link */
-        .slide-link {
-            display: block;
-            color: inherit;
-            text-decoration: none;
-        }
-        .slide-link .video-placeholder,
-        .slide-link .slide-content {
-            pointer-events: none; /* allow link to capture clicks */
-        }
         
         .video-placeholder {
             width: 100%;
@@ -657,18 +646,6 @@
                     <p>Accelerated R&D cycle from concept to production-ready system</p>
                 </div>
             </div>
-            <!-- anchor targets for partnership slides (update hrefs to real pages if available) -->
-            <div style="display:none">
-                <div id="severance"></div>
-                <div id="jim-henson"></div>
-                <div id="sony-music"></div>
-                <div id="harvard-lampoon"></div>
-                <div id="activision"></div>
-                <div id="riot-games"></div>
-                <div id="apple-tv-plus"></div>
-                <div id="high-fidelity-vr"></div>
-                <div id="clo3d"></div>
-            </div>
         </div>
         
         <div class="section">
@@ -852,8 +829,10 @@
             <h3>Reconstruction Quality Assessment</h3>
             
             <div class="comparison-slider" id="comparisonSlider">
-                <div class="comparison-image before-image">RAW CAPTURE</div>
-                <div class="comparison-image after-image">PROCESSED 3D MODEL</div>
+                <!-- Before: tackle2 (geometry/raw capture) - use repo images/ folder for GitHub hosting -->
+                <img class="comparison-image before-image" src="images/tackle2.png" alt="Geometry (raw capture) - tackle2" style="object-fit:cover; width:100%; height:100%;">
+                <!-- After: tackle1 (textured geometry / processed 3D model) - use repo images/ folder for GitHub hosting -->
+                <img class="comparison-image after-image" src="images/tackle1.png" alt="Textured geometry (processed 3D model) - tackle1" style="object-fit:cover; width:100%; height:100%;">
                 <div class="slider-handle" id="sliderHandle">
                     <div class="slider-button">⟷</div>
                 </div>
@@ -865,10 +844,10 @@
             <div class="interactive-demo">
                 <h3>Scan Visualization</h3>
                 <div class="demo-controls">
-                    <button class="demo-button active" onclick="showScanStage('capture', this)">CAPTURE</button>
-                    <button class="demo-button" onclick="showScanStage('pointcloud', this)">POINT CLOUD</button>
-                    <button class="demo-button" onclick="showScanStage('mesh', this)">MESH</button>
-                    <button class="demo-button" onclick="showScanStage('textured', this)">TEXTURED</button>
+                    <button class="demo-button active" onclick="showScanStage('capture')">CAPTURE</button>
+                    <button class="demo-button" onclick="showScanStage('pointcloud')">POINT CLOUD</button>
+                    <button class="demo-button" onclick="showScanStage('mesh')">MESH</button>
+                    <button class="demo-button" onclick="showScanStage('textured')">TEXTURED</button>
                 </div>
                 <div class="scan-visualization" id="scanViz">
                     <span id="scanStageLabel">MULTI-CAMERA CAPTURE STAGE</span>
@@ -925,129 +904,111 @@
             
             <div class="partnership-slideshow">
                 <div class="slide active">
-                    <a class="slide-link" href="#severance">
-                        <div class="video-placeholder">
-                            <iframe 
-                                src="https://www.youtube.com/embed/_UXKlYvLGJY" 
-                                title="Severance Season 2 - Apple TV+"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                style="width: 100%; height: 100%; border: none;">
-                            </iframe>
-                        </div>
-                        <div class="slide-content">
-                            <h4>Severance Season 2</h4>
-                            <p>Character digitization for Apple TV+ acclaimed science fiction series production. High-fidelity 3D scanning enabled the creation of digital doubles and assets for the show's unique visual storytelling requirements, supporting complex visual effects sequences and maintaining continuity across production.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        <iframe 
+                            src="https://www.youtube.com/embed/_UXKlYvLGJY" 
+                            title="Severance Season 2 - Apple TV+"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="width: 100%; height: 100%; border: none;">
+                        </iframe>
+                    </div>
+                    <div class="slide-content">
+                        <h4>Severance Season 2</h4>
+                        <p>Character digitization for Apple TV+ acclaimed science fiction series production. High-fidelity 3D scanning enabled the creation of digital doubles and assets for the show's unique visual storytelling requirements, supporting complex visual effects sequences and maintaining continuity across production.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#jim-henson">
-                        <div class="video-placeholder">
-                            <img src="Jim_Henson_Company.jpg" alt="Jim Henson Company - Character Scan" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="slide-content">
-                            <h4>Jim Henson Company</h4>
-                            <p>Digital character development for legendary puppetry and creature effects studio. The scanning technology bridged traditional puppetry techniques with modern digital workflows, enabling hybrid character creation that preserves the tactile quality of physical puppets while expanding creative possibilities through digital enhancement.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        <img src="Jim_Henson_Company.jpg" alt="Jim Henson Company - Character Scan" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="slide-content">
+                        <h4>Jim Henson Company</h4>
+                        <p>Digital character development for legendary puppetry and creature effects studio. The scanning technology bridged traditional puppetry techniques with modern digital workflows, enabling hybrid character creation that preserves the tactile quality of physical puppets while expanding creative possibilities through digital enhancement.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#sony-music">
-                        <div class="video-placeholder">
-                            <iframe 
-                                src="https://www.youtube.com/embed/rwGpzW8xz-U" 
-                                title="Sony Music - 3D Artist Capture"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                style="width: 100%; height: 100%; border: none;">
-                            </iframe>
-                        </div>
-                        <div class="slide-content">
-                            <h4>Sony Music</h4>
-                            <p>Artist character digitization for music entertainment. Full-body scans of recording artist.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        <iframe 
+                            src="https://www.youtube.com/embed/rwGpzW8xz-U" 
+                            title="Sony Music - 3D Artist Capture"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="width: 100%; height: 100%; border: none;">
+                        </iframe>
+                    </div>
+                    <div class="slide-content">
+                        <h4>Sony Music</h4>
+                        <p>Artist character digitization for music entertainment. Full-body scans of recording artist.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#harvard-lampoon">
-                        <div class="video-placeholder">
-                            [ VIDEO PLACEHOLDER - HARVARD LAMPOON ]
-                        </div>
-                        <div class="slide-content">
-                            <h4>Harvard Lampoon</h4>
-                            <p>Academic collaboration for  digital preservation of cultural artifacts, demonstrating the system's adaptability to non-commercial research contexts.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - HARVARD LAMPOON ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Harvard Lampoon</h4>
+                        <p>Academic collaboration for  digital preservation of cultural artifacts, demonstrating the system's adaptability to non-commercial research contexts.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#activision">
-                        <div class="video-placeholder">
-                            <img src="Activision.jpg" alt="Activision - 3D Game Asset Capture" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="slide-content">
-                            <h4>Activision</h4>
-                            <p>High-fidelity asset generation for AAA game company. Photorealistic scans supported the creation of personaliized 3D printed collectible items.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        <img src="Activision.jpg" alt="Activision - 3D Game Asset Capture" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="slide-content">
+                        <h4>Activision</h4>
+                        <p>High-fidelity asset generation for AAA game company. Photorealistic scans supported the creation of personaliized 3D printed collectible items.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#riot-games">
-                        <div class="video-placeholder">
-                            [ VIDEO PLACEHOLDER - RIOT GAMES ]
-                        </div>
-                        <div class="slide-content">
-                            <h4>Riot Games</h4>
-                            <p>  The technology enabled production of high-quality personalized collectible items. </p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - RIOT GAMES ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Riot Games</h4>
+                        <p>  The technology enabled production of high-quality personalized collectible items. </p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#apple-tv-plus">
-                        <div class="video-placeholder">
-                            [ VIDEO PLACEHOLDER - APPLE TV+ ]
-                        </div>
-                        <div class="slide-content">
-                            <h4>Apple TV+</h4>
-                            <p>Digital human asset creation for streaming platform original productions.  Multiple shows benefited from the scanning technology, streamlining character digitization workflows and ensuring consistent quality across diverse production requirements for Apple's premium content offerings.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - APPLE TV+ ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>Apple TV+</h4>
+                        <p>Digital human asset creation for streaming platform original productions.  Multiple shows benefited from the scanning technology, streamlining character digitization workflows and ensuring consistent quality across diverse production requirements for Apple's premium content offerings.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#high-fidelity-vr">
-                        <div class="video-placeholder">
-                            <iframe 
-                                src="https://www.youtube.com/embed/fsLT9qnlS2c" 
-                                title="High Fidelity VR"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                style="width: 100%; height: 100%; border: none;">
-                            </iframe>
-                        </div>
-                        <div class="slide-content">
-                            <h4>High Fidelity VR</h4>
-                            <p>Virtual reality avatar system integration for social VR platform. High-quality photogrammetric scans enabled personalized avatar creation, allowing users to represent themselves authentically in virtual spaces with realistic appearance and proportions.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        <iframe 
+                            src="https://www.youtube.com/embed/fsLT9qnlS2c" 
+                            title="High Fidelity VR"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="width: 100%; height: 100%; border: none;">
+                        </iframe>
+                    </div>
+                    <div class="slide-content">
+                        <h4>High Fidelity VR</h4>
+                        <p>Virtual reality avatar system integration for social VR platform. High-quality photogrammetric scans enabled personalized avatar creation, allowing users to represent themselves authentically in virtual spaces with realistic appearance and proportions.</p>
+                    </div>
                 </div>
                 
                 <div class="slide">
-                    <a class="slide-link" href="#clo3d">
-                        <div class="video-placeholder">
-                            [ VIDEO PLACEHOLDER - CLO3D ]
-                        </div>
-                        <div class="slide-content">
-                            <h4>CLO3D Integration</h4>
-                            <p>Virtual garment fitting software pipeline for fashion technology applications. Body scans provided accurate base models for virtual clothing simulation, enabling fashion designers and brands to visualize garment fit and drape on realistic body shapes, accelerating design iteration cycles and reducing physical sampling requirements.</p>
-                        </div>
-                    </a>
+                    <div class="video-placeholder">
+                        [ VIDEO PLACEHOLDER - CLO3D ]
+                    </div>
+                    <div class="slide-content">
+                        <h4>CLO3D Integration</h4>
+                        <p>Virtual garment fitting software pipeline for fashion technology applications. Body scans provided accurate base models for virtual clothing simulation, enabling fashion designers and brands to visualize garment fit and drape on realistic body shapes, accelerating design iteration cycles and reducing physical sampling requirements.</p>
+                    </div>
                 </div>
                 
                 <div class="slideshow-controls">
@@ -1121,148 +1082,124 @@
     </div>
     
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Slideshow functionality (initialized on DOMContentLoaded for safety)
+        // Slideshow functionality
         let currentSlideIndex = 0;
-        let slides = [];
-        let totalSlidesCount = 0;
-        let slider = null;
-        let handle = null;
-        let afterImage = null;
-        let isDragging = false;
-
+        const slides = document.querySelectorAll('.slide');
+        const totalSlidesCount = slides.length;
+        
+        // Initialize indicators
+        const indicatorsContainer = document.getElementById('indicators');
+        for (let i = 0; i < totalSlidesCount; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+            indicator.onclick = () => goToSlide(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+        
+        document.getElementById('totalSlides').textContent = totalSlidesCount;
+        
+        // Add event listeners to buttons
+        document.getElementById('prevBtn').addEventListener('click', () => changeSlide(-1));
+        document.getElementById('nextBtn').addEventListener('click', () => changeSlide(1));
+        
         function changeSlide(direction) {
-            if (totalSlidesCount === 0) return;
             currentSlideIndex += direction;
             if (currentSlideIndex >= totalSlidesCount) currentSlideIndex = 0;
             if (currentSlideIndex < 0) currentSlideIndex = totalSlidesCount - 1;
             showSlide(currentSlideIndex);
         }
-
+        
         function goToSlide(index) {
-            if (totalSlidesCount === 0) return;
             currentSlideIndex = index;
             showSlide(currentSlideIndex);
         }
-
+        
         function showSlide(index) {
-            if (!slides || slides.length === 0) return;
             slides.forEach(slide => slide.classList.remove('active'));
-            const s = slides[index];
-            if (s) s.classList.add('active');
-
+            slides[index].classList.add('active');
+            
             const indicators = document.querySelectorAll('.indicator');
             indicators.forEach(ind => ind.classList.remove('active'));
-            if (indicators[index]) indicators[index].classList.add('active');
-
-            const currentSlideEl = document.getElementById('currentSlide');
-            if (currentSlideEl) currentSlideEl.textContent = index + 1;
+            indicators[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
         }
-
+        
+        // Comparison slider functionality
+        const slider = document.getElementById('comparisonSlider');
+        const handle = document.getElementById('sliderHandle');
+        const afterImage = slider.querySelector('.after-image');
+        
+        let isDragging = false;
+        
         function updateSlider(e) {
             if (!isDragging && e.type !== 'click') return;
-            if (!slider || !handle || !afterImage) return;
+            
             const rect = slider.getBoundingClientRect();
-            const clientX = (e.clientX !== undefined) ? e.clientX : (e.touches && e.touches[0] && e.touches[0].clientX);
-            if (clientX === undefined) return;
-            const x = clientX - rect.left;
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
             const percentage = (x / rect.width) * 100;
+            
             if (percentage >= 0 && percentage <= 100) {
                 handle.style.left = percentage + '%';
                 afterImage.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
             }
         }
-
-        function initSlideshow() {
-            slides = Array.from(document.querySelectorAll('.slide'));
-            totalSlidesCount = slides.length;
-
-            const indicatorsContainer = document.getElementById('indicators');
-            if (indicatorsContainer) {
-                indicatorsContainer.innerHTML = '';
-                for (let i = 0; i < totalSlidesCount; i++) {
-                    const indicator = document.createElement('div');
-                    indicator.className = 'indicator' + (i === 0 ? ' active' : '');
-                    indicator.onclick = () => goToSlide(i);
-                    indicatorsContainer.appendChild(indicator);
-                }
-            }
-
-            const totalEl = document.getElementById('totalSlides');
-            if (totalEl) totalEl.textContent = totalSlidesCount;
-
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            if (prevBtn) prevBtn.addEventListener('click', () => changeSlide(-1));
-            if (nextBtn) nextBtn.addEventListener('click', () => changeSlide(1));
-
-            // comparison slider elements
-            slider = document.getElementById('comparisonSlider');
-            handle = document.getElementById('sliderHandle');
-            afterImage = slider ? slider.querySelector('.after-image') : null;
-
-            if (handle) {
-                handle.addEventListener('mousedown', () => isDragging = true);
-                handle.addEventListener('touchstart', () => isDragging = true);
-            }
-            document.addEventListener('mouseup', () => isDragging = false);
-            document.addEventListener('touchend', () => isDragging = false);
-
-            document.addEventListener('mousemove', updateSlider);
-            document.addEventListener('touchmove', updateSlider);
-            if (slider) slider.addEventListener('click', updateSlider);
-
-            // show first slide
-            showSlide(0);
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initSlideshow);
-        } else {
-            // DOM already ready
-            initSlideshow();
-        }
         
-        function showScanStage(stage, ev) {
+        handle.addEventListener('mousedown', () => isDragging = true);
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('mousemove', updateSlider);
+        slider.addEventListener('click', updateSlider);
+        
+        handle.addEventListener('touchstart', () => isDragging = true);
+        document.addEventListener('touchend', () => isDragging = false);
+        document.addEventListener('touchmove', updateSlider);
+        
+        function showScanStage(stage) {
             const buttons = document.querySelectorAll('.demo-button');
             buttons.forEach(btn => btn.classList.remove('active'));
-            // mark the clicked button active if a DOM element was passed
-            if (ev && ev.classList && ev.classList.contains && ev.classList.contains('demo-button')) {
-                ev.classList.add('active');
-            } else if (ev && ev.currentTarget) {
-                ev.currentTarget.classList.add('active');
-            } else if (ev && ev.target) {
-                // fallback for older browsers
-                ev.target.classList.add('active');
-            }
-
+            event.target.classList.add('active');
+            
             const viz = document.getElementById('scanViz');
             const label = document.getElementById('scanStageLabel');
-
+            
             const existingPoints = viz.querySelectorAll('.scan-point');
             existingPoints.forEach(point => point.remove());
-
+            
             const stages = {
                 capture: { label: 'MULTI-CAMERA CAPTURE STAGE', points: 0 },
                 pointcloud: { label: 'POINT CLOUD GENERATION (500K+ POINTS)', points: 150 },
                 mesh: { label: 'MESH SURFACE RECONSTRUCTION', points: 80 },
                 textured: { label: 'FINAL TEXTURED 3D MODEL', points: 0 }
             };
-
+            
             label.textContent = stages[stage].label;
-
+            
             for (let i = 0; i < stages[stage].points; i++) {
                 setTimeout(() => {
                     const point = document.createElement('div');
                     point.className = 'scan-point';
                     point.style.left = Math.random() * 100 + '%';
                     point.style.top = Math.random() * 100 + '%';
-                    point.style.animationDelay = (Math.random() * 1.5).toFixed(2) + 's';
+                    point.style.animationDelay = (Math.random() * 2) + 's';
                     viz.appendChild(point);
-                }, i * 6);
+                }, i * 10);
             }
+
         }
 
-        // Initialize slideshow state
-        if (typeof showSlide === 'function') {
-            showSlide(0);
+        // initialize slideshow state
+        showSlide(currentSlideIndex);
+
+        // auto-advance slides every 6 seconds, pause on hover
+        let slideInterval = setInterval(() => changeSlide(1), 6000);
+        const slideshowEl = document.querySelector('.partnership-slideshow');
+        if (slideshowEl) {
+            slideshowEl.addEventListener('mouseenter', () => clearInterval(slideInterval));
+            slideshowEl.addEventListener('mouseleave', () => {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(() => changeSlide(1), 6000);
+            });
         }
+    </script>
+</body>
+</html>
