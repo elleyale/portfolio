@@ -629,91 +629,135 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Artwork Section -->
-        <div class="video-showcase">
-            <h2 class="section-header">Artwork</h2>
-            
-            <div class="category-card" style="max-width: 100%; border: 1px solid #E0E0E0;">
-                <div class="artwork-carousel" id="artworkCarousel" style="height: 350px;">
-                    <div class="carousel-track" id="artworkTrack">
-                        <div class="carousel-slide">
-                            <img src="artwork_01_sardines.png" alt="Sardines in Can">
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="artwork_02_legs.png" alt="Legs by the Ocean">
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="artwork_03_spoon.png" alt="Hand with Spoon">
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="artwork_04_bottle.png" alt="Pouring Bottle">
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="artwork_05_violin.png" alt="Blue Violin">
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="artwork_06_fish.png" alt="Fish Detail">
+                <!-- Artwork Carousel -->
+                <div class="video-card">
+                    <div class="video-embed" style="background: #000;">
+                        <div class="artwork-carousel" id="artworkCarousel" style="height: 100%; width: 100%;">
+                            <div class="carousel-track" id="artworkTrack">
+                                <div class="carousel-slide">
+                                    <img src="artwork_01_sardines.png" alt="Sardines in Can">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_02_legs.png" alt="Legs by the Ocean">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_03_spoon.png" alt="Hand with Spoon">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_04_bottle.png" alt="Pouring Bottle">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_05_violin.png" alt="Blue Violin">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="artwork_06_fish.png" alt="Fish Detail">
+                                </div>
+                            </div>
+                            <button class="carousel-button prev" onclick="moveArtworkCarousel(-1)">‹</button>
+                            <button class="carousel-button next" onclick="moveArtworkCarousel(1)">›</button>
+                            <div class="carousel-indicators" id="artworkIndicators"></div>
                         </div>
                     </div>
-                    <button class="carousel-button prev" onclick="moveArtworkCarousel(-1)">‹</button>
-                    <button class="carousel-button next" onclick="moveArtworkCarousel(1)">›</button>
-                    <div class="carousel-indicators" id="artworkIndicators"></div>
+                    <div class="video-details">
+                        <div class="video-client">Visual Art</div>
+                        <h3 class="video-title">Digital Artwork & Illustration</h3>
+                        <p class="video-description">
+                            Original digital artwork exploring composition, color, and form through computational tools. Each piece investigates the relationship between traditional artistic principles and digital mediumship.
+                        </p>
+                        <div class="video-tech">
+                            <span>Digital Painting</span>
+                            <span>Composition</span>
+                            <span>Color Theory</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="category-content" style="padding: 30px;">
-                    <h3 class="category-title">Digital Artwork & Illustration</h3>
-                    <p class="category-description">
-                        Original digital artwork exploring composition, color, and form through computational tools. Each piece investigates the relationship between traditional artistic principles and digital mediumship.
-                    </p>
-                    <span class="category-count">6 Works</span>
-                </div>
-            </div>
-        </div>
 
-        <!-- Collaborations Section -->
-        <div class="video-showcase">
-            <h2 class="section-header">Collaborations</h2>
-            
-            <div class="category-card" style="max-width: 100%; border: 1px solid #E0E0E0;">
-                <div class="artwork-carousel" id="collaborationsCarousel" style="height: 350px;">
-                    <div class="carousel-track" id="collaborationsTrack">
-                        <!-- New Museum Video -->
-                        <div class="carousel-slide">
-                            <video controls style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                                <source src="new_museum.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <!-- Barrons Magazine Cover -->
-                        <div class="carousel-slide">
-                            <a href="https://www.barrons.com/articles/berkshire-hathaway-warren-buffett-companies-howard-hughes-loews-fairfax-financial-greenlight-capital-markel-white-mountains-e631c648?mod=hp_SP_C_1_2" target="_blank" class="collaboration-link">
-                                <img src="barrons_cover.jpg" alt="Barron's Magazine Cover">
-                            </a>
-                        </div>
+                <!-- New Museum × Manny 404 -->
+                <div class="video-card">
+                    <div class="video-embed" style="background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: cover;">
+                            <source src="new_museum.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
-                    <button class="carousel-button prev" onclick="moveCollaborationsCarousel(-1)">‹</button>
-                    <button class="carousel-button next" onclick="moveCollaborationsCarousel(1)">›</button>
-                    <div class="carousel-indicators" id="collaborationsIndicators"></div>
-                </div>
-                <div class="collaboration-caption">
-                    <div id="collabCaption1" class="collab-caption-content">
-                        <div class="collaboration-client">New Museum × Manny 404</div>
-                        <h3 class="collaboration-title">Immersive Installation</h3>
-                        <p class="collaboration-subtitle">
-                            Collaborative work with artist Manny 404 for New Museum exhibition. Technical implementation and volumetric capture for interactive art installation.
+                    <div class="video-details">
+                        <div class="video-client">New Museum × Manny 404</div>
+                        <h3 class="video-title">Immersive Installation</h3>
+                        <p class="video-description">
+                            Collaborative work with artist Manny 404 for New Museum exhibition. Technical implementation and volumetric capture for interactive art installation, merging digital and physical exhibition spaces.
                         </p>
-                    </div>
-                    <div id="collabCaption2" class="collab-caption-content" style="display: none;">
-                        <div class="collaboration-client">Barron's Magazine</div>
-                        <h3 class="collaboration-title">Cover Art & Illustration</h3>
-                        <p class="collaboration-subtitle">
-                            Featured cover illustration for Barron's Magazine exploring financial markets and investment themes through visual narrative.
-                            <a href="https://www.barrons.com/articles/berkshire-hathaway-warren-buffett-companies-howard-hughes-loews-fairfax-financial-greenlight-capital-markel-white-mountains-e631c648?mod=hp_SP_C_1_2" target="_blank" style="color: #FF0000; text-decoration: none; display: block; margin-top: 8px;">Read Article →</a>
-                        </p>
+                        <div class="video-tech">
+                            <span>Volumetric Capture</span>
+                            <span>Interactive Installation</span>
+                            <span>Digital-Physical Hybrid</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- High Fidelity VR -->
+                <a href="https://www.youtube.com/watch?v=fsLT9qnlS2c" target="_blank" class="video-card">
+                    <div class="video-embed">
+                        <iframe 
+                            src="https://www.youtube.com/embed/fsLT9qnlS2c" 
+                            title="High Fidelity - Social VR Platform"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">High Fidelity</div>
+                        <h3 class="video-title">Social VR Platform</h3>
+                        <p class="video-description">
+                            Avatar creation and photogrammetric scanning integration for social virtual reality platform. Developed high-fidelity 3D avatar pipeline enabling users to bring their authentic physical presence into immersive virtual spaces through precision photogrammetry workflows.
+                        </p>
+                        <div class="video-tech">
+                            <span>Virtual Reality</span>
+                            <span>Avatar Creation</span>
+                            <span>Social VR</span>
+                            <span>Photogrammetry Pipeline</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Spotify RapCaviar Pantheon × Brooklyn Museum -->
+                <a href="https://newsroom.spotify.com/2019-04-02/spotifys-rapcaviar-pantheon-unveils-new-class-of-honorees-with-cardi-b-jaden-smith-gunna-and-juice-wrld/" target="_blank" class="video-card">
+                    <div class="video-embed">
+                        <img src="gunna_spotify.png" alt="Spotify RapCaviar Pantheon - 3D Sculpture at Brooklyn Museum" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Spotify × Brooklyn Museum</div>
+                        <h3 class="video-title">RapCaviar Pantheon Exhibition</h3>
+                        <p class="video-description">
+                            3D scanning and sculpture creation for Spotify's RapCaviar Pantheon exhibition at Brooklyn Museum. Photogrammetric capture of artists Cardi B, Jaden Smith, Gunna, and Juice WRLD transformed into monumental bronze-style sculptures for the museum's first-ever hip-hop installation, celebrating the cultural impact of rap music.
+                        </p>
+                        <div class="video-tech">
+                            <span>Museum Exhibition</span>
+                            <span>3D Scanning</span>
+                            <span>Cultural Installation</span>
+                            <span>Music Heritage</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Barron's Magazine -->
+                <a href="https://www.barrons.com/articles/berkshire-hathaway-warren-buffett-companies-howard-hughes-loews-fairfax-financial-greenlight-capital-markel-white-mountains-e631c648?mod=hp_SP_C_1_2" target="_blank" class="video-card">
+                    <div class="video-embed">
+                        <img src="barrons_cover.jpg" alt="Barron's Magazine Cover" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="video-details">
+                        <div class="video-client">Barron's Magazine</div>
+                        <h3 class="video-title">Cover Art & Illustration</h3>
+                        <p class="video-description">
+                            Featured cover illustration for Barron's Magazine exploring financial markets and investment themes through visual narrative. Custom digital artwork commissioned for feature article on Warren Buffett's Berkshire Hathaway and alternative investment strategies.
+                        </p>
+                        <div class="video-tech">
+                            <span>Editorial Illustration</span>
+                            <span>Financial Media</span>
+                            <span>Cover Art</span>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -743,7 +787,7 @@
     </footer>
 
     <script>
-        // Artwork Carousel (main featured section)
+        // Artwork Carousel (in Artwork section)
         const artworkTrack = document.getElementById('artworkTrack');
         const artworkIndicatorsContainer = document.getElementById('artworkIndicators');
         if (artworkTrack && artworkIndicatorsContainer) {
@@ -783,53 +827,6 @@
             }, 5000);
 
             window.moveArtworkCarousel = moveArtworkCarousel;
-        }
-
-        // Collaborations Carousel
-        const collaborationsTrack = document.getElementById('collaborationsTrack');
-        const collaborationsIndicatorsContainer = document.getElementById('collaborationsIndicators');
-        if (collaborationsTrack && collaborationsIndicatorsContainer) {
-            const collaborationsSlides = collaborationsTrack.querySelectorAll('.carousel-slide');
-            let currentCollaborationsSlide = 0;
-            const totalCollaborationsSlides = collaborationsSlides.length;
-
-            for (let i = 0; i < totalCollaborationsSlides; i++) {
-                const indicator = document.createElement('div');
-                indicator.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
-                indicator.onclick = () => goToCollaborationsSlide(i);
-                collaborationsIndicatorsContainer.appendChild(indicator);
-            }
-
-            function moveCollaborationsCarousel(direction) {
-                currentCollaborationsSlide += direction;
-                if (currentCollaborationsSlide < 0) currentCollaborationsSlide = totalCollaborationsSlides - 1;
-                if (currentCollaborationsSlide >= totalCollaborationsSlides) currentCollaborationsSlide = 0;
-                updateCollaborationsCarousel();
-            }
-
-            function goToCollaborationsSlide(index) {
-                currentCollaborationsSlide = index;
-                updateCollaborationsCarousel();
-            }
-
-            function updateCollaborationsCarousel() {
-                collaborationsTrack.style.transform = `translateX(-${currentCollaborationsSlide * 100}%)`;
-                const indicators = collaborationsIndicatorsContainer.querySelectorAll('.carousel-indicator');
-                indicators.forEach((ind, idx) => {
-                    ind.classList.toggle('active', idx === currentCollaborationsSlide);
-                });
-
-                // Update caption
-                document.querySelectorAll('.collab-caption-content').forEach((caption, idx) => {
-                    caption.style.display = idx === currentCollaborationsSlide ? 'block' : 'none';
-                });
-            }
-
-            setInterval(() => {
-                moveCollaborationsCarousel(1);
-            }, 8000);
-
-            window.moveCollaborationsCarousel = moveCollaborationsCarousel;
         }
 
         // Old artwork carousel in media library (if still exists)
