@@ -955,7 +955,7 @@
                     m.metalness = 0.0;
                     m.roughness = 0.0015;        // ultra glossy for crisp spectral highlights
                     m.transmission = 0.985;     // very transmissive
-                    m.ior = 1.65;               // higher IOR for stronger Fresnel
+                    m.ior = 1.5;               // adjusted IOR per request
                     m.thickness = 0.04;         // thicker to accentuate dispersion
                     if ("envMapIntensity" in m) m.envMapIntensity = 3.8;
                     if ("reflectivity" in m) m.reflectivity = 1.0;
@@ -973,7 +973,7 @@
 
                     // runtime controls
                     m.userData = m.userData || {};
-                    m.userData.dispersionStrength = 0.48; // larger spread for vivid RGB separation
+                    m.userData.dispersionStrength = 5.0; // increased dispersion (requested)
                     m.userData._u_time = { value: 0.0 };
                     m.userData._u_dispersion = { value: m.userData.dispersionStrength };
 
