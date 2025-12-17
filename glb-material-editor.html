@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLB Material Property Editor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Martian Mono', monospace;
+            font-weight: 300;
+            background: #fafafa;
+            color: #1a1a1a;
+            overflow: hidden;
+        }
+        
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        #viewport {
+            flex: 1;
+            position: relative;
+            background: #ffffff;
+            border-right: 1px solid #e0e0e0;
+        }
+        
+        #controls {
+            width: 380px;
+            background: #ffffff;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        #controls::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #controls::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+        
+        #controls::-webkit-scrollbar-thumb {
+            background: #e53935;
+            border-radius: 3px;
+        }
+        
+        #controls::-webkit-scrollbar-thumb:hover {
+            background: #c62828;
+        }
+        
+        h1 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #e53935;
+            padding-bottom: 12px;
+        }
+        
+        h2 {
+            font-size: 11px;
+            font-weight: 500;
+            margin: 32px 0 16px 0;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        
+        .control-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 10px;
+            font-weight: 400;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 2px;
+            background: #e0e0e0;
+            border-radius: 1px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #e53935;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #c62828;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: #e53935;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            background: #c62828;
+        }
+        
+        input[type="color"] {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            background: #ffffff;
+            cursor: pointer;
+            padding: 2px;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            color: #1a1a1a;
+            font-size: 11px;
+            font-family: 'Martian Mono', monospace;
+            font-weight: 300;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #e53935;
+        }
+        
+        select {
+            width: 100%;
+            padding: 8px 10px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            color: #1a1a1a;
+            font-size: 11px;
+            font-family: 'Martian Mono', monospace;
+            font-weight: 300;
+            cursor: pointer;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #e53935;
+        }
+        
+        select option {
+            padding: 8px;
+            background: #ffffff;
+            color: #1a1a1a;
+        }
+        
+        select option:hover {
+            background: #f5f5f5;
+        }
+        
+        select option.selected {
+            background: #ffebee;
+            font-weight: 400;
+        }
+        
+        #materialSelect {
+            max-height: 150px;
+        }
+        
+        #materialInfo {
+            line-height: 1.8;
+            margin-top: 12px;
+            padding: 12px;
+            background: #fafafa;
+            border-left: 2px solid #e53935;
+            font-size: 10px;
+        }
+        
+        #materialInfo strong {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: none;
+            border-radius: 2px;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 400;
+            font-family: 'Martian Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        button:hover {
+            background: #e53935;
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button.secondary {
+            background: #fafafa;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+        }
+        
+        button.secondary:hover {
+            background: #f5f5f5;
+            border-color: #e53935;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .value-display {
+            display: inline-block;
+            float: right;
+            color: #e53935;
+            font-weight: 400;
+            font-size: 10px;
+        }
+        
+        #stats {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 16px;
+            border-radius: 2px;
+            font-size: 10px;
+            font-family: 'Martian Mono', monospace;
+            font-weight: 400;
+            color: #1a1a1a;
+            z-index: 10;
+            border: 1px solid #e0e0e0;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #1a1a1a;
+            font-size: 12px;
+            font-weight: 400;
+            display: none;
+        }
+        
+        .spinner {
+            border: 2px solid #e0e0e0;
+            border-top: 2px solid #e53935;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #e53935;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            text-transform: none;
+            font-size: 11px;
+            color: #1a1a1a;
+        }
+        
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .preset-buttons button {
+            padding: 10px;
+            font-size: 9px;
+            margin: 0;
+        }
+        
+        .export-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="viewport">
+            <div id="stats"></div>
+            <div id="loading">
+                <div class="spinner"></div>
+                <div>Loading Model...</div>
+            </div>
+        </div>
+        
+        <div id="controls">
+            <h1>GLB Material Editor</h1>
+            
+            <div class="file-input-wrapper">
+                <button onclick="document.getElementById('fileInput').click()">
+                    Load GLB Model
+                </button>
+                <input type="file" id="fileInput" accept=".glb,.gltf">
+            </div>
+            
+            <div id="materialSelector" style="display: none; margin-top: 20px;">
+                <h2>Material Selection</h2>
+                
+                <div class="control-group">
+                    <label>Select Material to Edit</label>
+                    <select id="materialSelect" size="5" style="height: auto;">
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editAllMaterials" checked>
+                    <label for="editAllMaterials">Edit All Materials</label>
+                </div>
+                
+                <div id="materialInfo" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 6px; font-size: 12px;">
+                    <div><strong>Material Name:</strong> <span id="matName">-</span></div>
+                    <div><strong>Type:</strong> <span id="matType">-</span></div>
+                    <div><strong>Used by:</strong> <span id="matUsage">-</span></div>
+                </div>
+            </div>
+            
+            <h2>Base Material</h2>
+            
+            <div class="control-group">
+                <label>Material Type</label>
+                <select id="materialType">
+                    <option value="standard">Standard (PBR)</option>
+                    <option value="physical">Physical</option>
+                    <option value="basic">Basic</option>
+                    <option value="lambert">Lambert</option>
+                    <option value="phong">Phong</option>
+                    <option value="toon">Toon</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Base Color <span class="value-display" id="colorValue">#ffffff</span></label>
+                <input type="color" id="color" value="#ffffff">
+            </div>
+            
+            <div class="control-group">
+                <label>Opacity <span class="value-display" id="opacityValue">1.00</span></label>
+                <input type="range" id="opacity" min="0" max="1" step="0.01" value="1">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="transparent">
+                <label for="transparent">Enable Transparency</label>
+            </div>
+            
+            <h2>PBR Properties</h2>
+            
+            <div class="control-group">
+                <label>Metalness <span class="value-display" id="metalnessValue">0.00</span></label>
+                <input type="range" id="metalness" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Roughness <span class="value-display" id="roughnessValue">0.50</span></label>
+                <input type="range" id="roughness" min="0" max="1" step="0.01" value="0.5">
+            </div>
+            
+            <div class="control-group">
+                <label>Clearcoat <span class="value-display" id="clearcoatValue">0.00</span></label>
+                <input type="range" id="clearcoat" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Clearcoat Roughness <span class="value-display" id="clearcoatRoughnessValue">0.00</span></label>
+                <input type="range" id="clearcoatRoughness" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <h2>Emissive & Glow</h2>
+            
+            <div class="control-group">
+                <label>Emissive Color <span class="value-display" id="emissiveColorValue">#000000</span></label>
+                <input type="color" id="emissiveColor" value="#000000">
+            </div>
+            
+            <div class="control-group">
+                <label>Emissive Intensity <span class="value-display" id="emissiveIntensityValue">0.00</span></label>
+                <input type="range" id="emissiveIntensity" min="0" max="5" step="0.1" value="0">
+            </div>
+            
+            <h2>Reflectivity & Refraction</h2>
+            
+            <div class="control-group">
+                <label>Reflectivity <span class="value-display" id="reflectivityValue">0.50</span></label>
+                <input type="range" id="reflectivity" min="0" max="1" step="0.01" value="0.5">
+            </div>
+            
+            <div class="control-group">
+                <label>Refraction Ratio <span class="value-display" id="refractionRatioValue">0.98</span></label>
+                <input type="range" id="refractionRatio" min="0" max="1" step="0.01" value="0.98">
+            </div>
+            
+            <div class="control-group">
+                <label>Index of Refraction (IOR) <span class="value-display" id="iorValue">1.50</span></label>
+                <input type="range" id="ior" min="1" max="2.5" step="0.01" value="1.5">
+            </div>
+            
+            <h2>Transmission (Glass-like)</h2>
+            
+            <div class="control-group">
+                <label>Transmission <span class="value-display" id="transmissionValue">0.00</span></label>
+                <input type="range" id="transmission" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Thickness <span class="value-display" id="thicknessValue">0.00</span></label>
+                <input type="range" id="thickness" min="0" max="5" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Attenuation Distance <span class="value-display" id="attenuationDistanceValue">0.00</span></label>
+                <input type="range" id="attenuationDistance" min="0" max="10" step="0.1" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Attenuation Color <span class="value-display" id="attenuationColorValue">#ffffff</span></label>
+                <input type="color" id="attenuationColor" value="#ffffff">
+            </div>
+            
+            <h2>Sheen (Fabric-like)</h2>
+            
+            <div class="control-group">
+                <label>Sheen <span class="value-display" id="sheenValue">0.00</span></label>
+                <input type="range" id="sheen" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Sheen Roughness <span class="value-display" id="sheenRoughnessValue">1.00</span></label>
+                <input type="range" id="sheenRoughness" min="0" max="1" step="0.01" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label>Sheen Color <span class="value-display" id="sheenColorValue">#ffffff</span></label>
+                <input type="color" id="sheenColor" value="#ffffff">
+            </div>
+            
+            <h2>Iridescence (Soap Bubble)</h2>
+            
+            <div class="control-group">
+                <label>Iridescence <span class="value-display" id="iridescenceValue">0.00</span></label>
+                <input type="range" id="iridescence" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Iridescence IOR <span class="value-display" id="iridescenceIORValue">1.30</span></label>
+                <input type="range" id="iridescenceIOR" min="1" max="2.5" step="0.01" value="1.3">
+            </div>
+            
+            <div class="control-group">
+                <label>Iridescence Thickness Min <span class="value-display" id="iridescenceThicknessMinValue">100</span></label>
+                <input type="range" id="iridescenceThicknessMin" min="0" max="1000" step="10" value="100">
+            </div>
+            
+            <div class="control-group">
+                <label>Iridescence Thickness Max <span class="value-display" id="iridescenceThicknessMaxValue">400</span></label>
+                <input type="range" id="iridescenceThicknessMax" min="0" max="1000" step="10" value="400">
+            </div>
+            
+            <h2>Anisotropy (Brushed Metal)</h2>
+            
+            <div class="control-group">
+                <label>Anisotropy <span class="value-display" id="anisotropyValue">0.00</span></label>
+                <input type="range" id="anisotropy" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Anisotropy Rotation <span class="value-display" id="anisotropyRotationValue">0.00</span></label>
+                <input type="range" id="anisotropyRotation" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <h2>Specular Properties</h2>
+            
+            <div class="control-group">
+                <label>Specular Intensity <span class="value-display" id="specularIntensityValue">1.00</span></label>
+                <input type="range" id="specularIntensity" min="0" max="2" step="0.01" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label>Specular Color <span class="value-display" id="specularColorValue">#ffffff</span></label>
+                <input type="color" id="specularColor" value="#ffffff">
+            </div>
+            
+            <h2>Advanced Color Properties</h2>
+            
+            <div class="control-group">
+                <label>Vertex Colors</label>
+                <select id="vertexColors">
+                    <option value="none">None</option>
+                    <option value="vertex">Vertex Colors</option>
+                    <option value="face">Face Colors</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Color Space</label>
+                <select id="colorSpace">
+                    <option value="srgb">sRGB</option>
+                    <option value="linear">Linear</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Tone Mapping</label>
+                <select id="toneMapping">
+                    <option value="none">None</option>
+                    <option value="linear">Linear</option>
+                    <option value="reinhard">Reinhard</option>
+                    <option value="cineon">Cineon</option>
+                    <option value="aces">ACES Filmic</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Tone Mapping Exposure <span class="value-display" id="toneMappingExposureValue">1.00</span></label>
+                <input type="range" id="toneMappingExposure" min="0" max="3" step="0.01" value="1">
+            </div>
+            
+            <h2>Displacement & Normals</h2>
+            
+            <div class="control-group">
+                <label>Displacement Scale <span class="value-display" id="displacementScaleValue">1.00</span></label>
+                <input type="range" id="displacementScale" min="0" max="2" step="0.01" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label>Displacement Bias <span class="value-display" id="displacementBiasValue">0.00</span></label>
+                <input type="range" id="displacementBias" min="-1" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Normal Scale X <span class="value-display" id="normalScaleXValue">1.00</span></label>
+                <input type="range" id="normalScaleX" min="0" max="2" step="0.01" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label>Normal Scale Y <span class="value-display" id="normalScaleYValue">1.00</span></label>
+                <input type="range" id="normalScaleY" min="0" max="2" step="0.01" value="1">
+            </div>
+            
+            <h2>Fog & Depth</h2>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="fog">
+                <label for="fog">Enable Fog</label>
+            </div>
+            
+            <div class="control-group">
+                <label>Fog Color <span class="value-display" id="fogColorValue">#cccccc</span></label>
+                <input type="color" id="fogColor" value="#cccccc">
+            </div>
+            
+            <div class="control-group">
+                <label>Fog Near <span class="value-display" id="fogNearValue">1.00</span></label>
+                <input type="range" id="fogNear" min="0.1" max="50" step="0.1" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label>Fog Far <span class="value-display" id="fogFarValue">20.00</span></label>
+                <input type="range" id="fogFar" min="1" max="100" step="1" value="20">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="depthWrite" checked>
+                <label for="depthWrite">Depth Write</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="depthTest" checked>
+                <label for="depthTest">Depth Test</label>
+            </div>
+            
+            <div class="control-group">
+                <label>Depth Function</label>
+                <select id="depthFunc">
+                    <option value="less">Less</option>
+                    <option value="lequal" selected>Less or Equal</option>
+                    <option value="equal">Equal</option>
+                    <option value="greater">Greater</option>
+                    <option value="notequal">Not Equal</option>
+                    <option value="gequal">Greater or Equal</option>
+                    <option value="always">Always</option>
+                </select>
+            </div>
+            
+            <h2>Rendering Options</h2>
+            
+            <div class="control-group">
+                <label>Blending Mode</label>
+                <select id="blending">
+                    <option value="normal">Normal</option>
+                    <option value="additive">Additive</option>
+                    <option value="subtractive">Subtractive</option>
+                    <option value="multiply">Multiply</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Alpha Test <span class="value-display" id="alphaTestValue">0.00</span></label>
+                <input type="range" id="alphaTest" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Side</label>
+                <select id="side">
+                    <option value="front">Front</option>
+                    <option value="back">Back</option>
+                    <option value="double">Double</option>
+                </select>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="wireframe">
+                <label for="wireframe">Wireframe Mode</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="flatShading">
+                <label for="flatShading">Flat Shading</label>
+            </div>
+            
+            <div class="control-group">
+                <label>Wireframe Line Width <span class="value-display" id="wireframeLinewidthValue">1</span></label>
+                <input type="range" id="wireframeLinewidth" min="1" max="10" step="1" value="1">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="alphaToCoverage">
+                <label for="alphaToCoverage">Alpha to Coverage (MSAA)</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="premultipliedAlpha" checked>
+                <label for="premultipliedAlpha">Premultiplied Alpha</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="dithering">
+                <label for="dithering">Dithering</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="shadowSide">
+                <label for="shadowSide">Shadow Side</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="colorWrite" checked>
+                <label for="colorWrite">Color Write</label>
+            </div>
+            
+            <h2>Environment</h2>
+            
+            <div class="file-input-wrapper">
+                <button class="secondary" onclick="document.getElementById('hdrInput').click()">
+                    Load HDR Environment
+                </button>
+                <input type="file" id="hdrInput" accept=".hdr">
+            </div>
+            
+            <div class="control-group">
+                <label>Environment Intensity <span class="value-display" id="envIntensityValue">1.00</span></label>
+                <input type="range" id="envIntensity" min="0" max="3" step="0.1" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label>Environment Rotation <span class="value-display" id="envRotationValue">0.00</span></label>
+                <input type="range" id="envRotation" min="0" max="6.28" step="0.01" value="0">
+            </div>
+            
+            <div class="control-group">
+                <label>Background Color <span class="value-display" id="bgColorValue">#fafafa</span></label>
+                <input type="color" id="bgColor" value="#fafafa">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="showHDRBackground">
+                <label for="showHDRBackground">Show HDR as Background</label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="showGrid">
+                <label for="showGrid">Show Grid</label>
+            </div>
+            
+            <div class="export-section">
+                <h2>Export</h2>
+                
+                <div class="button-group">
+                    <button class="secondary" onclick="exportMaterial('json')">Export JSON</button>
+                    <button class="secondary" onclick="exportMaterial('glb')">Export GLB</button>
+                </div>
+                
+                <button class="secondary" onclick="exportAllMaterials()">Export All Materials</button>
+            </div>
+            
+            <h2>Material Presets</h2>
+            
+            <div class="preset-buttons">
+                <button onclick="applyPreset('chrome')">Chrome</button>
+                <button onclick="applyPreset('gold')">Gold</button>
+                <button onclick="applyPreset('copper')">Copper</button>
+                <button onclick="applyPreset('bronze')">Bronze</button>
+                <button onclick="applyPreset('plastic')">Plastic</button>
+                <button onclick="applyPreset('rubber')">Rubber</button>
+                <button onclick="applyPreset('glass')">Glass</button>
+                <button onclick="applyPreset('diamond')">Diamond</button>
+                <button onclick="applyPreset('wood')">Wood</button>
+                <button onclick="applyPreset('ceramic')">Ceramic</button>
+                <button onclick="applyPreset('carbon')">Carbon Fiber</button>
+                <button onclick="applyPreset('pearl')">Pearl</button>
+                <button onclick="applyPreset('velvet')">Velvet</button>
+                <button onclick="applyPreset('silk')">Silk</button>
+                <button onclick="applyPreset('soap')">Soap Bubble</button>
+                <button onclick="applyPreset('brushed')">Brushed Metal</button>
+            </div>
+            
+            <button onclick="resetMaterial()">Reset Material</button>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+        
+        let scene, camera, renderer, controls, model, mixer, clock;
+        let materials = [];
+        let materialMeshMap = new Map(); // Maps material to meshes that use it
+        let selectedMaterialIndex = -1; // -1 means edit all materials
+        let gridHelper;
+        let hdrEnvironment = null;
+        
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(
+                50,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
+            camera.position.set(0, 2, 5);
+            
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth - 380, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('viewport').appendChild(renderer.domElement);
+            
+            // Controls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minDistance = 0.5;
+            controls.maxDistance = 50;
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight1.position.set(5, 10, 5);
+            directionalLight1.castShadow = true;
+            scene.add(directionalLight1);
+            
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+            directionalLight2.position.set(-5, 5, -5);
+            scene.add(directionalLight2);
+            
+            const pointLight = new THREE.PointLight(0xffffff, 0.5, 100);
+            pointLight.position.set(0, 5, 0);
+            scene.add(pointLight);
+            
+            // Grid
+            gridHelper = new THREE.GridHelper(10, 10, 0x444444, 0x222222);
+            gridHelper.visible = false;
+            scene.add(gridHelper);
+            
+            // Clock for animations
+            clock = new THREE.Clock();
+            
+            // Background
+            scene.background = new THREE.Color(0xfafafa);
+            updateBackground();
+            
+            // Load default model (cube as placeholder)
+            createDefaultModel();
+            
+            // Start animation loop
+            animate();
+            
+            // Event listeners
+            setupEventListeners();
+            
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        function createDefaultModel() {
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                metalness: 0,
+                roughness: 0.5
+            });
+            
+            model = new THREE.Mesh(geometry, material);
+            model.castShadow = true;
+            model.receiveShadow = true;
+            scene.add(model);
+            
+            materials = [material];
+        }
+        
+        function loadModel(file) {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            // Remove existing model
+            if (model) {
+                scene.remove(model);
+                disposeMaterial(model);
+            }
+            
+            const loader = new GLTFLoader();
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                loader.parse(e.target.result, '', function(gltf) {
+                    model = gltf.scene;
+                    
+                    // Collect all materials and build mesh mapping
+                    materials = [];
+                    materialMeshMap.clear();
+                    const materialSet = new Set();
+                    
+                    model.traverse((child) => {
+                        if (child.isMesh) {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            
+                            if (child.material) {
+                                const mats = Array.isArray(child.material) ? child.material : [child.material];
+                                
+                                mats.forEach(mat => {
+                                    if (!materialSet.has(mat)) {
+                                        materialSet.add(mat);
+                                        materials.push(mat);
+                                        materialMeshMap.set(mat, []);
+                                    }
+                                    materialMeshMap.get(mat).push(child);
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Center and scale model
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = 2 / maxDim;
+                    
+                    model.scale.multiplyScalar(scale);
+                    model.position.sub(center.multiplyScalar(scale));
+                    
+                    scene.add(model);
+                    
+                    // Setup animations if available
+                    if (gltf.animations && gltf.animations.length > 0) {
+                        mixer = new THREE.AnimationMixer(model);
+                        gltf.animations.forEach((clip) => {
+                            mixer.clipAction(clip).play();
+                        });
+                    }
+                    
+                    loading.style.display = 'none';
+                    updateStats();
+                    populateMaterialSelector();
+                    
+                    // Load material properties from first material or all if edit all is checked
+                    if (materials.length > 0) {
+                        if (document.getElementById('editAllMaterials').checked) {
+                            selectedMaterialIndex = -1;
+                            loadMaterialProperties(materials[0]); // Load first material as reference
+                        } else {
+                            selectedMaterialIndex = 0;
+                            loadMaterialProperties(materials[0]);
+                        }
+                    }
+                }, function(error) {
+                    console.error('Error loading model:', error);
+                    loading.style.display = 'none';
+                    alert('Error loading model. Please check the console.');
+                });
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+        
+        
+        function loadHDR(file) {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            const reader = new FileReader();
+            const loader = new RGBELoader();
+            
+            reader.onload = function(e) {
+                const arrayBuffer = e.target.result;
+                const dataUrl = URL.createObjectURL(new Blob([arrayBuffer]));
+                
+                loader.load(dataUrl, function(texture) {
+                    texture.mapping = THREE.EquirectangularReflectionMapping;
+                    
+                    hdrEnvironment = texture;
+                    scene.environment = texture;
+                    
+                    // Update background if checkbox is checked
+                    if (document.getElementById('showHDRBackground').checked) {
+                        scene.background = texture;
+                    }
+                    
+                    loading.style.display = 'none';
+                    URL.revokeObjectURL(dataUrl);
+                }, undefined, function(error) {
+                    console.error('Error loading HDR:', error);
+                    loading.style.display = 'none';
+                    alert('Error loading HDR file. Please check the console.');
+                });
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+        
+        function updateEnvironmentRotation() {
+            if (hdrEnvironment) {
+                const rotation = parseFloat(document.getElementById('envRotation').value);
+                hdrEnvironment.rotation = rotation;
+            }
+        }
+        
+        function updateEnvironmentIntensity() {
+            const intensity = parseFloat(document.getElementById('envIntensity').value);
+            if (scene.environment) {
+                scene.environmentIntensity = intensity;
+            }
+        }
+        
+        function populateMaterialSelector() {
+            const selector = document.getElementById('materialSelect');
+            const selectorContainer = document.getElementById('materialSelector');
+            
+            selector.innerHTML = '';
+            
+            if (materials.length === 0) {
+                selectorContainer.style.display = 'none';
+                return;
+            }
+            
+            if (materials.length === 1) {
+                selectorContainer.style.display = 'none';
+                return;
+            }
+            
+            selectorContainer.style.display = 'block';
+            
+            materials.forEach((material, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                
+                const materialName = material.name || `Material ${index + 1}`;
+                const meshCount = materialMeshMap.get(material)?.length || 0;
+                option.textContent = `${index + 1}. ${materialName} (${meshCount} mesh${meshCount !== 1 ? 'es' : ''})`;
+                
+                selector.appendChild(option);
+            });
+            
+            // Update info for first material
+            updateMaterialInfo(0);
+        }
+        
+        function updateMaterialInfo(index) {
+            if (index < 0 || index >= materials.length) {
+                document.getElementById('matName').textContent = 'All Materials';
+                document.getElementById('matType').textContent = 'Multiple';
+                document.getElementById('matUsage').textContent = `${materials.length} materials`;
+                return;
+            }
+            
+            const material = materials[index];
+            const meshes = materialMeshMap.get(material) || [];
+            
+            document.getElementById('matName').textContent = material.name || `Material ${index + 1}`;
+            document.getElementById('matType').textContent = material.type || 'Unknown';
+            document.getElementById('matUsage').textContent = `${meshes.length} mesh${meshes.length !== 1 ? 'es' : ''}: ${meshes.map(m => m.name || 'Unnamed').join(', ')}`;
+        }
+        
+        function loadMaterialProperties(material) {
+            if (!material) return;
+            
+            // Helper function to safely get color
+            const getColorHex = (color) => {
+                if (!color) return '#ffffff';
+                return '#' + color.getHexString();
+            };
+            
+            // Helper function to safely get value
+            const getValue = (value, defaultValue) => {
+                return value !== undefined ? value : defaultValue;
+            };
+            
+            // Load all properties from the material
+            document.getElementById('color').value = getColorHex(material.color);
+            document.getElementById('opacity').value = getValue(material.opacity, 1);
+            document.getElementById('transparent').checked = getValue(material.transparent, false);
+            
+            document.getElementById('metalness').value = getValue(material.metalness, 0);
+            document.getElementById('roughness').value = getValue(material.roughness, 0.5);
+            document.getElementById('emissiveColor').value = getColorHex(material.emissive);
+            document.getElementById('emissiveIntensity').value = getValue(material.emissiveIntensity, 0);
+            
+            document.getElementById('clearcoat').value = getValue(material.clearcoat, 0);
+            document.getElementById('clearcoatRoughness').value = getValue(material.clearcoatRoughness, 0);
+            
+            document.getElementById('reflectivity').value = getValue(material.reflectivity, 0.5);
+            document.getElementById('refractionRatio').value = getValue(material.refractionRatio, 0.98);
+            document.getElementById('ior').value = getValue(material.ior, 1.5);
+            
+            document.getElementById('transmission').value = getValue(material.transmission, 0);
+            document.getElementById('thickness').value = getValue(material.thickness, 0);
+            document.getElementById('attenuationDistance').value = getValue(material.attenuationDistance, 0);
+            document.getElementById('attenuationColor').value = getColorHex(material.attenuationColor);
+            
+            document.getElementById('sheen').value = getValue(material.sheen, 0);
+            document.getElementById('sheenRoughness').value = getValue(material.sheenRoughness, 1);
+            document.getElementById('sheenColor').value = getColorHex(material.sheenColor);
+            
+            document.getElementById('iridescence').value = getValue(material.iridescence, 0);
+            document.getElementById('iridescenceIOR').value = getValue(material.iridescenceIOR, 1.3);
+            
+            if (material.iridescenceThicknessRange) {
+                document.getElementById('iridescenceThicknessMin').value = material.iridescenceThicknessRange[0];
+                document.getElementById('iridescenceThicknessMax').value = material.iridescenceThicknessRange[1];
+            }
+            
+            document.getElementById('anisotropy').value = getValue(material.anisotropy, 0);
+            document.getElementById('anisotropyRotation').value = getValue(material.anisotropyRotation, 0);
+            
+            document.getElementById('specularIntensity').value = getValue(material.specularIntensity, 1);
+            document.getElementById('specularColor').value = getColorHex(material.specularColor);
+            
+            document.getElementById('displacementScale').value = getValue(material.displacementScale, 1);
+            document.getElementById('displacementBias').value = getValue(material.displacementBias, 0);
+            
+            if (material.normalScale) {
+                document.getElementById('normalScaleX').value = material.normalScale.x;
+                document.getElementById('normalScaleY').value = material.normalScale.y;
+            }
+            
+            document.getElementById('wireframe').checked = getValue(material.wireframe, false);
+            document.getElementById('flatShading').checked = getValue(material.flatShading, false);
+            document.getElementById('wireframeLinewidth').value = getValue(material.wireframeLinewidth, 1);
+            
+            // Update all value displays
+            const allControls = [
+                'color', 'opacity', 'metalness', 'roughness', 'emissiveColor', 'emissiveIntensity',
+                'clearcoat', 'clearcoatRoughness', 'reflectivity', 'refractionRatio', 'ior',
+                'transmission', 'thickness', 'attenuationDistance', 'attenuationColor',
+                'sheen', 'sheenRoughness', 'sheenColor',
+                'iridescence', 'iridescenceIOR', 'iridescenceThicknessMin', 'iridescenceThicknessMax',
+                'anisotropy', 'anisotropyRotation',
+                'specularIntensity', 'specularColor',
+                'displacementScale', 'displacementBias', 'normalScaleX', 'normalScaleY',
+                'wireframeLinewidth'
+            ];
+            
+            allControls.forEach(updateValueDisplay);
+        }
+        
+        function disposeMaterial(obj) {
+            obj.traverse((child) => {
+                if (child.isMesh) {
+                    if (child.geometry) child.geometry.dispose();
+                    if (child.material) {
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(mat => mat.dispose());
+                        } else {
+                            child.material.dispose();
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateMaterials() {
+            const props = {
+                color: new THREE.Color(document.getElementById('color').value),
+                opacity: parseFloat(document.getElementById('opacity').value),
+                transparent: document.getElementById('transparent').checked,
+                metalness: parseFloat(document.getElementById('metalness').value),
+                roughness: parseFloat(document.getElementById('roughness').value),
+                emissive: new THREE.Color(document.getElementById('emissiveColor').value),
+                emissiveIntensity: parseFloat(document.getElementById('emissiveIntensity').value),
+                clearcoat: parseFloat(document.getElementById('clearcoat').value),
+                clearcoatRoughness: parseFloat(document.getElementById('clearcoatRoughness').value),
+                reflectivity: parseFloat(document.getElementById('reflectivity').value),
+                refractionRatio: parseFloat(document.getElementById('refractionRatio').value),
+                ior: parseFloat(document.getElementById('ior').value),
+                transmission: parseFloat(document.getElementById('transmission').value),
+                thickness: parseFloat(document.getElementById('thickness').value),
+                attenuationDistance: parseFloat(document.getElementById('attenuationDistance').value),
+                attenuationColor: new THREE.Color(document.getElementById('attenuationColor').value),
+                sheen: parseFloat(document.getElementById('sheen').value),
+                sheenRoughness: parseFloat(document.getElementById('sheenRoughness').value),
+                sheenColor: new THREE.Color(document.getElementById('sheenColor').value),
+                iridescence: parseFloat(document.getElementById('iridescence').value),
+                iridescenceIOR: parseFloat(document.getElementById('iridescenceIOR').value),
+                iridescenceThicknessMin: parseFloat(document.getElementById('iridescenceThicknessMin').value),
+                iridescenceThicknessMax: parseFloat(document.getElementById('iridescenceThicknessMax').value),
+                anisotropy: parseFloat(document.getElementById('anisotropy').value),
+                anisotropyRotation: parseFloat(document.getElementById('anisotropyRotation').value),
+                specularIntensity: parseFloat(document.getElementById('specularIntensity').value),
+                specularColor: new THREE.Color(document.getElementById('specularColor').value),
+                displacementScale: parseFloat(document.getElementById('displacementScale').value),
+                displacementBias: parseFloat(document.getElementById('displacementBias').value),
+                normalScaleX: parseFloat(document.getElementById('normalScaleX').value),
+                normalScaleY: parseFloat(document.getElementById('normalScaleY').value),
+                wireframe: document.getElementById('wireframe').checked,
+                flatShading: document.getElementById('flatShading').checked,
+                wireframeLinewidth: parseFloat(document.getElementById('wireframeLinewidth').value),
+                side: getSideValue(document.getElementById('side').value),
+                blending: getBlendingValue(document.getElementById('blending').value),
+                alphaTest: parseFloat(document.getElementById('alphaTest').value),
+                depthWrite: document.getElementById('depthWrite').checked,
+                depthTest: document.getElementById('depthTest').checked,
+                depthFunc: getDepthFuncValue(document.getElementById('depthFunc').value),
+                alphaToCoverage: document.getElementById('alphaToCoverage').checked,
+                premultipliedAlpha: document.getElementById('premultipliedAlpha').checked,
+                dithering: document.getElementById('dithering').checked,
+                colorWrite: document.getElementById('colorWrite').checked
+            };
+            
+            const materialType = document.getElementById('materialType').value;
+            const editAll = document.getElementById('editAllMaterials').checked;
+            
+            // Determine which materials to update
+            let materialsToUpdate = [];
+            if (editAll || selectedMaterialIndex === -1) {
+                materialsToUpdate = materials;
+            } else if (selectedMaterialIndex >= 0 && selectedMaterialIndex < materials.length) {
+                materialsToUpdate = [materials[selectedMaterialIndex]];
+            }
+            
+            materialsToUpdate.forEach((material) => {
+                // Update common properties
+                if (material.color !== undefined) material.color.copy(props.color);
+                material.opacity = props.opacity;
+                material.transparent = props.transparent;
+                material.wireframe = props.wireframe;
+                material.side = props.side;
+                material.blending = props.blending;
+                material.alphaTest = props.alphaTest;
+                material.depthWrite = props.depthWrite;
+                material.depthTest = props.depthTest;
+                material.depthFunc = props.depthFunc;
+                material.alphaToCoverage = props.alphaToCoverage;
+                material.premultipliedAlpha = props.premultipliedAlpha;
+                material.dithering = props.dithering;
+                material.colorWrite = props.colorWrite;
+                
+                // Update PBR properties if available
+                if (material.metalness !== undefined) material.metalness = props.metalness;
+                if (material.roughness !== undefined) material.roughness = props.roughness;
+                if (material.emissive !== undefined) {
+                    material.emissive.copy(props.emissive);
+                    material.emissiveIntensity = props.emissiveIntensity;
+                }
+                if (material.clearcoat !== undefined) {
+                    material.clearcoat = props.clearcoat;
+                    material.clearcoatRoughness = props.clearcoatRoughness;
+                }
+                if (material.reflectivity !== undefined) material.reflectivity = props.reflectivity;
+                if (material.refractionRatio !== undefined) material.refractionRatio = props.refractionRatio;
+                if (material.ior !== undefined) material.ior = props.ior;
+                
+                // Transmission properties
+                if (material.transmission !== undefined) material.transmission = props.transmission;
+                if (material.thickness !== undefined) material.thickness = props.thickness;
+                if (material.attenuationDistance !== undefined) material.attenuationDistance = props.attenuationDistance;
+                if (material.attenuationColor !== undefined) material.attenuationColor.copy(props.attenuationColor);
+                
+                // Sheen properties
+                if (material.sheen !== undefined) material.sheen = props.sheen;
+                if (material.sheenRoughness !== undefined) material.sheenRoughness = props.sheenRoughness;
+                if (material.sheenColor !== undefined) material.sheenColor.copy(props.sheenColor);
+                
+                // Iridescence properties
+                if (material.iridescence !== undefined) material.iridescence = props.iridescence;
+                if (material.iridescenceIOR !== undefined) material.iridescenceIOR = props.iridescenceIOR;
+                if (material.iridescenceThicknessRange !== undefined) {
+                    material.iridescenceThicknessRange = [props.iridescenceThicknessMin, props.iridescenceThicknessMax];
+                }
+                
+                // Anisotropy properties
+                if (material.anisotropy !== undefined) material.anisotropy = props.anisotropy;
+                if (material.anisotropyRotation !== undefined) material.anisotropyRotation = props.anisotropyRotation;
+                
+                // Specular properties
+                if (material.specularIntensity !== undefined) material.specularIntensity = props.specularIntensity;
+                if (material.specularColor !== undefined) material.specularColor.copy(props.specularColor);
+                
+                // Displacement and normal properties
+                if (material.displacementScale !== undefined) material.displacementScale = props.displacementScale;
+                if (material.displacementBias !== undefined) material.displacementBias = props.displacementBias;
+                if (material.normalScale !== undefined) {
+                    material.normalScale.set(props.normalScaleX, props.normalScaleY);
+                }
+                
+                // Flat shading
+                if (material.flatShading !== undefined) {
+                    material.flatShading = props.flatShading;
+                    material.needsUpdate = true;
+                }
+                if (material.wireframeLinewidth !== undefined) material.wireframeLinewidth = props.wireframeLinewidth;
+                
+                material.needsUpdate = true;
+            });
+            
+            // Update tone mapping
+            updateToneMapping();
+        }
+        
+        function getSideValue(side) {
+            switch(side) {
+                case 'front': return THREE.FrontSide;
+                case 'back': return THREE.BackSide;
+                case 'double': return THREE.DoubleSide;
+                default: return THREE.FrontSide;
+            }
+        }
+        
+        function getBlendingValue(blending) {
+            switch(blending) {
+                case 'normal': return THREE.NormalBlending;
+                case 'additive': return THREE.AdditiveBlending;
+                case 'subtractive': return THREE.SubtractiveBlending;
+                case 'multiply': return THREE.MultiplyBlending;
+                case 'custom': return THREE.CustomBlending;
+                default: return THREE.NormalBlending;
+            }
+        }
+        
+        function getDepthFuncValue(func) {
+            switch(func) {
+                case 'never': return THREE.NeverDepth;
+                case 'always': return THREE.AlwaysDepth;
+                case 'less': return THREE.LessDepth;
+                case 'lequal': return THREE.LessEqualDepth;
+                case 'equal': return THREE.EqualDepth;
+                case 'gequal': return THREE.GreaterEqualDepth;
+                case 'greater': return THREE.GreaterDepth;
+                case 'notequal': return THREE.NotEqualDepth;
+                default: return THREE.LessEqualDepth;
+            }
+        }
+        
+        function updateToneMapping() {
+            const toneMapping = document.getElementById('toneMapping').value;
+            const exposure = parseFloat(document.getElementById('toneMappingExposure').value);
+            
+            switch(toneMapping) {
+                case 'none':
+                    renderer.toneMapping = THREE.NoToneMapping;
+                    break;
+                case 'linear':
+                    renderer.toneMapping = THREE.LinearToneMapping;
+                    break;
+                case 'reinhard':
+                    renderer.toneMapping = THREE.ReinhardToneMapping;
+                    break;
+                case 'cineon':
+                    renderer.toneMapping = THREE.CineonToneMapping;
+                    break;
+                case 'aces':
+                    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                    break;
+            }
+            
+            renderer.toneMappingExposure = exposure;
+        }
+        
+        function updateFog() {
+            const fogEnabled = document.getElementById('fog').checked;
+            
+            if (fogEnabled) {
+                const fogColor = new THREE.Color(document.getElementById('fogColor').value);
+                const fogNear = parseFloat(document.getElementById('fogNear').value);
+                const fogFar = parseFloat(document.getElementById('fogFar').value);
+                scene.fog = new THREE.Fog(fogColor, fogNear, fogFar);
+            } else {
+                scene.fog = null;
+            }
+        }
+        
+        
+        function exportMaterial(format) {
+            const editAll = document.getElementById('editAllMaterials').checked;
+            let materialToExport;
+            
+            if (editAll || selectedMaterialIndex === -1) {
+                if (materials.length === 0) {
+                    alert('No materials to export');
+                    return;
+                }
+                materialToExport = materials[0];
+                console.log('Exporting first material as reference');
+            } else {
+                materialToExport = materials[selectedMaterialIndex];
+            }
+            
+            if (!materialToExport) {
+                alert('No material selected');
+                return;
+            }
+            
+            if (format === 'json') {
+                const materialData = serializeMaterial(materialToExport);
+                const jsonString = JSON.stringify(materialData, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${materialToExport.name || 'material'}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            } else if (format === 'glb') {
+                exportModelAsGLB();
+            }
+        }
+        
+        function exportAllMaterials() {
+            if (materials.length === 0) {
+                alert('No materials to export');
+                return;
+            }
+            
+            const allMaterials = materials.map(mat => serializeMaterial(mat));
+            const jsonString = JSON.stringify(allMaterials, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'all_materials.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function serializeMaterial(material) {
+            const data = {
+                name: material.name || 'Unnamed Material',
+                type: material.type,
+                uuid: material.uuid
+            };
+            
+            // Basic properties
+            if (material.color) data.color = '#' + material.color.getHexString();
+            if (material.opacity !== undefined) data.opacity = material.opacity;
+            if (material.transparent !== undefined) data.transparent = material.transparent;
+            
+            // PBR properties
+            if (material.metalness !== undefined) data.metalness = material.metalness;
+            if (material.roughness !== undefined) data.roughness = material.roughness;
+            if (material.emissive) data.emissive = '#' + material.emissive.getHexString();
+            if (material.emissiveIntensity !== undefined) data.emissiveIntensity = material.emissiveIntensity;
+            
+            // Advanced properties
+            if (material.clearcoat !== undefined) data.clearcoat = material.clearcoat;
+            if (material.clearcoatRoughness !== undefined) data.clearcoatRoughness = material.clearcoatRoughness;
+            if (material.reflectivity !== undefined) data.reflectivity = material.reflectivity;
+            if (material.refractionRatio !== undefined) data.refractionRatio = material.refractionRatio;
+            if (material.ior !== undefined) data.ior = material.ior;
+            
+            // Transmission
+            if (material.transmission !== undefined) data.transmission = material.transmission;
+            if (material.thickness !== undefined) data.thickness = material.thickness;
+            if (material.attenuationDistance !== undefined) data.attenuationDistance = material.attenuationDistance;
+            if (material.attenuationColor) data.attenuationColor = '#' + material.attenuationColor.getHexString();
+            
+            // Sheen
+            if (material.sheen !== undefined) data.sheen = material.sheen;
+            if (material.sheenRoughness !== undefined) data.sheenRoughness = material.sheenRoughness;
+            if (material.sheenColor) data.sheenColor = '#' + material.sheenColor.getHexString();
+            
+            // Iridescence
+            if (material.iridescence !== undefined) data.iridescence = material.iridescence;
+            if (material.iridescenceIOR !== undefined) data.iridescenceIOR = material.iridescenceIOR;
+            if (material.iridescenceThicknessRange) data.iridescenceThicknessRange = material.iridescenceThicknessRange;
+            
+            // Anisotropy
+            if (material.anisotropy !== undefined) data.anisotropy = material.anisotropy;
+            if (material.anisotropyRotation !== undefined) data.anisotropyRotation = material.anisotropyRotation;
+            
+            // Specular
+            if (material.specularIntensity !== undefined) data.specularIntensity = material.specularIntensity;
+            if (material.specularColor) data.specularColor = '#' + material.specularColor.getHexString();
+            
+            // Rendering
+            if (material.side !== undefined) data.side = material.side;
+            if (material.wireframe !== undefined) data.wireframe = material.wireframe;
+            if (material.flatShading !== undefined) data.flatShading = material.flatShading;
+            
+            return data;
+        }
+        
+        function exportModelAsGLB() {
+            if (!model) {
+                alert('No model loaded to export');
+                return;
+            }
+            
+            const exporter = new GLTFExporter();
+            
+            exporter.parse(
+                model,
+                function(result) {
+                    const blob = new Blob([result], { type: 'application/octet-stream' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'model_with_materials.glb';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                },
+                function(error) {
+                    console.error('Error exporting GLB:', error);
+                    alert('Error exporting model');
+                },
+                { binary: true }
+            );
+        }
+        
+        function updateBackground() {
+            const showHDR = document.getElementById('showHDRBackground').checked;
+            
+            if (showHDR && hdrEnvironment) {
+                scene.background = hdrEnvironment;
+            } else {
+                const bgColor = document.getElementById('bgColor').value;
+                scene.background = new THREE.Color(bgColor);
+            }
+        }
+        
+        function updateStats() {
+            const stats = document.getElementById('stats');
+            let triangles = 0;
+            let vertices = 0;
+            
+            if (model) {
+                model.traverse((child) => {
+                    if (child.isMesh && child.geometry) {
+                        if (child.geometry.index) {
+                            triangles += child.geometry.index.count / 3;
+                        } else {
+                            triangles += child.geometry.attributes.position.count / 3;
+                        }
+                        vertices += child.geometry.attributes.position.count;
+                    }
+                });
+            }
+            
+            stats.innerHTML = `
+                Materials: ${materials.length}<br>
+                Triangles: ${Math.round(triangles).toLocaleString()}<br>
+                Vertices: ${vertices.toLocaleString()}
+            `;
+        }
+        
+        function setupEventListeners() {
+            // File input
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    loadModel(e.target.files[0]);
+                }
+            });
+            
+            // HDR input
+            document.getElementById('hdrInput').addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    loadHDR(e.target.files[0]);
+                }
+            });
+            
+            // Material selector
+            document.getElementById('materialSelect').addEventListener('change', (e) => {
+                const index = parseInt(e.target.value);
+                selectedMaterialIndex = index;
+                
+                if (index >= 0 && index < materials.length) {
+                    loadMaterialProperties(materials[index]);
+                    updateMaterialInfo(index);
+                    document.getElementById('editAllMaterials').checked = false;
+                }
+            });
+            
+            // Edit all materials checkbox
+            document.getElementById('editAllMaterials').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    selectedMaterialIndex = -1;
+                    document.getElementById('materialSelect').selectedIndex = -1;
+                    updateMaterialInfo(-1);
+                } else {
+                    // Select first material
+                    if (materials.length > 0) {
+                        selectedMaterialIndex = 0;
+                        document.getElementById('materialSelect').selectedIndex = 0;
+                        loadMaterialProperties(materials[0]);
+                        updateMaterialInfo(0);
+                    }
+                }
+            });
+            
+            // All controls
+            const controls = [
+                'color', 'opacity', 'transparent', 'metalness', 'roughness',
+                'emissiveColor', 'emissiveIntensity', 'clearcoat', 'clearcoatRoughness',
+                'reflectivity', 'refractionRatio', 'ior',
+                'transmission', 'thickness', 'attenuationDistance', 'attenuationColor',
+                'sheen', 'sheenRoughness', 'sheenColor',
+                'iridescence', 'iridescenceIOR', 'iridescenceThicknessMin', 'iridescenceThicknessMax',
+                'anisotropy', 'anisotropyRotation',
+                'specularIntensity', 'specularColor',
+                'displacementScale', 'displacementBias', 'normalScaleX', 'normalScaleY',
+                'wireframe', 'flatShading', 'wireframeLinewidth', 'side', 'materialType',
+                'blending', 'alphaTest', 'depthWrite', 'depthTest', 'depthFunc',
+                'alphaToCoverage', 'premultipliedAlpha', 'dithering', 'colorWrite', 'shadowSide',
+                'vertexColors', 'colorSpace'
+            ];
+            
+            controls.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', () => {
+                        updateValueDisplay(id);
+                        updateMaterials();
+                    });
+                    element.addEventListener('change', () => {
+                        updateValueDisplay(id);
+                        updateMaterials();
+                    });
+                }
+            });
+            
+            // Tone mapping controls
+            document.getElementById('toneMapping').addEventListener('change', updateToneMapping);
+            document.getElementById('toneMappingExposure').addEventListener('input', () => {
+                updateValueDisplay('toneMappingExposure');
+                updateToneMapping();
+            });
+            
+            // Fog controls
+            const fogControls = ['fog', 'fogColor', 'fogNear', 'fogFar'];
+            fogControls.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', () => {
+                        updateValueDisplay(id);
+                        updateFog();
+                    });
+                    element.addEventListener('change', () => {
+                        updateValueDisplay(id);
+                        updateFog();
+                    });
+                }
+            });
+            
+            // Environment controls
+            document.getElementById('bgColor').addEventListener('input', updateBackground);
+            document.getElementById('showGrid').addEventListener('change', (e) => {
+                gridHelper.visible = e.target.checked;
+            });
+            document.getElementById('showHDRBackground').addEventListener('change', updateBackground);
+            document.getElementById('envIntensity').addEventListener('input', () => {
+                updateValueDisplay('envIntensity');
+                updateEnvironmentIntensity();
+            });
+            document.getElementById('envRotation').addEventListener('input', () => {
+                updateValueDisplay('envRotation');
+                updateEnvironmentRotation();
+            });
+            
+            // Initialize value displays
+            controls.forEach(updateValueDisplay);
+            fogControls.forEach(updateValueDisplay);
+            updateValueDisplay('toneMappingExposure');
+            updateValueDisplay('envRotation');
+        }
+        
+        function updateValueDisplay(id) {
+            const element = document.getElementById(id);
+            const display = document.getElementById(id + 'Value');
+            
+            if (display && element) {
+                if (element.type === 'range' || element.type === 'number') {
+                    display.textContent = parseFloat(element.value).toFixed(2);
+                } else if (element.type === 'color') {
+                    display.textContent = element.value;
+                }
+            }
+        }
+        
+        function applyPreset(preset) {
+            const presets = {
+                chrome: {
+                    color: '#ffffff',
+                    metalness: 1.0,
+                    roughness: 0.1,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1,
+                    reflectivity: 1.0
+                },
+                gold: {
+                    color: '#ffd700',
+                    metalness: 1.0,
+                    roughness: 0.3,
+                    clearcoat: 0.5,
+                    clearcoatRoughness: 0.2,
+                    reflectivity: 0.9
+                },
+                copper: {
+                    color: '#b87333',
+                    metalness: 1.0,
+                    roughness: 0.4,
+                    clearcoat: 0.3,
+                    clearcoatRoughness: 0.3,
+                    reflectivity: 0.8
+                },
+                bronze: {
+                    color: '#cd7f32',
+                    metalness: 1.0,
+                    roughness: 0.5,
+                    clearcoat: 0.2,
+                    clearcoatRoughness: 0.4,
+                    reflectivity: 0.7
+                },
+                plastic: {
+                    color: '#4fc3f7',
+                    metalness: 0.0,
+                    roughness: 0.4,
+                    clearcoat: 0.7,
+                    clearcoatRoughness: 0.1,
+                    reflectivity: 0.5
+                },
+                rubber: {
+                    color: '#333333',
+                    metalness: 0.0,
+                    roughness: 0.9,
+                    clearcoat: 0.0,
+                    clearcoatRoughness: 1.0,
+                    reflectivity: 0.1
+                },
+                glass: {
+                    color: '#ffffff',
+                    metalness: 0.0,
+                    roughness: 0.0,
+                    opacity: 0.3,
+                    transparent: true,
+                    reflectivity: 1.0,
+                    transmission: 1.0,
+                    thickness: 1.0,
+                    ior: 1.5
+                },
+                diamond: {
+                    color: '#ffffff',
+                    metalness: 0.0,
+                    roughness: 0.0,
+                    opacity: 0.5,
+                    transparent: true,
+                    reflectivity: 1.0,
+                    transmission: 0.9,
+                    thickness: 2.0,
+                    ior: 2.42,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.0
+                },
+                wood: {
+                    color: '#8B4513',
+                    metalness: 0.0,
+                    roughness: 0.8,
+                    clearcoat: 0.3,
+                    clearcoatRoughness: 0.5,
+                    reflectivity: 0.3
+                },
+                ceramic: {
+                    color: '#f0f0f0',
+                    metalness: 0.0,
+                    roughness: 0.2,
+                    clearcoat: 0.9,
+                    clearcoatRoughness: 0.05,
+                    reflectivity: 0.6
+                },
+                carbon: {
+                    color: '#1a1a1a',
+                    metalness: 0.9,
+                    roughness: 0.4,
+                    clearcoat: 0.8,
+                    clearcoatRoughness: 0.2,
+                    anisotropy: 0.8,
+                    anisotropyRotation: 0.25
+                },
+                pearl: {
+                    color: '#f8f8f0',
+                    metalness: 0.0,
+                    roughness: 0.3,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1,
+                    sheen: 0.8,
+                    sheenRoughness: 0.2,
+                    sheenColor: '#ffd4e5',
+                    iridescence: 0.6,
+                    iridescenceIOR: 1.3,
+                    iridescenceThicknessMin: 100,
+                    iridescenceThicknessMax: 400
+                },
+                velvet: {
+                    color: '#8b0000',
+                    metalness: 0.0,
+                    roughness: 1.0,
+                    sheen: 1.0,
+                    sheenRoughness: 0.8,
+                    sheenColor: '#ff6b6b',
+                    reflectivity: 0.1
+                },
+                silk: {
+                    color: '#ffffff',
+                    metalness: 0.0,
+                    roughness: 0.2,
+                    sheen: 0.9,
+                    sheenRoughness: 0.1,
+                    sheenColor: '#ffffff',
+                    clearcoat: 0.5,
+                    clearcoatRoughness: 0.1,
+                    anisotropy: 0.5
+                },
+                soap: {
+                    color: '#ffffff',
+                    metalness: 0.0,
+                    roughness: 0.1,
+                    opacity: 0.4,
+                    transparent: true,
+                    transmission: 0.8,
+                    thickness: 0.5,
+                    iridescence: 1.0,
+                    iridescenceIOR: 1.3,
+                    iridescenceThicknessMin: 100,
+                    iridescenceThicknessMax: 400,
+                    clearcoat: 0.5
+                },
+                brushed: {
+                    color: '#c0c0c0',
+                    metalness: 1.0,
+                    roughness: 0.3,
+                    anisotropy: 1.0,
+                    anisotropyRotation: 0.0,
+                    clearcoat: 0.3,
+                    clearcoatRoughness: 0.2
+                }
+            };
+            
+            const values = presets[preset];
+            if (!values) return;
+            
+            Object.keys(values).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = values[key];
+                    } else {
+                        element.value = values[key];
+                    }
+                    updateValueDisplay(key);
+                }
+            });
+            
+            updateMaterials();
+        }
+        
+        function resetMaterial() {
+            // Basic properties
+            document.getElementById('color').value = '#ffffff';
+            document.getElementById('opacity').value = 1;
+            document.getElementById('transparent').checked = false;
+            
+            // PBR properties
+            document.getElementById('metalness').value = 0;
+            document.getElementById('roughness').value = 0.5;
+            document.getElementById('emissiveColor').value = '#000000';
+            document.getElementById('emissiveIntensity').value = 0;
+            document.getElementById('clearcoat').value = 0;
+            document.getElementById('clearcoatRoughness').value = 0;
+            
+            // Reflectivity & Refraction
+            document.getElementById('reflectivity').value = 0.5;
+            document.getElementById('refractionRatio').value = 0.98;
+            document.getElementById('ior').value = 1.5;
+            
+            // Transmission
+            document.getElementById('transmission').value = 0;
+            document.getElementById('thickness').value = 0;
+            document.getElementById('attenuationDistance').value = 0;
+            document.getElementById('attenuationColor').value = '#ffffff';
+            
+            // Sheen
+            document.getElementById('sheen').value = 0;
+            document.getElementById('sheenRoughness').value = 1;
+            document.getElementById('sheenColor').value = '#ffffff';
+            
+            // Iridescence
+            document.getElementById('iridescence').value = 0;
+            document.getElementById('iridescenceIOR').value = 1.3;
+            document.getElementById('iridescenceThicknessMin').value = 100;
+            document.getElementById('iridescenceThicknessMax').value = 400;
+            
+            // Anisotropy
+            document.getElementById('anisotropy').value = 0;
+            document.getElementById('anisotropyRotation').value = 0;
+            
+            // Specular
+            document.getElementById('specularIntensity').value = 1;
+            document.getElementById('specularColor').value = '#ffffff';
+            
+            // Displacement & Normals
+            document.getElementById('displacementScale').value = 1;
+            document.getElementById('displacementBias').value = 0;
+            document.getElementById('normalScaleX').value = 1;
+            document.getElementById('normalScaleY').value = 1;
+            
+            // Rendering
+            document.getElementById('wireframe').checked = false;
+            document.getElementById('flatShading').checked = false;
+            document.getElementById('wireframeLinewidth').value = 1;
+            document.getElementById('side').value = 'front';
+            document.getElementById('materialType').value = 'standard';
+            document.getElementById('blending').value = 'normal';
+            document.getElementById('alphaTest').value = 0;
+            
+            // Depth & Alpha
+            document.getElementById('depthWrite').checked = true;
+            document.getElementById('depthTest').checked = true;
+            document.getElementById('depthFunc').value = 'lequal';
+            document.getElementById('alphaToCoverage').checked = false;
+            document.getElementById('premultipliedAlpha').checked = true;
+            document.getElementById('dithering').checked = false;
+            document.getElementById('colorWrite').checked = true;
+            
+            // Update all value displays
+            const allControls = [
+                'color', 'opacity', 'metalness', 'roughness', 'emissiveColor', 'emissiveIntensity',
+                'clearcoat', 'clearcoatRoughness', 'reflectivity', 'refractionRatio', 'ior',
+                'transmission', 'thickness', 'attenuationDistance', 'attenuationColor',
+                'sheen', 'sheenRoughness', 'sheenColor',
+                'iridescence', 'iridescenceIOR', 'iridescenceThicknessMin', 'iridescenceThicknessMax',
+                'anisotropy', 'anisotropyRotation',
+                'specularIntensity', 'specularColor',
+                'displacementScale', 'displacementBias', 'normalScaleX', 'normalScaleY',
+                'wireframeLinewidth', 'alphaTest'
+            ];
+            
+            allControls.forEach(updateValueDisplay);
+            updateMaterials();
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            controls.update();
+            
+            if (mixer) {
+                const delta = clock.getDelta();
+                mixer.update(delta);
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            camera.aspect = (window.innerWidth - 380) / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth - 380, window.innerHeight);
+        }
+        
+        // Make functions globally accessible for HTML onclick handlers
+        window.applyPreset = applyPreset;
+        window.resetMaterial = resetMaterial;
+        window.exportMaterial = exportMaterial;
+        window.exportAllMaterials = exportAllMaterials;
+        
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
