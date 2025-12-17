@@ -25,7 +25,7 @@
 </head>
 <body>
   <div class="topbar">
-    <a class="back" href="index (5).html">← Back</a>
+    <a class="back" href="index.html" id="toolsBack">← Back</a>
     <h1>Tools</h1>
   </div>
 
@@ -66,6 +66,22 @@
     // Keep a small script to ensure the active tab class remains set
     const tab = document.querySelector('.tab');
     if (tab) tab.classList.add('active');
+    // Ensure back button goes to index.html; fallback to history.back()
+    const backBtn = document.getElementById('toolsBack');
+    if (backBtn) {
+      backBtn.addEventListener('click', function(e) {
+        // Prefer explicit index.html
+        e.preventDefault();
+        const target = 'index.html';
+        // Try direct navigation first
+        try {
+          window.location.href = target;
+        } catch (err) {
+          // fallback to history
+          history.back();
+        }
+      });
+    }
   </script>
 </body>
 </html>
