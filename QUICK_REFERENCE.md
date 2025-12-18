@@ -178,11 +178,11 @@ Get YOUR_FORM_ID from formspree.io (free account)
 ## 📊 Performance Snapshot
 
 ```
-Current Metrics:
-├─ Page Load: ~3.5s (Fair - due to 3D model)
-├─ Mobile Score: 75 (Good)
-├─ Desktop Score: 90 (Excellent)
-└─ Page Size: 5.5 MB (Heavy)
+Current Metrics (Estimated):
+├─ Page Load: ~3.5s (estimated, fair - due to 3D model)
+├─ Mobile Score: ~75 (estimated, good)
+├─ Desktop Score: ~90 (estimated, excellent)
+└─ Page Size: ~5.5 MB (calculated, heavy)
 
 Optimization Targets:
 ├─ Compress model → save 2MB

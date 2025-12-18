@@ -261,7 +261,8 @@ This is an **advanced creative technologist portfolio** featuring:
    ```
    Action: Add at least 3-5 projects per category
    Format: Image + title + short description + date
-   Time: 4-6 hours
+   Time: 2 hours (6 projects) to 6 hours (20 projects)
+   Detail: ~20 min per project (image prep + text + testing)
    Impact: Transforms template into portfolio
    ```
 
